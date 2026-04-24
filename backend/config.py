@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -17,11 +19,13 @@ class Settings(BaseSettings):
     SMTP_PASS: str = ""
     CONTACT_TO_EMAIL: str = "contact@asymcapital.in"
     APP_ENV: str = "development"
-    ALLOWED_ORIGINS: list[str] = [
-        "http://localhost:8000",
-        "http://localhost:3000",
-        "https://asymcapital.in",
-    ]
+
+    @property
+    def ALLOWED_ORIGINS(self) -> list[str]:
+        raw = os.getenv("ALLOWED_ORIGINS", "")
+        if not raw:
+            return ["http://localhost:8000", "http://localhost:3000", "https://asymcapital.in", "https://www.asymcapital.in"]
+        return [o.strip() for o in raw.split(",") if o.strip()]
 
 
 settings = Settings()
