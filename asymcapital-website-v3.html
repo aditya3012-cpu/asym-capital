@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASYM Capital — Asymmetric Edge in Systematic Trading</title>
+<meta name="description" content="ASYM Capital operates at the intersection of proprietary trading and quantitative-as-a-service. Systematic strategies, algorithmic execution, bespoke alpha generation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink:     #0C0C0E;
+  --paper:   #F5F0E8;
+  --cream:   #EDE8DC;
+  --orange:  #E8521A;
+  --orange2: #FF7A3D;
+  --gold:    #C9960C;
+  --muted:   #7A7468;
+  --rule:    #D4CCBE;
+  --white:   #FEFCF8;
+  --dark:    #141416;
+  --dark2:   #1C1C20;
+  --dark3:   #242428;
+  --dark-muted: #5A5A62;
+  --dark-rule:  #2E2E34;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--orange);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(232,82,26,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.3s ease;
+}
+body:hover .cursor { transform: scale(1); }
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: normal;
+}
+nav::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(12,12,14,0.9) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--orange); }
+.nav-links {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--orange); }
+.nav-cta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--orange);
+  padding: 0.6rem 1.4rem;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.nav-cta:hover { background: var(--orange2); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8rem 4rem 6rem;
+  position: relative;
+  z-index: 2;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: var(--orange);
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  font-weight: 900;
+  line-height: 1.0;
+  color: var(--white);
+  margin-bottom: 2.5rem;
+}
+h1 em {
+  font-style: italic;
+  color: var(--orange);
+}
+.hero-desc {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--dark-muted);
+  max-width: 420px;
+  margin-bottom: 3rem;
+}
+.hero-actions {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.btn-primary {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--orange);
+  color: var(--ink);
+  padding: 1rem 2rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--orange2); transform: translateY(-2px); }
+.btn-ghost {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s;
+}
+.btn-ghost:hover { color: var(--orange); }
+.btn-ghost::after { content: '→'; transition: transform 0.3s; }
+.btn-ghost:hover::after { transform: translateX(4px); }
+
+/* Hero right: animated canvas area */
+.hero-right {
+  position: relative;
+  overflow: hidden;
+}
+.hero-chart {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-chart canvas {
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+/* Asymmetric payoff diagram overlay */
+.payoff-diagram {
+  position: absolute;
+  bottom: 15%;
+  right: 10%;
+  width: 300px;
+  background: rgba(28,28,32,0.85);
+  border: 1px solid var(--dark-rule);
+  backdrop-filter: blur(20px);
+  padding: 1.5rem;
+}
+.payoff-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+  margin-bottom: 1rem;
+}
+.payoff-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.payoff-stat .val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--white);
+}
+.payoff-stat .val.pos { color: var(--orange); }
+.payoff-stat .lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+  margin-top: 0.2rem;
+}
+
+/* Hero vertical rule */
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  bottom: 15%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--dark-rule), transparent);
+}
+
+/* ── TICKER ── */
+.ticker-wrap {
+  border-top: 1px solid var(--dark-rule);
+  border-bottom: 1px solid var(--dark-rule);
+  background: var(--dark2);
+  overflow: hidden;
+  padding: 1rem 0;
+  position: relative;
+}
+.ticker-wrap::before, .ticker-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+}
+.ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--dark2), transparent); }
+.ticker-wrap::after  { right: 0; background: linear-gradient(to left, var(--dark2), transparent); }
+.ticker {
+  display: flex;
+  gap: 4rem;
+  animation: tickerScroll 30s linear infinite;
+  white-space: nowrap;
+}
+@keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ticker-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.ticker-item span { color: var(--orange); }
+.ticker-dot {
+  width: 4px; height: 4px;
+  background: var(--dark-rule);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── SECTION UTILITIES ── */
+section { position: relative; }
+.section-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+  margin-bottom: 5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--dark-rule);
+}
+.section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--orange);
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: var(--white);
+}
+.section-title em { font-style: italic; color: var(--orange); }
+
+/* ── ABOUT ── */
+.about { padding: 10rem 0; background: var(--dark); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  align-items: start;
+  max-width: 860px;
+}
+
+.about-lede {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+  line-height: 1.5;
+  color: var(--white);
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+.about-lede strong { color: var(--orange); font-weight: 700; }
+
+.about-body {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--dark-muted);
+  margin-bottom: 2rem;
+}
+
+.about-pillars {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.pillar {
+  border-top: 2px solid var(--dark-rule);
+  padding-top: 1.5rem;
+  transition: border-color 0.3s;
+}
+.pillar:hover { border-color: var(--orange); }
+.pillar-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--orange);
+  margin-bottom: 0.75rem;
+}
+.pillar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.pillar-desc {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--dark-muted);
+}
+
+/* ── SERVICES ── */
+.services { padding: 10rem 0; background: var(--ink); }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--dark-rule);
+}
+.service-card {
+  padding: 3rem;
+  border-right: 1px solid var(--dark-rule);
+  border-bottom: 1px solid var(--dark-rule);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s;
+}
+.service-card:nth-child(3n) { border-right: none; }
+.service-card:nth-last-child(-n+3) { border-bottom: none; }
+.service-card:hover { background: var(--dark2); }
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 3px;
+  background: var(--orange);
+  transition: width 0.4s ease;
+}
+.service-card:hover::before { width: 100%; }
+
+.service-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--dark-muted);
+  margin-bottom: 2.5rem;
+}
+.service-icon {
+  width: 44px; height: 44px;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+}
+.service-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.service-desc {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--dark-muted);
+  margin-bottom: 2rem;
+}
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.service-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+  border: 1px solid var(--dark-rule);
+  padding: 0.3rem 0.6rem;
+}
+
+/* ── PHILOSOPHY ── */
+.philosophy {
+  padding: 10rem 0;
+  background: var(--orange);
+  overflow: hidden;
+}
+.philosophy .section-num { color: var(--ink); opacity: 0.5; }
+.philosophy .section-title { color: var(--ink); }
+.philosophy .section-title em { color: var(--ink); font-style: italic; }
+.philosophy-border { border-color: rgba(0,0,0,0.15); }
+
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 6rem;
+  align-items: center;
+}
+.philosophy-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.philosophy-quote em { font-style: italic; opacity: 0.7; }
+.philosophy-body {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: rgba(12,12,14,0.7);
+}
+.philosophy-body p + p { margin-top: 1.5rem; }
+
+/* ── TECH STACK ── */
+.tech { padding: 10rem 0; background: var(--dark2); }
+
+.tech-categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--dark-rule);
+}
+.tech-col {
+  padding: 2.5rem;
+  border-right: 1px solid var(--dark-rule);
+  transition: background 0.3s;
+}
+.tech-col:last-child { border-right: none; }
+.tech-col:hover { background: var(--dark3); }
+.tech-col-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--dark-rule);
+}
+.tech-col-desc {
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--dark-muted);
+  margin-bottom: 2rem;
+}
+.tech-col-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.tech-col-items li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(46,46,52,0.6);
+}
+.tech-col-items li:last-child { border-bottom: none; padding-bottom: 0; }
+.tci-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--paper);
+  white-space: nowrap;
+}
+.tci-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--dark-muted);
+  text-align: right;
+}
+
+/* ── CONTACT ── */
+.contact { padding: 10rem 0; background: var(--ink); }
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  align-items: start;
+}
+.contact-left .big-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.0;
+  color: var(--white);
+  margin-bottom: 2rem;
+}
+.contact-left .big-text em { font-style: italic; color: var(--orange); }
+.contact-sub {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--dark-muted);
+  max-width: 380px;
+}
+.contact-details {
+  padding-top: 2rem;
+}
+.contact-item {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--dark-rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.contact-item:last-child { border-bottom: 1px solid var(--dark-rule); }
+.contact-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+}
+.contact-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.contact-value:hover { color: var(--orange); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 3rem 4rem;
+  border-top: 1px solid var(--dark-rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--ink);
+}
+.footer-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--dark-muted);
+}
+.footer-logo span { color: var(--orange); }
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--dark-muted);
+  text-align: center;
+}
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+.footer-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--orange); }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.35s; }
+.reveal-delay-4 { transition-delay: 0.5s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1.5rem 2rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 8rem 2rem 4rem; }
+  .hero-right { height: 300px; }
+  .hero::after { display: none; }
+  .section-inner { padding: 0 2rem; }
+  .about-grid, .services-grid, .philosophy-grid, .tech-categories, .contact-inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { border-right: none; }
+  .tech-col { border-right: none; border-bottom: 1px solid var(--dark-rule); }
+  .tech-col:last-child { border-bottom: none; }
+  .payoff-diagram { display: none; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">ASYM<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="#tech">Technology</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div class="hero-left">
+    <div class="hero-eyebrow reveal">Bengaluru · Est. 2024</div>
+    <h1 class="reveal reveal-delay-1">
+      Where<br><em>asymmetry</em><br>becomes<br>alpha.
+    </h1>
+    <p class="hero-desc reveal reveal-delay-2">
+      ASYM Capital operates at the intersection of proprietary trading and quantitative-as-a-service — deploying systematic strategies across equity, derivatives, and fixed income markets.
+    </p>
+    <div class="hero-actions reveal reveal-delay-3">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-chart">
+      <canvas id="heroCanvas"></canvas>
+    </div>
+    <div class="payoff-diagram reveal">
+      <div class="payoff-label">Live Portfolio Pulse</div>
+      <div class="payoff-stats">
+        <div class="payoff-stat">
+          <div class="val pos" id="sharpe">1.87</div>
+          <div class="lbl">Sharpe Ratio</div>
+        </div>
+        <div class="payoff-stat">
+          <div class="val" id="latency">240μs</div>
+          <div class="lbl">Exec Latency</div>
+        </div>
+        <div class="payoff-stat">
+          <div class="val pos" id="signals">60+</div>
+          <div class="lbl">Live Signals</div>
+        </div>
+        <div class="payoff-stat">
+          <div class="val" id="classes">3</div>
+          <div class="lbl">Asset Classes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ── -->
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker">
+    <div class="ticker-item">Equity <span>▲ 1.2%</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">NSE Futures <span>+0.8%</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Options Flow <span>▲ Active</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Fixed Income <span>─ Neutral</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Signal Alpha <span>▲ 1.4σ</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Execution <span>VWAP Active</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Regime <span>▲ Low Vol</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Drawdown <span>─ Controlled</span></div>
+    <div class="ticker-dot"></div>
+    <!-- Duplicate for infinite loop -->
+    <div class="ticker-item">Equity <span>▲ 1.2%</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">NSE Futures <span>+0.8%</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Options Flow <span>▲ Active</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Fixed Income <span>─ Neutral</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Signal Alpha <span>▲ 1.4σ</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Execution <span>VWAP Active</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Regime <span>▲ Low Vol</span></div>
+    <div class="ticker-dot"></div>
+    <div class="ticker-item">Drawdown <span>─ Controlled</span></div>
+    <div class="ticker-dot"></div>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About <em>ASYM Capital</em></h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <p class="about-lede">
+          ASYM Capital operates at the intersection of a <strong>Proprietary Trading Firm</strong> and a <strong>Quantitative-as-a-Service (QaaS)</strong> provider — a highly specialised tier of financial technology.
+        </p>
+        <p class="about-body">
+          Founded in 2024 and based in Bengaluru — India's foremost technology hub — ASYM Capital was built with a singular thesis: that <em>asymmetric opportunities</em> are the highest-quality trades in any market. Where potential upside significantly outweighs downside risk, where probability distributions are skewed in your favour, where disciplined execution and rigorous modelling create structural edge.
+        </p>
+        <p class="about-body">
+          Our focus on systematic backtesting, low-latency execution (TWAP/VWAP), and bespoke alpha generation for external clients places us in the same tier as the world's most sophisticated quantitative trading operations. We build and deploy end-to-end algorithmic trading systems — from raw signal generation and portfolio construction through to live order execution — and provide those same capabilities as a service to external clients across varying portfolio sizes.
+        </p>
+        <p class="about-body">
+          Globally, our approach is closest to firms like <em>WorldQuant</em> (systematic alpha research at scale), <em>QuantConnect</em> (systematic backtesting infrastructure as a service), and India's leading prop desks — <em>AlphaGrep</em>, <em>Quadeye</em>, and <em>Graviton Research Capital</em>. We combine the research depth of the former with the execution precision of the latter, for a client base that spans institutional desks to sophisticated HNIs.
+        </p>
+
+        <div class="about-pillars reveal reveal-delay-1">
+          <div class="pillar">
+            <div class="pillar-num">01</div>
+            <div class="pillar-title">Systematic Research</div>
+            <div class="pillar-desc">Multi-factor signal generation, regime detection via HMM, and rigorous statistical validation before any strategy touches capital.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">02</div>
+            <div class="pillar-title">Low-Latency Execution</div>
+            <div class="pillar-desc">TWAP, VWAP, and adaptive execution algorithms integrated with broker APIs. Sub-millisecond order routing with realistic impact modeling.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">03</div>
+            <div class="pillar-title">Bespoke Analytics</div>
+            <div class="pillar-desc">Custom alpha signals, factor exposure reports, and portfolio analytics for external clients. Institutional grade, delivered at any portfolio scale.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">04</div>
+            <div class="pillar-title">Risk Infrastructure</div>
+            <div class="pillar-desc">Real-time exposure monitoring, portfolio Greeks, stress testing, and systematic hedging. Risk is not managed after the fact — it is engineered in from day one.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section class="services" id="services">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">What We <em>Do</em></h2>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round">
+          <polyline points="4,34 14,20 22,26 32,12 40,18"/>
+          <line x1="4" y1="38" x2="40" y2="38"/>
+        </svg>
+        <div class="service-name">Systematic Trading Strategies</div>
+        <div class="service-desc">End-to-end algorithmic trading systems covering signal generation, portfolio construction, risk management, and live order execution across equity, derivatives, and fixed income.</div>
+        <div class="service-tags">
+          <span class="service-tag">Multi-asset</span>
+          <span class="service-tag">Prop capital</span>
+          <span class="service-tag">Live execution</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round">
+          <rect x="6" y="6" width="32" height="32" rx="2"/>
+          <line x1="22" y1="6" x2="22" y2="38"/>
+          <polyline points="6,18 22,14 38,18"/>
+          <polyline points="6,30 22,26 38,30"/>
+        </svg>
+        <div class="service-name">Algorithmic Execution</div>
+        <div class="service-desc">Low-latency TWAP, VWAP, and adaptive execution algorithms integrated directly with broker APIs for optimal order routing, minimal market impact, and realistic transaction cost modeling.</div>
+        <div class="service-tags">
+          <span class="service-tag">TWAP / VWAP</span>
+          <span class="service-tag">Broker API</span>
+          <span class="service-tag">Sub-ms latency</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="22" cy="22" r="16"/>
+          <line x1="22" y1="6" x2="22" y2="22"/>
+          <line x1="22" y1="22" x2="32" y2="28"/>
+          <circle cx="22" cy="22" r="2" fill="#FF6B35"/>
+        </svg>
+        <div class="service-name">Quantitative Analytics (QaaS)</div>
+        <div class="service-desc">Bespoke quantitative models, alpha signals, and factor exposure reports for external clients across varying portfolio sizes. The rigour of a quant hedge fund, at any scale.</div>
+        <div class="service-tags">
+          <span class="service-tag">Alpha signals</span>
+          <span class="service-tag">Factor reports</span>
+          <span class="service-tag">Bespoke models</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-num">04</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round">
+          <rect x="8" y="20" width="6" height="18"/>
+          <rect x="19" y="12" width="6" height="26"/>
+          <rect x="30" y="4" width="6" height="34"/>
+          <line x1="6" y1="40" x2="38" y2="40"/>
+        </svg>
+        <div class="service-name">Backtesting Infrastructure</div>
+        <div class="service-desc">High-fidelity event-driven backtesting processing multi-year tick-level data. Full performance analytics suite (Sharpe, Sortino, Calmar, max drawdown) with realistic slippage and commission modeling.</div>
+        <div class="service-tags">
+          <span class="service-tag">Tick-level data</span>
+          <span class="service-tag">Multi-factor</span>
+          <span class="service-tag">Risk analytics</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">05</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round">
+          <path d="M 8,32 Q 14,18 22,22 Q 30,26 36,10"/>
+          <circle cx="22" cy="22" r="3"/>
+          <line x1="6" y1="38" x2="38" y2="38"/>
+          <line x1="6" y1="6" x2="6" y2="38"/>
+        </svg>
+        <div class="service-name">Market Signal Intelligence</div>
+        <div class="service-desc">ML-driven regime detection using Hidden Markov Models, momentum and mean-reversion signals, and cross-sectional volatility analytics across 60+ equities for systematic pre-market intelligence.</div>
+        <div class="service-tags">
+          <span class="service-tag">HMM regimes</span>
+          <span class="service-tag">60+ signals</span>
+          <span class="service-tag">Pre-market</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">06</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round">
+          <polygon points="22,4 40,34 4,34"/>
+          <line x1="22" y1="14" x2="22" y2="26"/>
+          <circle cx="22" cy="30" r="1.5" fill="#FF6B35"/>
+        </svg>
+        <div class="service-name">Portfolio Risk Management</div>
+        <div class="service-desc">Real-time portfolio risk monitoring, Greeks exposure management, and systematic hedging strategies. Multi-factor risk decomposition with live stress testing and scenario analysis across positions.</div>
+        <div class="service-tags">
+          <span class="service-tag">Greeks mgmt</span>
+          <span class="service-tag">Real-time</span>
+          <span class="service-tag">Stress testing</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PHILOSOPHY ── -->
+<section class="philosophy" id="philosophy">
+  <div class="section-inner">
+    <div class="section-header philosophy-border" style="border-bottom: 1px solid rgba(0,0,0,0.15);">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Our <em>Philosophy</em></h2>
+    </div>
+    <div class="philosophy-grid">
+      <div class="philosophy-quote reveal">
+        "In markets, symmetry is overrated. The best opportunities are not balanced — <em>they are skewed.</em> We find them, measure them, and execute against them systematically."
+      </div>
+      <div class="philosophy-body reveal reveal-delay-2">
+        <p>The word <em>asymmetric</em> is not decoration. It is the foundation of every model we build, every position we take, every system we architect. We are in the business of identifying probability distributions skewed in our favour — and acting on them with precision.</p>
+        <p>This means rejecting "balanced" portfolio construction when data shows directional skew. It means stress-testing the tail, not just the mean. It means building execution algorithms that preserve edge rather than erode it. And it means delivering that same philosophy to every client engagement we take on.</p>
+        <p>Rigour, not intuition. Evidence, not narrative. Asymmetry, not symmetry.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TECH ── -->
+<section class="tech" id="tech">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Infrastructure &amp; <em>Research Stack</em></h2>
+    </div>
+    <div class="tech-categories reveal">
+
+      <div class="tech-col">
+        <div class="tech-col-label">Execution &amp; Latency</div>
+        <div class="tech-col-desc">The layer where firms like Optiver and HRT live. Low-latency order routing, async event loops, and broker connectivity built for sub-millisecond execution.</div>
+        <ul class="tech-col-items">
+          <li><span class="tci-name">C / C++</span><span class="tci-note">Order routing core</span></li>
+          <li><span class="tci-name">asyncio</span><span class="tci-note">Async event loop</span></li>
+          <li><span class="tci-name">FIX Protocol</span><span class="tci-note">Broker connectivity</span></li>
+          <li><span class="tci-name">TWAP / VWAP algos</span><span class="tci-note">Execution strategies</span></li>
+        </ul>
+      </div>
+
+      <div class="tech-col">
+        <div class="tech-col-label">Quant Research</div>
+        <div class="tech-col-desc">The toolkit Two Sigma and WorldQuant run their alpha factories on. Statistical modelling, derivatives pricing, and regime-aware signal generation.</div>
+        <ul class="tech-col-items">
+          <li><span class="tci-name">Python</span><span class="tci-note">Primary research language</span></li>
+          <li><span class="tci-name">QuantLib</span><span class="tci-note">Derivatives pricing</span></li>
+          <li><span class="tci-name">NumPy / SciPy</span><span class="tci-note">Numerics &amp; optimisation</span></li>
+          <li><span class="tci-name">statsmodels</span><span class="tci-note">Econometrics</span></li>
+        </ul>
+      </div>
+
+      <div class="tech-col">
+        <div class="tech-col-label">ML &amp; Signal Intelligence</div>
+        <div class="tech-col-desc">Regime detection, factor modelling, and cross-sectional signal pipelines — the same methods used by AQR's systematic research desk and D.E. Shaw's quant groups.</div>
+        <ul class="tech-col-items">
+          <li><span class="tci-name">Scikit-learn</span><span class="tci-note">Factor &amp; ML models</span></li>
+          <li><span class="tci-name">HMM (hmmlearn)</span><span class="tci-note">Regime detection</span></li>
+          <li><span class="tci-name">pandas</span><span class="tci-note">Signal pipelines</span></li>
+          <li><span class="tci-name">yfinance / NSE API</span><span class="tci-note">Market data</span></li>
+        </ul>
+      </div>
+
+      <div class="tech-col">
+        <div class="tech-col-label">Data &amp; Infrastructure</div>
+        <div class="tech-col-desc">The backbone. Tick-level data storage, backtesting pipelines, and containerised deployment — the QuantConnect-style infrastructure that makes systematic research reproducible.</div>
+        <ul class="tech-col-items">
+          <li><span class="tci-name">PostgreSQL</span><span class="tci-note">Time-series store</span></li>
+          <li><span class="tci-name">FastAPI</span><span class="tci-note">Internal API layer</span></li>
+          <li><span class="tci-name">Docker</span><span class="tci-note">Containerised deployment</span></li>
+          <li><span class="tci-name">Plotly / Dash</span><span class="tci-note">Research dashboards</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Get in <em>Touch</em></h2>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-left reveal">
+        <div class="big-text">Let's build<br><em>asymmetric</em><br>edge<br>together.</div>
+        <p class="contact-sub">Whether you need bespoke quantitative analytics, algorithmic execution infrastructure, or systematic trading strategies — we work closely with a select number of clients to deliver institutional-grade solutions.</p>
+      </div>
+      <div class="contact-details reveal reveal-delay-2">
+        <div class="contact-item">
+          <span class="contact-label">Email</span>
+          <a href="mailto:contact@asymcapital.in" class="contact-value">contact@asymcapital.in</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Location</span>
+          <span class="contact-value">Bengaluru, India</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Domain</span>
+          <a href="https://asymcapital.in" class="contact-value">asymcapital.in</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">LinkedIn</span>
+          <a href="https://linkedin.com/company/asym-capital" class="contact-value" target="_blank">asym-capital</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Markets</span>
+          <span class="contact-value">NSE · BSE · Derivatives</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Founded</span>
+          <span class="contact-value">2024</span>
+        </div>
+        <div style="margin-top: 3rem;">
+          <a href="mailto:contact@asymcapital.in" class="btn-primary">Start a Conversation →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">ASYM<span>.</span>CAPITAL</div>
+  <div class="footer-copy">
+    © 2024 ASYM Capital. All rights reserved.<br>
+    Trading involves substantial risk. Past performance is not indicative of future results.
+  </div>
+  <div class="footer-links">
+    <a href="https://linkedin.com/company/asym-capital" target="_blank">LinkedIn</a>
+    <a href="https://github.com/asym-capital" target="_blank">GitHub</a>
+    <a href="mailto:contact@asymcapital.in">Email</a>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 5 + 'px';
+  cursor.style.top  = my - 5 + 'px';
+});
+
+function animateRing() {
+  rx += (mx - rx - 18) * 0.12;
+  ry += (my - ry - 18) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button, .service-card, .tech-cell').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'scale(2.5)';
+    ring.style.transform = 'scale(1.4)';
+    ring.style.borderColor = 'rgba(232,82,26,0.8)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'scale(1)';
+    ring.style.transform = 'scale(1)';
+    ring.style.borderColor = 'rgba(232,82,26,0.5)';
+  });
+});
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(r => observer.observe(r));
+
+// Trigger hero reveals immediately
+document.querySelectorAll('.hero .reveal').forEach(r => {
+  setTimeout(() => r.classList.add('visible'), 100);
+});
+
+// ── HERO CANVAS: animated multi-asset chart ──
+(function() {
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Generate realistic-looking price series
+  function genSeries(n, start, drift, vol) {
+    const pts = [start];
+    for (let i = 1; i < n; i++) {
+      const r = (Math.random() - 0.5) * vol + drift;
+      pts.push(Math.max(0.05, pts[i-1] * (1 + r)));
+    }
+    return pts;
+  }
+
+  const N = 200;
+  const series = [
+    { pts: genSeries(N, 1, 0.0008, 0.022), color: '#FF6B35', alpha: 0.9, lw: 2 },
+    { pts: genSeries(N, 1, 0.0003, 0.015), color: '#C9960C', alpha: 0.5, lw: 1.5 },
+    { pts: genSeries(N, 1, 0.0001, 0.010), color: '#5A5A80', alpha: 0.4, lw: 1 },
+  ];
+
+  let frame = 0;
+
+  function drawSeries(s, w, h) {
+    const pts = s.pts;
+    const mn = Math.min(...pts), mx = Math.max(...pts);
+    const range = mx - mn || 1;
+    const px = (v) => (v - mn) / range;
+
+    // Fill gradient below line
+    const grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, s.color.replace(')', ',0.15)').replace('rgb', 'rgba').replace('#FF6B35', 'rgba(255,107,53,0.15)').replace('#C9960C', 'rgba(201,150,12,0.08)').replace('#5A5A80', 'rgba(90,90,128,0.06)'));
+    grad.addColorStop(1, 'transparent');
+
+    const visible = Math.min(N, Math.floor(frame * 0.7) + 60);
+
+    ctx.beginPath();
+    for (let i = 0; i < visible; i++) {
+      const x = (i / (N - 1)) * w;
+      const y = h - px(pts[i]) * h * 0.65 - h * 0.1;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = s.color;
+    ctx.globalAlpha = s.alpha;
+    ctx.lineWidth = s.lw;
+    ctx.stroke();
+
+    // Close path for fill
+    ctx.lineTo((visible - 1) / (N - 1) * w, h);
+    ctx.lineTo(0, h);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+
+  function draw() {
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    // Grid lines
+    ctx.globalAlpha = 0.08;
+    ctx.strokeStyle = '#5A5A80';
+    ctx.lineWidth = 1;
+    for (let i = 1; i < 6; i++) {
+      ctx.beginPath();
+      ctx.moveTo(0, h * i / 6);
+      ctx.lineTo(w, h * i / 6);
+      ctx.stroke();
+    }
+    for (let i = 1; i < 8; i++) {
+      ctx.beginPath();
+      ctx.moveTo(w * i / 8, 0);
+      ctx.lineTo(w * i / 8, h);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    series.forEach(s => drawSeries(s, w, h));
+
+    // Animated dot on latest point of primary series
+    if (frame > 10) {
+      const s = series[0];
+      const visible = Math.min(N, Math.floor(frame * 0.7) + 60);
+      const i = visible - 1;
+      const pts = s.pts;
+      const mn = Math.min(...pts), mx = Math.max(...pts);
+      const range = mx - mn || 1;
+      const x = (i / (N - 1)) * w;
+      const y = h - ((pts[i] - mn) / range) * h * 0.65 - h * 0.1;
+
+      // Pulsing ring
+      const pulse = (Math.sin(frame * 0.08) + 1) / 2;
+      ctx.beginPath();
+      ctx.arc(x, y, 6 + pulse * 6, 0, Math.PI * 2);
+      ctx.strokeStyle = '#FF6B35';
+      ctx.globalAlpha = 0.3 * (1 - pulse);
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#FF6B35';
+      ctx.fill();
+    }
+
+    frame++;
+    if (frame < N * 1.5) requestAnimationFrame(draw);
+    else { frame = N * 1.4; requestAnimationFrame(draw); }
+  }
+  draw();
+})();
+
+// ── STAT COUNTER ANIMATION ──
+function animateValue(el, start, end, suffix, duration) {
+  const startTime = performance.now();
+  const isFloat = String(end).includes('.');
+  const update = (now) => {
+    const p = Math.min((now - startTime) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    const val = start + (end - start) * ease;
+    el.textContent = (isFloat ? val.toFixed(2) : Math.floor(val)) + suffix;
+    if (p < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+setTimeout(() => {
+  animateValue(document.getElementById('sharpe'), 0, 1.87, '', 1600);
+}, 800);
+</script>
+</body>
+</html>
