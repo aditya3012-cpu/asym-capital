@@ -18,6 +18,8 @@
   "send_email": [{ "name": "EMAIL" }],
 
   "vars": {
+    // "true" = show the maintenance page; "false" = site live.
+    "MAINTENANCE": "true",
     // Sender must be an address on a domain verified in Email Service.
     "CONTACT_FROM_EMAIL": "contact@asymcapital.uk",
     // Where enquiries are delivered.

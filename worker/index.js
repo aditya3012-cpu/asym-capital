@@ -154,8 +154,34 @@ async function handleContact(request, env) {
   return json({ status: "ok", message: "We'll be in touch within 24 hours." });
 }
 
+const MAINTENANCE_HTML = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="robots" content="noindex"><title>Under Maintenance — ASYM Capital</title></head>
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0C0C0E;font-family:'Courier New',Courier,monospace;color:#F5F0E8;text-align:center;">
+<div style="padding:32px;max-width:520px;">
+<p style="margin:0 0 16px;color:#E8521A;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;">ASYM Capital</p>
+<h1 style="margin:0 0 16px;font-size:24px;letter-spacing:0.04em;color:#FEFCF8;">Under maintenance</h1>
+<p style="margin:0;font-size:14px;line-height:1.8;color:#B5AFA3;">We're making some improvements and will be back shortly. Thank you for your patience.</p>
+</div></body></html>`;
+
+function maintenance(request) {
+  const wantsJson = new URL(request.url).pathname.startsWith("/api/");
+  const headers = { "Retry-After": "3600", "Cache-Control": "no-store" };
+  if (wantsJson) {
+    return new Response(JSON.stringify({ detail: "Site is under maintenance. Please try again later." }), {
+      status: 503,
+      headers: { ...headers, "Content-Type": "application/json" },
+    });
+  }
+  return new Response(MAINTENANCE_HTML, {
+    status: 503,
+    headers: { ...headers, "Content-Type": "text/html; charset=utf-8" },
+  });
+}
+
 export default {
   async fetch(request, env) {
+    // Set MAINTENANCE to "true" in wrangler.jsonc vars to take the site offline.
+    if (env.MAINTENANCE === "true") return maintenance(request);
+
     const { pathname } = new URL(request.url);
 
     if (pathname === "/api/health") {
