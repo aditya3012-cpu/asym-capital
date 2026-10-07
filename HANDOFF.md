@@ -130,7 +130,7 @@ The owner asked for the site to be taken offline while it's redone.
 ```
 frontend/index.html     # whole site: one HTML file with inline CSS (~1,250 lines)
 frontend/main.js        # nav, mobile menu, scroll reveal, footer year, form (posts to /api/contact)
-frontend/favicon.svg, robots.txt, sitemap.xml
+frontend/favicon.svg, og.png (1200x630 link preview), robots.txt, sitemap.xml
 worker/index.js         # Cloudflare Worker (maintenance, health, contact API, assets)
 wrangler.jsonc          # Worker config (see §3)
 asymcapital-website-v3.html  # older standalone copy of the site; not deployed

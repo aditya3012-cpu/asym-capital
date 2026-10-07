@@ -68,7 +68,7 @@ function validate(data) {
   if (message.length < 20) return "Message must be at least 20 characters.";
   if (message.length > 5000) return "Message is too long.";
   if (company.length > 200) return "Company name is too long.";
-  if (!(enquiry in ENQUIRY_LABELS)) return "Invalid enquiry type.";
+  if (!Object.hasOwn(ENQUIRY_LABELS, enquiry)) return "Invalid enquiry type.";
 
   return { name, email, message, company: company || null, enquiry };
 }

@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    ASYM Capital — main.js
-   Interactive behaviour: nav highlighting, mobile menu, scroll reveal,
+   Interactive behaviour: scroll reveal, nav highlighting, mobile menu,
    footer year and the contact form. Smooth scrolling is handled in CSS.
 ───────────────────────────────────────────────────────────────────────────── */
 
@@ -9,7 +9,33 @@
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ── 1. ACTIVE NAV HIGHLIGHTING (IntersectionObserver) ──────────────────── */
+  /* ── 1. SCROLL REVEAL (first, so nothing below can leave content hidden) ── */
+  const reveals = document.querySelectorAll('.reveal');
+
+  if (reduceMotion) {
+    reveals.forEach(function (el) { el.classList.add('visible'); });
+  } else {
+    // threshold 0 + bottom margin: elements taller than the viewport still reveal.
+    const revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+
+    reveals.forEach(function (el) { revealObserver.observe(el); });
+
+    // The hero is on screen at load, so reveal it straight away.
+    setTimeout(function () {
+      document.querySelectorAll('.hero .reveal').forEach(function (el) {
+        el.classList.add('visible');
+      });
+    }, 100);
+  }
+
+  /* ── 2. ACTIVE NAV HIGHLIGHTING (IntersectionObserver) ──────────────────── */
   const sectionIds = ['about', 'services', 'philosophy', 'tech', 'contact'];
   const navLinks   = document.querySelectorAll('.nav-links a');
 
@@ -35,9 +61,10 @@
     if (el) sectionObserver.observe(el);
   });
 
-  /* ── 2. MOBILE NAV TOGGLE ───────────────────────────────────────────────── */
+  /* ── 3. MOBILE NAV TOGGLE ───────────────────────────────────────────────── */
   const navToggle  = document.getElementById('nav-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
+  const behindMenu = [document.getElementById('main'), document.querySelector('footer')];
 
   function setMenuOpen(open) {
     mobileMenu.classList.toggle('open', open);
@@ -45,6 +72,8 @@
     navToggle.setAttribute('aria-expanded', String(open));
     navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     document.body.style.overflow = open ? 'hidden' : '';
+    // Keep keyboard and screen-reader focus out of the page hidden behind the overlay.
+    behindMenu.forEach(function (el) { if (el) el.inert = open; });
   }
 
   if (navToggle && mobileMenu) {
@@ -52,10 +81,11 @@
       setMenuOpen(!mobileMenu.classList.contains('open'));
     });
 
-    mobileMenu.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
+    // Any in-page link (menu items, logo, "Get in Touch") closes the menu.
+    document.addEventListener('click', function (e) {
+      if (mobileMenu.classList.contains('open') && e.target.closest('a[href^="#"]')) {
         setMenuOpen(false);
-      });
+      }
     });
 
     document.addEventListener('keydown', function (e) {
@@ -66,34 +96,10 @@
     });
 
     // Close the overlay if the viewport grows past the mobile breakpoint.
-    window.matchMedia('(min-width: 901px)').addEventListener('change', function (e) {
-      if (e.matches) setMenuOpen(false);
-    });
-  }
-
-  /* ── 3. SCROLL REVEAL ───────────────────────────────────────────────────── */
-  const reveals = document.querySelectorAll('.reveal');
-
-  if (reduceMotion) {
-    reveals.forEach(function (el) { el.classList.add('visible'); });
-  } else {
-    const revealObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    reveals.forEach(function (el) { revealObserver.observe(el); });
-
-    // The hero is on screen at load, so reveal it straight away.
-    setTimeout(function () {
-      document.querySelectorAll('.hero .reveal').forEach(function (el) {
-        el.classList.add('visible');
-      });
-    }, 100);
+    const desktop = window.matchMedia('(min-width: 901px)');
+    const onDesktop = function (e) { if (e.matches) setMenuOpen(false); };
+    if (desktop.addEventListener) desktop.addEventListener('change', onDesktop);
+    else desktop.addListener(onDesktop); // Safari < 14
   }
 
   /* ── 4. FOOTER YEAR ─────────────────────────────────────────────────────── */
@@ -186,5 +192,9 @@
       }
     });
   }
+
+  // Tells the <head> fallback that everything above ran, so the page can keep
+  // its .js class (and the form stays visible).
+  window.asymReady = true;
 
 })();

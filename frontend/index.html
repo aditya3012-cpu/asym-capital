@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASYM Capital — Asymmetric Edge in Systematic Trading</title>
-<meta name="description" content="Quantitative trading and advisory: systematic strategies, algorithmic execution and quantitative analytics for institutions, family offices, funds and high-net-worth investors.">
+<meta name="description" content="Proprietary trading and quantitative-as-a-service: systematic strategies, algorithmic execution and analytics for institutions, family offices, funds and HNWIs.">
 <link rel="canonical" href="https://asymcapital.uk/">
 <meta name="theme-color" content="#0C0C0E">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -12,10 +12,14 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ASYM Capital">
 <meta property="og:title" content="ASYM Capital — Asymmetric Edge in Systematic Trading">
-<meta property="og:description" content="Quantitative trading and advisory: systematic strategies, algorithmic execution and quantitative analytics for institutions, family offices, funds and high-net-worth investors.">
+<meta property="og:description" content="Proprietary trading and quantitative-as-a-service: systematic strategies, algorithmic execution and analytics for institutions, family offices, funds and HNWIs.">
 <meta property="og:url" content="https://asymcapital.uk/">
 <meta property="og:locale" content="en_GB">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://asymcapital.uk/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ASYM Capital">
+<meta name="twitter:card" content="summary_large_image">
 
 <script type="application/ld+json">
 {
@@ -41,8 +45,14 @@
 }
 </script>
 
-<!-- Lets the CSS hide .reveal elements only when JS is available to show them again. -->
-<script>document.documentElement.classList.add('js');</script>
+<!-- Lets the CSS hide .reveal elements (and show the JS-only form) only when JS is running.
+     If main.js fails to load or run, the class is removed on load so the page stays readable. -->
+<script>
+document.documentElement.classList.add('js');
+window.addEventListener('load', function () {
+  if (!window.asymReady) document.documentElement.classList.remove('js');
+});
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -566,7 +576,7 @@ section { position: relative; }
 
 .tech-categories {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
   border: 1px solid var(--dark-rule);
 }
@@ -648,6 +658,7 @@ section { position: relative; }
 .contact-details {
   padding-top: 2rem;
 }
+.noscript-note { margin-top: 2rem; max-width: none; }
 .contact-item {
   padding: 1.5rem 0;
   border-top: 1px solid var(--dark-rule);
@@ -672,12 +683,15 @@ section { position: relative; }
   color: var(--white);
   text-align: right;
   text-decoration: none;
+  overflow-wrap: anywhere;
   transition: color 0.3s;
 }
 a.contact-value:hover { color: var(--orange); }
 address.contact-value { font-style: normal; }
 
 /* ── CONTACT FORM ── */
+/* The form needs main.js to submit; without JS, visitors use the email and phone above. */
+html:not(.js) #contact-form { display: none; }
 #contact-form {
   display: flex;
   flex-direction: column;
@@ -808,11 +822,23 @@ footer {
 }
 
 /* ── RESPONSIVE ── */
+@media (min-width: 901px) and (max-width: 1199px) {
+  .tech-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tech-col:nth-child(2n) { border-right: none; }
+  .tech-col:nth-child(-n+2) { border-bottom: 1px solid var(--dark-rule); }
+}
+
 @media (max-width: 900px) {
   nav { padding: 1.5rem 2rem; }
-  .nav-links { display: none; }
-  #nav-toggle { display: flex; }
-  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .js .nav-links { display: none; }
+  .js #nav-toggle { display: flex; }
+  /* Without JS the menu can't open, so keep the links visible and let them wrap. */
+  html:not(.js) nav { position: absolute; flex-wrap: wrap; row-gap: 1rem; }
+  html:not(.js) .hero-left { padding-top: 11rem; }
+  html:not(.js) .nav-links { order: 3; width: 100%; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+  .hero { grid-template-columns: minmax(0, 1fr); min-height: auto; }
+  h1 { font-size: clamp(2.25rem, 15vw, 3.5rem); }
+  .figures-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero-left { padding: 8rem 2rem 3rem; }
   .hero-right { padding: 0 2rem 5rem; }
   .hero::after { display: none; }
@@ -820,9 +846,10 @@ footer {
   .about, .services, .philosophy, .tech, .contact { padding: 6rem 0; }
   .section-header { margin-bottom: 3rem; }
   .about-grid, .services-grid, .philosophy-grid, .tech-categories, .contact-inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 3rem;
   }
+  .contact-left .big-text { font-size: clamp(2rem, 13vw, 2.5rem); }
   .services-grid { gap: 0; }
   .services-grid .service-card { border-right: none; border-bottom: 1px solid var(--dark-rule); }
   .services-grid .service-card:last-child { border-bottom: none; }
@@ -867,7 +894,7 @@ footer {
 </nav>
 
 <!-- Mobile menu overlay -->
-<div id="mobile-menu">
+<div id="mobile-menu" role="navigation" aria-label="Mobile">
   <a href="#about">About</a>
   <a href="#services">Services</a>
   <a href="#philosophy">Philosophy</a>
@@ -1195,6 +1222,8 @@ footer {
             <span class="contact-value">2022</span>
           </div>
         </div>
+
+        <noscript><p class="contact-sub noscript-note">To get in touch, email contact@asymcapital.uk or call +44 7743 262560.</p></noscript>
 
         <form id="contact-form" novalidate>
           <div class="field">
