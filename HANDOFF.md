@@ -100,6 +100,18 @@ The frontend (`frontend/main.js`, ~line 104) posts the form as JSON to same-orig
 
 ---
 
+### Second domain: derivq.com (owner's request, 7 Oct 2026)
+
+The owner owns derivq.com and wants the same website served there. It is served by the **same** `asym-capital-uk` Worker, so both domains always show identical content. Canonical tags, Open Graph URLs, the sitemap and structured data all point to `https://asymcapital.uk/...`, so Google treats asymcapital.uk as the main address and folds derivq.com into it (no duplicate-content split). The Worker redirects `http://` and `www.` on either domain to `https://<apex>` in one hop.
+
+As of 7 Oct 2026 derivq.com uses GoDaddy nameservers (`ns39/ns40.domaincontrol.com`), points at a GoDaddy parking page, and has **no MX records** (no email to preserve). To attach it:
+1. Cloudflare dashboard → Add a domain → `derivq.com` → Free plan. In the imported DNS records, delete GoDaddy's two A records (`76.223.105.230`, `13.248.243.5`) and the `www` CNAME.
+2. GoDaddy → derivq.com → Nameservers → "I'll use my own" → enter the two Cloudflare nameservers shown. Wait for the zone to become Active.
+3. Workers & Pages → `asym-capital-uk` → Settings → Domains & Routes → Add → Custom domain: `derivq.com`, then again for `www.derivq.com`.
+4. Same fix for the broken `www.asymcapital.uk`: delete its CNAME in the asymcapital.uk DNS, then add `www.asymcapital.uk` as a custom domain on the Worker (the Worker redirects it to the apex).
+
+Do not add these domains via `routes` in `wrangler.jsonc` unless asymcapital.uk is listed there too: a Wrangler deploy can replace dashboard-managed routes.
+
 ## 5. Maintenance mode (currently ON)
 
 The owner asked for the site to be taken offline while it's redone.

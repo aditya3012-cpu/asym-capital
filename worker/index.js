@@ -239,10 +239,14 @@ async function route(request, env) {
 
 export default {
   async fetch(request, env) {
-    // Force HTTPS (localhost is exempt so `wrangler dev` keeps working).
+    // One hop to the canonical form: HTTPS, and no "www." (the same Worker serves
+    // asymcapital.uk and derivq.com). localhost is exempt so `wrangler dev` works.
     const url = new URL(request.url);
-    if (url.protocol === "http:" && url.hostname !== "localhost" && url.hostname !== "127.0.0.1") {
+    const local = url.hostname === "localhost" || url.hostname === "127.0.0.1";
+    const www = url.hostname.startsWith("www.");
+    if (!local && (url.protocol === "http:" || www)) {
       url.protocol = "https:";
+      if (www) url.hostname = url.hostname.slice(4);
       return withHeaders(Response.redirect(url.toString(), 301));
     }
     return withHeaders(await route(request, env));
