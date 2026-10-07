@@ -92,6 +92,9 @@
   function invalid(el, msg) {
     setStatus(msg, 'error');
     el.setAttribute('aria-invalid', 'true');
+    // Tie the message to the field so screen readers announce the reason on return.
+    const ids = (el.getAttribute('aria-describedby') || '').split(' ').filter(Boolean);
+    if (ids.indexOf('cf-status') < 0) el.setAttribute('aria-describedby', ids.concat('cf-status').join(' '));
     el.focus();
     return false;
   }
@@ -105,7 +108,11 @@
 
   if (form) {
     form.addEventListener('input', function (e) {
-      e.target.removeAttribute('aria-invalid');
+      const el = e.target;
+      el.removeAttribute('aria-invalid');
+      const rest = (el.getAttribute('aria-describedby') || '').split(' ').filter(function (id) { return id && id !== 'cf-status'; });
+      if (rest.length) el.setAttribute('aria-describedby', rest.join(' '));
+      else el.removeAttribute('aria-describedby');
     });
 
     form.addEventListener('submit', async function (e) {
@@ -133,7 +140,7 @@
         const data = await res.json().catch(function () { return {}; });
 
         if (res.ok) {
-          setStatus("Message sent. We'll be in touch within 24 hours.", 'success');
+          setStatus('Message sent. We\u2019ll be in touch within 24 hours.', 'success');
           form.reset();
         } else if (res.status === 400 || res.status === 422) {
           // The server rejected the input: show its reason so it can be fixed.

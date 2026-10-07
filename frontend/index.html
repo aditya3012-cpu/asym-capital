@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://asymcapital.uk/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="ASYM Capital">
+<meta property="og:image:alt" content="ASYM Capital. Fig. 1: illustrative distribution, not performance data.">
 <meta name="twitter:card" content="summary_large_image">
 
 <script type="application/ld+json">
@@ -228,7 +228,7 @@ h1 {
 .body p + p { margin-top: 1em; }
 .nb { white-space: nowrap; }
 .cap { font-size: 12px; line-height: 1.4; font-weight: 400; font-stretch: 112%; color: var(--muted); }
-.cap b { font-weight: 500; font-stretch: 125%; letter-spacing: 0.12em; text-transform: uppercase; margin-right: 10px; }
+.cap b { font-weight: 500; font-stretch: 125%; letter-spacing: 0.12em; text-transform: uppercase; margin-right: 7px; }
 @media (min-width: 1200px) { body { font-size: 17px; } }
 
 /* ───────────────────────── Buttons ───────────────────────── */
@@ -272,7 +272,7 @@ h1 {
   background: var(--signal); opacity: 0; transition: opacity .15s ease;
 }
 .nav a:hover::after, .nav a:focus-visible::after { opacity: 1; }
-.nav a:focus-visible { outline-offset: -2px; }
+.nav a:focus-visible, .brand:focus-visible { outline-offset: -2px; }
 .nav-contact-wrap { grid-column: 12 / 13; display: flex; align-items: center; }
 .nav-contact {
   display: flex; align-items: center; width: 100%; height: 40px; padding-left: calc(var(--inset) - 1px);
@@ -289,7 +289,7 @@ h1 {
 .menu { display: none; }
 .menu summary {
   list-style: none; cursor: pointer;
-  display: flex; align-items: center; height: 44px; padding-left: calc(var(--inset) - 1px);
+  display: flex; align-items: center; height: 44px; justify-content: center; padding: 0;
   border: 1px solid var(--ink); font-size: 14px; font-weight: 500; font-stretch: 112%;
 }
 .menu summary::-webkit-details-marker { display: none; }
@@ -302,7 +302,7 @@ h1 {
 }
 .menu-panel .wrap { min-height: 100%; }
 .menu-list { position: relative; border-bottom: 1px solid var(--rule); }
-.menu-list a {
+.menu-list > a {
   display: flex; justify-content: space-between; align-items: center;
   margin-left: calc(-1 * var(--inset)); margin-right: calc(-1 * var(--inset) - 1px);
   padding: 18px var(--inset); border-bottom: 1px solid var(--rule);
@@ -330,6 +330,7 @@ main { position: relative; z-index: 1; }
 .bars { fill: none; stroke-width: 1; shape-rendering: crispEdges; }
 .bars--ink { stroke: var(--ink); }
 .bars--tail { stroke: var(--signal); }
+.ticks--4 { display: none; }
 .axis { stroke: var(--ink); stroke-width: 1; fill: none; shape-rendering: crispEdges; }
 .bracket { stroke: var(--signal); stroke-width: 1; fill: none; shape-rendering: crispEdges; }
 .flag {
@@ -341,7 +342,7 @@ main { position: relative; z-index: 1; }
 .hero-fig figcaption {
   background: var(--bg); background-clip: padding-box;
   border-left: 1px solid transparent; border-right: 1px solid transparent;
-  padding: 18px var(--inset) 0; height: 50px;
+  padding: 18px var(--inset) 14px; min-height: 50px;
 }
 
 /* ───────────────────────── Key figures ───────────────────────── */
@@ -385,12 +386,8 @@ main { position: relative; z-index: 1; }
 .summary { font-size: 15px; line-height: 20px; color: var(--muted); max-width: 40ch; margin-top: -2px; }
 
 /* About */
-.mx.lines { border-bottom: 0; }
 .lines .cell { padding-top: 32px; padding-bottom: 40px; }
 .lines .h3--lg { margin-bottom: 16px; }
-.pillars .cell { padding-top: 28px; padding-bottom: 36px; }
-.pillars .h3 { margin-bottom: 10px; }
-.pillars p { font-size: 15px; line-height: 1.6; color: var(--muted); }
 
 /* Services */
 .svc { display: flex; flex-direction: column; min-height: 300px; padding-top: 28px; padding-bottom: 30px; transition: background-color .15s ease; }
@@ -435,7 +432,7 @@ main { position: relative; z-index: 1; }
 .flow { grid-template-rows: auto auto repeat(6, auto); }
 .stage { grid-row: span 8; display: grid; grid-template-rows: subgrid; padding-top: 28px; }
 .stage__head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.stage__head .h3 { white-space: nowrap; }
+.flow .stage__head .h3 { white-space: nowrap; }
 .node { flex: none; width: 8px; height: 8px; background: var(--ink); }
 .node--live { background: var(--signal); }
 .wire { position: relative; flex: 1; height: 1px; background: var(--ink); margin-right: calc(-1 * var(--inset) - 1px); }
@@ -487,7 +484,7 @@ main { position: relative; z-index: 1; }
 .details a:hover { background-image: linear-gradient(var(--ink), var(--ink)); }
 .details address { font-style: normal; }
 
-.form-cell { padding-top: 32px; padding-bottom: 44px; }
+.form-cell { padding-top: 22px; padding-bottom: 44px; }
 .form { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); column-gap: calc(2 * var(--inset)); row-gap: 22px; }
 /* The form submits with main.js; without JS, the email and phone above are the way in. */
 html:not(.js) #contact-form { display: none; }
@@ -515,6 +512,7 @@ html:not(.js) #contact-form { display: none; }
 .status.success { color: var(--ink); }
 .status.error { color: var(--signal-text); }
 .status a { color: var(--ink); text-underline-offset: 3px; white-space: nowrap; }
+.js .noscript-note { display: none; }
 .noscript-note { font-size: 15px; color: var(--muted); max-width: 40ch; }
 .noscript-note a { color: var(--ink); }
 
@@ -548,14 +546,15 @@ html:not(.js) #contact-form { display: none; }
 .ft-legal-links a:hover { color: var(--inv-text); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ───────────────────────── Responsive ───────────────────────── */
-@media (min-width: 1200px) and (max-width: 1279px) {
-  .nav a { font-size: 13px; font-stretch: 100%; }
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .nav a { font-size: 13px; font-stretch: 100%; padding-left: 16px; }
 }
 @media (min-width: 900px) and (max-width: 1279px) {
   /* Four pipeline columns are too narrow here: two rows of two stages. */
   .flow { grid-template-rows: repeat(2, auto auto repeat(6, auto)); }
   .flow .stage { grid-column: span 6; }
   .flow .stage:nth-child(-n+2) .sheet > div:last-child { padding-bottom: 28px; }
+  .flow .stage:nth-child(2) .wire { visibility: hidden; }
 }
 @media (max-width: 1199px) {
   .nav, .nav-contact-wrap { display: none; }
@@ -593,6 +592,8 @@ html:not(.js) #contact-form { display: none; }
   .hero-fig .plot svg { aspect-ratio: auto; height: clamp(220px, 44vw, 340px); }
   .hero-fig figcaption { height: auto; padding-bottom: 20px; }
   .cap b { display: block; margin: 0 0 4px; }
+  .ticks--5 { display: none; }
+  .ticks--4 { display: inline; }
 
   .facts .fact { grid-column: span 2; min-height: 156px; padding-top: 20px; padding-bottom: 22px; }
   .facts .fact .num { padding-top: 24px; }
@@ -608,7 +609,7 @@ html:not(.js) #contact-form { display: none; }
   .head > .side-cell { padding-top: 0; }
 
   .svc { min-height: 0; padding-top: 24px; padding-bottom: 28px; }
-  .payoff { margin-top: 36px; }
+  .payoff { margin-top: 36px; max-width: 400px; }
   .phil-body { margin-top: 28px; }
   .stage { grid-row: auto; display: block; padding-top: 24px; }
   .sheet { display: block; }
@@ -621,7 +622,7 @@ html:not(.js) #contact-form { display: none; }
   .form-cell { border-top: 1px solid var(--rule); padding-top: 28px; }
   .form { grid-template-columns: minmax(0, 1fr); }
   .ft-top .cell { padding-top: 32px; padding-bottom: 0; }
-  .ft-top .cell + .cell { padding-top: 28px; }
+  .ft-band.ft-top .cell + .cell { padding-top: 28px; }
   .ft-top .cell:last-child { padding-bottom: 36px; }
   .ft-band .cell + .cell { padding-top: 12px; }
 }
@@ -637,9 +638,21 @@ html:not(.js) #contact-form { display: none; }
 }
 @media (min-width: 600px) and (max-width: 899px) {
   .svcs .svc { grid-column: span 2; }
-  .pillars .cell { grid-column: span 2; }
-  .flow .stage { grid-column: span 2; }
+  .flow { grid-template-rows: repeat(2, auto auto repeat(6, auto)); }
+  .flow .stage { grid-column: span 2; grid-row: span 8; display: grid; grid-template-rows: subgrid; }
+  .flow .sheet { display: contents; }
+  .flow .stage:nth-child(-n+2) .sheet > div:last-child { padding-bottom: 28px; }
   .risk li { grid-column: span 2; }
+}
+
+.svc p, .stage__desc, .summary, .legal, .cap { text-wrap: pretty; }
+
+@media (forced-colors: active) {
+  .bars--ink, .axis, .payoff svg .zero, .payoff svg .down { stroke: CanvasText; }
+  .node, .wire { forced-color-adjust: none; background: CanvasText; }
+  .wire--arrow::after { border-color: CanvasText; }
+  .node--live { background: Highlight; }
+  .field select { appearance: auto; -webkit-appearance: auto; background-image: none; padding-right: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -695,7 +708,7 @@ html:not(.js) #contact-form { display: none; }
 <main id="main">
 
   <!-- Hero -->
-  <section class="hero" id="top" aria-labelledby="hero-title">
+  <section class="hero" aria-labelledby="hero-title">
     <div class="wrap grid">
       <div class="cell c1-7 hero-copy">
         <p class="eyebrow eyebrow--list"><span>Systematic trading</span><span>London</span><span>Est. 2022</span></p>
@@ -715,11 +728,13 @@ html:not(.js) #contact-form { display: none; }
             <path class="bars bars--ink" vector-effect="non-scaling-stroke" d="M15 418V420M25 418V420M35 418V420M45 418V420M55 418V420M65 418V420M75 418V420M85 418V420M95 418V420M105 413.9V420M115 402.7V420M125 378.4V420M135 334.9V420M145 270.8V420M155 193.2V420M165 116.5V420M175 56.2V420M185 20.8V420M195 10V420M205 17.6V420M215 36.7V420M225 61.9V420M235 90.2V420M245 120V420M255 150.3V420M265 180.2V420M275 209.3V420"/>
             <path class="bars bars--tail" vector-effect="non-scaling-stroke" d="M285 236.9V420M295 262.6V420M305 286.3V420M315 307.7V420M325 326.7V420M335 343.4V420M345 357.8V420M355 370V420M365 380.3V420M375 388.9V420M385 395.8V420M395 401.5V420M405 405.9V420M415 409.5V420M425 412.2V420M435 414.3V420M445 415.8V420M455 417V420M465 417.9V420M475 418V420M485 418V420"/>
             <path class="bracket" vector-effect="non-scaling-stroke" d="M281 216V210H489V216"/>
-            <path class="axis" vector-effect="non-scaling-stroke" d="M0 420H500M0 420V425M100 420V425M200 420V425M300 420V425M400 420V425M499.5 420V425"/>
+            <path class="axis" vector-effect="non-scaling-stroke" d="M0 420H500M0 420V425M499.5 420V425"/>
+            <path class="axis ticks--5" vector-effect="non-scaling-stroke" d="M100 420V425M200 420V425M300 420V425M400 420V425"/>
+            <path class="axis ticks--4" vector-effect="non-scaling-stroke" d="M125 420V425M250 420V425M375 420V425"/>
           </svg>
           <span class="flag" aria-hidden="true">Upside tail</span>
         </div>
-        <figcaption id="fig1-cap" class="cap"><b>Fig. 1</b>Illustrative distribution. Not performance data.</figcaption>
+        <figcaption id="fig1-cap" class="cap"><b>Fig. 1</b> Illustrative distribution. Not performance data.</figcaption>
       </figure>
     </div>
   </section>
@@ -761,11 +776,11 @@ html:not(.js) #contact-form { display: none; }
       <div class="grid head">
         <div class="cell c1-7">
           <p class="eyebrow">About</p>
-          <h2 class="h2" id="about-title">Founded in 2022 on a single thesis: the <span class="nb">highest-quality</span> opportunities in any market are asymmetric.</h2>
+          <h2 class="h2" id="about-title">We look for positions where the potential upside is materially larger than the downside.</h2>
         </div>
         <div class="cell c9-12 side-cell">
           <div class="body side">
-            <p>They are positions where the potential upside materially outweighs the downside, where the distribution of outcomes is skewed in your favour, and where disciplined modelling and execution turn that skew into a repeatable edge.</p>
+            <p>Our research measures that asymmetry, and our execution systems are built to keep it after trading costs.</p>
             <p>ASYM Capital is registered under <span class="nb">DERIVQ LIMITED</span> <span class="nb">(CRN 09852527)</span>.</p>
           </div>
         </div>
@@ -781,29 +796,11 @@ html:not(.js) #contact-form { display: none; }
         <article class="cell c7-12">
           <h3 class="h3--lg">Quantitative-as-a-Service</h3>
           <div class="body">
-            <p>The systems that trade our own book are the ones we deploy for clients, at any portfolio size. We work with a select group of institutions, family offices, funds and <span class="nb">high-net-worth</span> investors, and bring the same rigour to each engagement that we apply to our own capital.</p>
+            <p>The systems that trade our own book are the ones we deploy for clients, at any portfolio size. QaaS is available to institutions, family offices, funds and <span class="nb">high-net-worth</span> investors.</p>
           </div>
         </article>
       </div>
 
-      <div class="grid mx pillars">
-        <div class="cell span3">
-          <h3 class="h3">Systematic research</h3>
-          <p>Multi-factor signal generation, regime detection with hidden Markov models, and rigorous statistical validation before any strategy touches capital.</p>
-        </div>
-        <div class="cell span3">
-          <h3 class="h3">Low-latency execution</h3>
-          <p>TWAP, VWAP and adaptive execution algorithms integrated with broker APIs. Sub-millisecond order routing with realistic market-impact modelling.</p>
-        </div>
-        <div class="cell span3">
-          <h3 class="h3">Bespoke analytics</h3>
-          <p>Custom alpha signals, factor exposure reports and portfolio analytics for external clients, at any portfolio size.</p>
-        </div>
-        <div class="cell span3">
-          <h3 class="h3">Risk infrastructure</h3>
-          <p>Real-time exposure monitoring, portfolio Greeks, stress testing and systematic hedging, built into every system from the start.</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -813,45 +810,39 @@ html:not(.js) #contact-form { display: none; }
       <div class="grid head">
         <div class="cell c1-7">
           <p class="eyebrow">Services</p>
-          <h2 class="h2" id="services-title">What we do</h2>
-        </div>
-        <div class="cell c9-12 side-cell">
-          <p class="summary">Six services, built on the systems we run on our own capital.</p>
-          <div class="body side">
-            <p>We work closely with a select number of clients.</p>
-          </div>
+          <h2 class="h2" id="services-title">Six services, built on the systems we run on our own capital.</h2>
         </div>
       </div>
 
       <div class="grid mx svcs">
         <article class="cell span4 svc">
           <h3 class="h3">Systematic trading strategies</h3>
-          <p>End-to-end algorithmic trading systems covering signal generation, portfolio construction, risk management and live order execution across equity, derivatives and fixed income.</p>
+          <p>Algorithmic trading systems across equity, derivatives and fixed income, covering signal generation, portfolio construction, risk management and live order execution.</p>
           <a class="svc__link" href="#contact" data-enquiry="systematic_trading">Enquire <span class="visually-hidden">about systematic trading strategies</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
         </article>
         <article class="cell span4 svc">
           <h3 class="h3">Algorithmic execution</h3>
-          <p>Low-latency TWAP, VWAP and adaptive execution algorithms integrated directly with broker APIs for optimal order routing, minimal market impact and realistic transaction-cost modelling.</p>
+          <p>Low-latency TWAP, VWAP and adaptive execution algorithms connected directly to broker APIs, with market-impact and transaction-cost modelling.</p>
           <a class="svc__link" href="#contact" data-enquiry="algorithmic_execution">Enquire <span class="visually-hidden">about algorithmic execution</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
         </article>
         <article class="cell span4 svc">
           <h3 class="h3">Quantitative analytics (QaaS)</h3>
-          <p>Bespoke quantitative models, alpha signals and factor exposure reports for external clients, for portfolios of any size.</p>
+          <p>Bespoke quantitative models, alpha signals and factor exposure reports, for portfolios of any size.</p>
           <a class="svc__link" href="#contact" data-enquiry="quantitative_analytics">Enquire <span class="visually-hidden">about quantitative analytics</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
         </article>
         <article class="cell span4 svc">
           <h3 class="h3">Backtesting infrastructure</h3>
-          <p>High-fidelity, event-driven backtesting over multi-year tick-level data, with a full performance analytics suite (Sharpe, Sortino, Calmar, maximum drawdown) and realistic slippage and commission modelling.</p>
+          <p>Event-driven backtesting on multi-year tick-level data, with slippage and commission modelling and the standard measures: Sharpe, Sortino, Calmar and maximum drawdown.</p>
           <a class="svc__link" href="#contact" data-enquiry="backtesting">Enquire <span class="visually-hidden">about backtesting infrastructure</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
         </article>
         <article class="cell span4 svc">
           <h3 class="h3">Market signal intelligence</h3>
-          <p>Machine-learning regime detection using hidden Markov models, momentum and mean-reversion signals, and cross-sectional volatility analytics across 60+ equities for systematic pre-market intelligence.</p>
+          <p>Regime detection with hidden Markov models, momentum and mean-reversion signals, and cross-sectional volatility analytics across 60+ equities, delivered before the market opens.</p>
           <a class="svc__link" href="#contact" data-enquiry="market_signals">Enquire <span class="visually-hidden">about market signal intelligence</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
         </article>
         <article class="cell span4 svc">
           <h3 class="h3">Portfolio risk management</h3>
-          <p>Real-time portfolio risk monitoring, Greeks exposure management and systematic hedging. Multi-factor risk decomposition with live stress testing and scenario analysis across positions.</p>
+          <p>Real-time risk monitoring, Greeks exposure management and systematic hedging, with multi-factor risk decomposition, live stress testing and scenario analysis across positions.</p>
           <a class="svc__link" href="#contact" data-enquiry="risk_management">Enquire <span class="visually-hidden">about portfolio risk management</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
         </article>
       </div>
@@ -865,10 +856,9 @@ html:not(.js) #contact-form { display: none; }
         <div class="cell c1-7">
           <p class="eyebrow">Philosophy</p>
           <div>
-            <h2 class="statement" id="philosophy-title">In markets, symmetry is overrated. The best opportunities are not balanced; they are skewed.</h2>
+            <h2 class="statement" id="philosophy-title">The first question we ask of any model or position is whether the distribution of outcomes is skewed in our favour.</h2>
             <div class="body phil-body">
-              <p>We find those opportunities, measure them and execute against them systematically. Every model we build and every position we take starts from the same question: is the distribution of outcomes skewed in our favour?</p>
-              <p>In practice, that means rejecting “balanced” portfolio construction when the data shows directional skew, stress-testing the tail rather than just the mean, and building execution algorithms that preserve edge rather than erode it. Clients get the same discipline.</p>
+              <p>When the data shows directional skew, we do not force the portfolio back into balance. We stress-test the tails as well as the mean, and we model transaction costs so that execution does not give back what the signal found.</p>
             </div>
           </div>
         </div>
@@ -887,7 +877,7 @@ html:not(.js) #contact-form { display: none; }
               <span class="lbl lbl--up" aria-hidden="true">Upside</span>
               <span class="lbl lbl--sym" aria-hidden="true">Symmetric</span>
             </div>
-            <figcaption id="fig2-cap" class="cap"><b>Fig. 2</b>Conceptual payoff. Not performance data.</figcaption>
+            <figcaption id="fig2-cap" class="cap"><b>Fig. 2</b> Conceptual payoff. Not performance data.</figcaption>
           </figure>
         </div>
       </div>
@@ -903,9 +893,8 @@ html:not(.js) #contact-form { display: none; }
           <h2 class="h2" id="technology-title">From market data to live execution</h2>
         </div>
         <div class="cell c9-12 side-cell">
-          <p class="summary">Infrastructure and research stack</p>
           <div class="body side">
-            <p>Every strategy moves through the same four stages, with risk controls built into each one. The infrastructure that trades our own capital is the infrastructure we deploy for clients.</p>
+            <p>Every strategy moves through the same four stages, with risk controls built into each one.</p>
           </div>
         </div>
       </div>
@@ -936,7 +925,7 @@ html:not(.js) #contact-form { display: none; }
           </dl>
         </li>
         <li class="cell span3 stage">
-          <div class="stage__head"><span class="node" aria-hidden="true"></span><h3 class="h3">Backtesting and validation</h3><span class="wire wire--arrow" aria-hidden="true"></span></div>
+          <div class="stage__head"><span class="node" aria-hidden="true"></span><h3 class="h3">Backtesting</h3><span class="wire wire--arrow" aria-hidden="true"></span></div>
           <p class="stage__desc">Event-driven simulation on tick data with realistic costs. No strategy reaches capital before it passes statistical validation.</p>
           <dl class="sheet">
             <div class="lead"><dt>Engine</dt><dd>Event-driven</dd></div>
@@ -984,10 +973,7 @@ html:not(.js) #contact-form { display: none; }
       <div class="grid head">
         <div class="cell c1-7">
           <p class="eyebrow">Contact</p>
-          <h2 class="h2" id="contact-title">Get in touch</h2>
-        </div>
-        <div class="cell c9-12 side-cell">
-          <p class="summary">For institutions, family offices, funds and <span class="nb">high-net-worth</span> investors.</p>
+          <h2 class="h2" id="contact-title">Enquiries from institutions, family offices, funds and <span class="nb">high-net-worth</span> investors.</h2>
         </div>
       </div>
 
@@ -1004,7 +990,7 @@ html:not(.js) #contact-form { display: none; }
         </div>
         <div class="gap-col" aria-hidden="true"></div>
         <div class="cell c7-12 form-cell">
-          <noscript><p class="noscript-note">To get in touch, email <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a> or call <a href="tel:+447743262560">+44 7743 262560</a>.</p></noscript>
+          <p class="noscript-note">To get in touch, email <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a> or call <a href="tel:+447743262560">+44 7743 262560</a>.</p>
           <form class="form" id="contact-form" data-mailto="contact@asymcapital.uk" novalidate>
             <div class="field">
               <label for="cf-name">Name</label>

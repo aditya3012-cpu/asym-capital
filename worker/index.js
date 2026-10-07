@@ -80,8 +80,8 @@ const WORDMARK = `<span style="font-family:${FONT};font-size:16px;font-weight:bo
 function emailShell(title, inner, footer) {
   return `<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${title}</title></head>
 <body style="margin:0;padding:0;background:#F1F2F2;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F1F2F2;padding:32px 0;"><tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#FFFFFF;border:1px solid #C9CDD2;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F1F2F2;padding:32px 0;"><tr><td align="center">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#FFFFFF;border:1px solid #C9CDD2;">
 <tr><td style="padding:22px 32px;border-bottom:1px solid #0B0D10;">${WORDMARK}</td></tr>
 ${inner}
 <tr><td style="padding:20px 32px;border-top:1px solid #C9CDD2;font-family:${FONT};font-size:11px;line-height:1.6;color:#555B65;">${footer}</td></tr>
@@ -107,10 +107,9 @@ ${row("Enquiry type", label)}
   return emailShell("New enquiry: ASYM Capital", inner, "Sent from the contact form on asymcapital.uk. Reply to this email to answer the enquirer directly.");
 }
 
-function autoreplyHtml(name) {
+function autoreplyHtml() {
   const p = (text) => `<p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#0B0D10;">${text}</p>`;
   const inner = `<tr><td style="padding:28px 32px 12px;font-family:${FONT};">
-${p(`Dear ${esc(name)},`)}
 ${p("Thank you for contacting ASYM Capital. We have received your enquiry and a member of our team will be in touch within 24 hours.")}
 ${p("If your requirements are time-sensitive, please reply to this email and we will prioritise your enquiry.")}
 ${p("Kind regards,<br>ASYM Capital")}
@@ -161,8 +160,9 @@ async function handleContact(request, env) {
       to: f.email,
       from,
       subject: "Thank you for contacting ASYM Capital",
-      html: autoreplyHtml(f.name),
-      text: `Dear ${f.name},\n\nThank you for contacting ASYM Capital. Your enquiry has been received and we will be in touch within 24 hours.\n\nASYM Capital\n\n--\n${LEGAL_LINE}\nTrading involves substantial risk. Past performance is not indicative of future results.`,
+      html: autoreplyHtml(),
+      // Plain-text twin of autoreplyHtml(); like it, it repeats nothing the sender typed.
+      text: `Thank you for contacting ASYM Capital. We have received your enquiry and a member of our team will be in touch within 24 hours.\n\nIf your requirements are time-sensitive, please reply to this email and we will prioritise your enquiry.\n\nKind regards,\nASYM Capital\n\n--\ncontact@asymcapital.uk · +44 7743 262560 · asymcapital.uk\n${LEGAL_LINE}\nTrading involves substantial risk. Past performance is not indicative of future results.`,
     });
   } catch (err) {
     console.error("Auto-reply failed", err && err.code, err && err.message);
