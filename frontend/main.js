@@ -1,6 +1,7 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    ASYM Capital — main.js
-   Mobile menu, "Enquire" links, footer year and the contact form.
+   Mobile menu, "Enquire" links, footer year and the contact form
+   (sent by the Worker, or as a pre-filled email if the Worker can't send).
    The page is complete without JS; only the contact form depends on it.
 ───────────────────────────────────────────────────────────────────────────── */
 
@@ -64,6 +65,30 @@
     status.className   = 'status' + (type ? ' ' + type : '');
   }
 
+  // If the server can't send email (not configured, down, offline), the
+  // enquiry still reaches us: open a pre-filled draft in the visitor's own
+  // email app, addressed to the form's data-mailto address.
+  function mailDraftHref(p) {
+    const type = enquiry.options[enquiry.selectedIndex].text;
+    const lines = ['Name: ' + p.name, 'Email: ' + p.email];
+    if (p.company) lines.push('Company: ' + p.company);
+    lines.push('Enquiry type: ' + type, '', p.message);
+    return 'mailto:' + form.dataset.mailto +
+      '?subject=' + encodeURIComponent('Website enquiry: ' + type) +
+      '&body=' + encodeURIComponent(lines.join('\r\n'));
+  }
+
+  function sendByEmailApp(p) {
+    const href = mailDraftHref(p);
+    setStatus('Your email app should open with your message ready to send to ' + form.dataset.mailto + '. If it doesn\u2019t, ', '');
+    const link = document.createElement('a');
+    link.href = href;
+    link.textContent = 'open the email here';
+    status.appendChild(link);
+    status.appendChild(document.createTextNode('.'));
+    window.location.href = href;
+  }
+
   function invalid(el, msg) {
     setStatus(msg, 'error');
     el.setAttribute('aria-invalid', 'true');
@@ -110,12 +135,15 @@
         if (res.ok) {
           setStatus("Message sent. We'll be in touch within 24 hours.", 'success');
           form.reset();
+        } else if (res.status === 400 || res.status === 422) {
+          // The server rejected the input: show its reason so it can be fixed.
+          const msg = data && data.detail;
+          setStatus(typeof msg === 'string' ? msg : 'Please check the form and try again.', 'error');
         } else {
-          const msg = (data && (data.detail || data.message)) || 'Something went wrong. Please try again.';
-          setStatus(typeof msg === 'string' ? msg : 'Something went wrong. Please try again.', 'error');
+          sendByEmailApp(payload);
         }
       } catch (err) {
-        setStatus('Network error. Please check your connection and try again.', 'error');
+        sendByEmailApp(payload);
       } finally {
         submit.disabled   = false;
         label.textContent = 'Send message';

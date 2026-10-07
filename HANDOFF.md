@@ -117,7 +117,7 @@ The owner asked for the site to be taken offline while it's redone.
    - Switch the Worker to a third-party API (Resend, Brevo, Postmark, …) using `fetch` + an API key stored as a Worker **secret** (`wrangler secret put`), with that provider's DNS records on asymcapital.uk.
    - Send through the owner's Fastmail account via Fastmail's JMAP API, with an API token stored as a Worker secret (no extra DNS needed, since Fastmail already sends for the domain).
    - Replace the form with a `mailto:` link.
-   Until resolved, a submission returns 500 with "Failed to send message. Please try emailing us directly at contact@asymcapital.uk."
+   Until resolved, the Worker returns 500, and the frontend falls back: it opens a pre-filled email to contact@asymcapital.uk (the form's `data-mailto`) in the visitor's own mail app and shows a backup link. The same fallback covers 429, other 5xx responses and network errors; 400/422 show the server's validation message. The owner confirmed enquiries go to contact@asymcapital.uk only (not asymcapital.com, a domain whose ownership is unconfirmed).
 2. ~~Branding/copy still references asymcapital.in.~~ Resolved: the site and `CONTACT_TO_EMAIL` now use contact@asymcapital.uk (see §8 for the confirmed company details).
 3. **Rate limiting** is per-isolate only; add a Cloudflare rate-limiting rule for `POST /api/contact` (Security → WAF → Rate limiting rules).
 4. **Spam protection:** none yet. Consider Cloudflare Turnstile on the form (verify the token in the Worker).

@@ -499,6 +499,7 @@ html:not(.js) #contact-form { display: none; }
 .status { font-size: 14px; line-height: 1.45; color: var(--muted); }
 .status.success { color: var(--ink); }
 .status.error { color: var(--signal-text); }
+.status a { color: var(--ink); text-underline-offset: 3px; white-space: nowrap; }
 .noscript-note { font-size: 15px; color: var(--muted); max-width: 40ch; }
 
 /* ───────────────────────── Footer ───────────────────────── */
@@ -1002,7 +1003,7 @@ html:not(.js) #contact-form { display: none; }
         <div class="gap-col" aria-hidden="true"></div>
         <div class="cell c7-12 form-cell">
           <noscript><p class="noscript-note">To get in touch, email contact@asymcapital.uk or call +44 7743 262560.</p></noscript>
-          <form class="form" id="contact-form" novalidate>
+          <form class="form" id="contact-form" data-mailto="contact@asymcapital.uk" novalidate>
             <div class="field">
               <label for="cf-name">Name</label>
               <input type="text" id="cf-name" name="name" autocomplete="name" maxlength="200" required>
