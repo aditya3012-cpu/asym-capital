@@ -73,6 +73,7 @@ If you add a build step (e.g. a framework or bundler), set the **Build command**
 
 ### `worker/index.js`: what the Worker does
 
+0. Plain-HTTP requests get a 301 to HTTPS (localhost exempt for `wrangler dev`). Every response carries security headers: HSTS (1 year), nosniff, Referrer-Policy, X-Frame-Options DENY, Permissions-Policy and a same-origin Content-Security-Policy (inline style/script allowed). `/fonts/*` is cached for 30 days.
 1. If `env.MAINTENANCE === "true"`, return a 503 maintenance page for every request (JSON 503 for `/api/*`), with `Retry-After: 3600` and `noindex`.
 2. `GET /api/health` returns `{status:"ok", timestamp}`.
 3. `POST /api/contact`: the contact form backend:
@@ -119,6 +120,8 @@ The owner asked for the site to be taken offline while it's redone.
    - Replace the form with a `mailto:` link.
    Until resolved, the Worker returns 500, and the frontend falls back: it opens a pre-filled email to contact@asymcapital.uk (the form's `data-mailto`) in the visitor's own mail app and shows a backup link. The same fallback covers 429, other 5xx responses and network errors; 400/422 show the server's validation message. The owner confirmed enquiries go to contact@asymcapital.uk only (not asymcapital.com, a domain whose ownership is unconfirmed).
 2. ~~Branding/copy still references asymcapital.in.~~ Resolved: the site and `CONTACT_TO_EMAIL` now use contact@asymcapital.uk (see §8 for the confirmed company details).
+2a. **Analytics: none installed.** Recommended: Cloudflare Web Analytics (free, cookieless, so no cookie banner needed). Dashboard → Analytics & Logs → Web Analytics → Add a site → asymcapital.uk; with the zone proxied, choose automatic setup, or paste the provided `<script>` tag into the pages and add `https://static.cloudflareinsights.com` to `script-src` and `https://cloudflareinsights.com` to `connect-src` in the Worker's CSP. Then update the privacy policy's cookies/analytics section.
+2b. **Performance (7 Oct 2026, Lighthouse via `wrangler dev`):** 100 performance / 100 accessibility / 100 best practices / 100 SEO on both mobile and desktop presets; 107 KB total page weight; no cookies set.
 3. **Rate limiting** is per-isolate only; add a Cloudflare rate-limiting rule for `POST /api/contact` (Security → WAF → Rate limiting rules).
 4. **Spam protection:** none yet. Consider Cloudflare Turnstile on the form (verify the token in the Worker).
 5. **`www` subdomain** returns error 522 (see §4). Fix before launch.
@@ -131,7 +134,9 @@ The owner asked for the site to be taken offline while it's redone.
 frontend/index.html     # whole site: one HTML file with inline CSS (see §8 design system)
 frontend/main.js        # mobile menu, Enquire preselect, footer year, contact form (posts to /api/contact)
 frontend/404.html       # "Page not found" page (served with a 404 status for any unknown path)
-frontend/favicon.svg, og.png (1200x630 link preview), robots.txt, sitemap.xml
+frontend/privacy.html, terms.html   # Privacy policy and terms of use, served at /privacy and /terms
+frontend/fonts/         # Archivo, self-hosted Latin subset (woff2) + OFL licence; no Google Fonts requests
+frontend/favicon.svg, favicon.ico, apple-touch-icon.png, og.png (1200x630 link preview), robots.txt, sitemap.xml
 worker/index.js         # Cloudflare Worker (maintenance, health, contact API, assets)
 wrangler.jsonc          # Worker config (see §3)
 asymcapital-website-v3.html  # older standalone copy of the site; not deployed

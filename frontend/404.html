@@ -7,13 +7,23 @@
 <meta name="description" content="The page you were looking for could not be found. Return to the ASYM Capital homepage or contact us.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#FCFCFB">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..600&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* A standalone page: the same tokens and grid as the homepage, nothing else.
    Every link is absolute because this page is served for any unknown path. */
+/* Archivo (SIL Open Font License, see /fonts/OFL.txt), self-hosted: Latin subset,
+   width 100-125%, weight 300-600, which covers every character the site uses. */
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-latin.woff2") format("woff2");
+  font-weight: 300 600;
+  font-stretch: 100% 125%;
+  font-style: normal;
+  font-display: swap;
+}
 :root {
   --bg: #FCFCFB; --surface: #F1F2F2; --ink: #0B0D10; --muted: #555B65;
   --grid: #E6E8EB; --rule: #C9CDD2; --signal: #E8521A;
@@ -80,6 +90,9 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
 .site-footer .wrap { padding: 28px var(--inset) 32px; font-size: 13px; line-height: 1.6; }
 .site-footer p + p { margin-top: 6px; }
 .site-footer .entity { color: var(--inv-text); }
+.site-footer .links { display: flex; flex-wrap: wrap; gap: 0 28px; margin-top: 14px; }
+.site-footer .links a { display: inline-block; padding: 2px 0; text-decoration: none; }
+.site-footer .links a:hover { color: var(--inv-text); text-decoration: underline; text-underline-offset: 3px; }
 
 @media (max-width: 899px) {
   :root { --cols: 4; --margin: 16px; --inset: 16px; --header-h: 60px; }
@@ -121,6 +134,7 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
   <div class="wrap">
     <p class="entity">ASYM Capital is a trading name of DERIVQ LIMITED, a company registered in England and Wales (company number 09852527). Registered office: 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
     <p>Trading involves substantial risk. Past performance is not indicative of future results.</p>
+    <p class="links"><a href="/privacy">Privacy policy</a><a href="/terms">Terms of use</a></p>
   </div>
 </footer>
 </body>

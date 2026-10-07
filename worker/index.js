@@ -179,6 +179,26 @@ const MAINTENANCE_HTML = `<!DOCTYPE html><html lang="en-GB"><head><meta charset=
 <p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#555B65;">Please check back shortly. In the meantime you can reach us at <a href="mailto:contact@asymcapital.uk" style="color:#0B0D10;">contact@asymcapital.uk</a> or <a href="tel:+447743262560" style="color:#0B0D10;">+44 7743 262560</a>.</p>
 </div></body></html>`;
 
+// Sent with every response. The CSP allows only same-origin resources; inline
+// <style>/<script> stay allowed because the pages use small inline blocks.
+const SECURITY_HEADERS = {
+  "Strict-Transport-Security": "max-age=31536000",
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "X-Frame-Options": "DENY",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  "Content-Security-Policy":
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
+    "img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; " +
+    "frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
+};
+
+function withHeaders(response, extra = {}) {
+  const headers = new Headers(response.headers);
+  for (const [k, v] of Object.entries({ ...SECURITY_HEADERS, ...extra })) headers.set(k, v);
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
 function maintenance(request) {
   const wantsJson = new URL(request.url).pathname.startsWith("/api/");
   const headers = { "Retry-After": "3600", "Cache-Control": "no-store" };
@@ -194,22 +214,37 @@ function maintenance(request) {
   });
 }
 
+async function route(request, env) {
+  // Set MAINTENANCE to "true" in wrangler.jsonc vars to take the site offline.
+  if (env.MAINTENANCE === "true") return maintenance(request);
+
+  const { pathname } = new URL(request.url);
+
+  if (pathname === "/api/health") {
+    return json({ status: "ok", timestamp: new Date().toISOString() });
+  }
+  if (pathname === "/api/contact") {
+    if (request.method !== "POST") return json({ detail: "Method not allowed." }, 405);
+    return handleContact(request, env);
+  }
+  if (pathname.startsWith("/api/")) return json({ detail: "Not found." }, 404);
+
+  const asset = await env.ASSETS.fetch(request);
+  // The font file rarely changes; let browsers keep it for 30 days.
+  if (pathname.startsWith("/fonts/") && asset.ok) {
+    return withHeaders(asset, { "Cache-Control": "public, max-age=2592000" });
+  }
+  return asset;
+}
+
 export default {
   async fetch(request, env) {
-    // Set MAINTENANCE to "true" in wrangler.jsonc vars to take the site offline.
-    if (env.MAINTENANCE === "true") return maintenance(request);
-
-    const { pathname } = new URL(request.url);
-
-    if (pathname === "/api/health") {
-      return json({ status: "ok", timestamp: new Date().toISOString() });
+    // Force HTTPS (localhost is exempt so `wrangler dev` keeps working).
+    const url = new URL(request.url);
+    if (url.protocol === "http:" && url.hostname !== "localhost" && url.hostname !== "127.0.0.1") {
+      url.protocol = "https:";
+      return withHeaders(Response.redirect(url.toString(), 301));
     }
-    if (pathname === "/api/contact") {
-      if (request.method !== "POST") return json({ detail: "Method not allowed." }, 405);
-      return handleContact(request, env);
-    }
-    if (pathname.startsWith("/api/")) return json({ detail: "Not found." }, 404);
-
-    return env.ASSETS.fetch(request);
+    return withHeaders(await route(request, env));
   },
 };
