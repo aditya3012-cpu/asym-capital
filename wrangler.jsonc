@@ -1,0 +1,33 @@
+{
+  // Separate Cloudflare deployment for asymcapital.uk.
+  // Lives on the `cloudflare-uk` branch only; it does not affect the existing
+  // `asym-capital` Worker (asymcapital.in) or the Railway backend.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "asym-capital-uk",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-03",
+
+  // Serve the static site from /frontend. Every request runs the Worker first so
+  // maintenance mode can cover the whole site; the Worker hands non-API paths to ASSETS.
+  "assets": {
+    "directory": "./frontend",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    // Unknown paths get frontend/404.html with a 404 status (also via env.ASSETS.fetch).
+    "not_found_handling": "404-page"
+  },
+
+  // Cloudflare Email Service binding (requires asymcapital.uk onboarded to Email Service).
+  "send_email": [{ "name": "EMAIL" }],
+
+  "vars": {
+    // "true" = show the maintenance page; "false" = site live.
+    "MAINTENANCE": "false",
+    // Sender must be an address on a domain verified in Email Service.
+    "CONTACT_FROM_EMAIL": "contact@asymcapital.uk",
+    // Where enquiries are delivered (Fastmail mailbox; also shown to visitors if sending fails).
+    "CONTACT_TO_EMAIL": "contact@asymcapital.uk"
+  },
+
+  "observability": { "enabled": true }
+}
