@@ -7,7 +7,8 @@
   "main": "worker/index.js",
   "compatibility_date": "2026-10-03",
 
-  // Serve the static site from /frontend; only /api/* runs the Worker first.
+  // Serve the static site from /frontend. Every request runs the Worker first so
+  // maintenance mode can cover the whole site; the Worker hands non-API paths to ASSETS.
   "assets": {
     "directory": "./frontend",
     "binding": "ASSETS",
@@ -22,8 +23,8 @@
     "MAINTENANCE": "true",
     // Sender must be an address on a domain verified in Email Service.
     "CONTACT_FROM_EMAIL": "contact@asymcapital.uk",
-    // Where enquiries are delivered.
-    "CONTACT_TO_EMAIL": "contact@asymcapital.in"
+    // Where enquiries are delivered (Fastmail mailbox; also shown to visitors if sending fails).
+    "CONTACT_TO_EMAIL": "contact@asymcapital.uk"
   },
 
   "observability": { "enabled": true }

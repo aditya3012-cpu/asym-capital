@@ -1,6 +1,7 @@
 // ASYM Capital (asymcapital.uk) — Cloudflare Worker.
-// Static site is served from /frontend via the ASSETS binding.
-// This Worker only handles /api/* (contact form + health check).
+// Every request runs here first (assets.run_worker_first): maintenance mode,
+// then /api/* (contact form + health check), then the static site in /frontend
+// via the ASSETS binding.
 
 const ENQUIRY_LABELS = {
   systematic_trading: "Systematic Trading Strategies",
@@ -13,6 +14,12 @@ const ENQUIRY_LABELS = {
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Company details for outgoing client emails (matches the site footer).
+const LEGAL_LINE =
+  "ASYM Capital is a trading name of DERIVQ LIMITED, a company registered in England and Wales " +
+  "(company number 09852527). Registered office: 53 Kilby Court, Southern Way, North Greenwich, " +
+  "London SE10 0PR, United Kingdom.";
 
 // Best-effort per-isolate rate limit (3 submissions / hour / IP).
 // For hard limits, add a Cloudflare WAF rate-limiting rule on POST /api/contact.
@@ -98,7 +105,7 @@ function autoreplyHtml(name) {
 <p style="margin:0 0 20px;color:#B5AFA3;font-size:14px;line-height:1.8;">Thank you for reaching out to <strong style="color:#F5F0E8;">ASYM Capital</strong>. Your enquiry has been received and a member of our team will be in touch within <strong style="color:#E8521A;">24 hours</strong>.</p>
 <p style="margin:0 0 20px;color:#B5AFA3;font-size:14px;line-height:1.8;">We work with a select number of clients and take great care in every engagement. If your requirements are time-sensitive, please reply to this email directly and we will prioritise your enquiry.</p>
 <p style="margin:0;color:#B5AFA3;font-size:14px;line-height:1.8;">Regards,<br><strong style="color:#F5F0E8;">ASYM Capital</strong></p></td></tr>
-<tr><td style="background:#141416;border:1px solid #2E2E34;border-top:none;padding:16px 32px;"><p style="margin:0;color:#5A5A62;font-size:9px;letter-spacing:0.06em;">Trading involves substantial risk. Past performance is not indicative of future results.</p></td></tr>
+<tr><td style="background:#141416;border:1px solid #2E2E34;border-top:none;padding:16px 32px;"><p style="margin:0 0 8px;color:#8F8A80;font-size:10px;line-height:1.6;letter-spacing:0.04em;">${LEGAL_LINE}</p><p style="margin:0;color:#8F8A80;font-size:10px;line-height:1.6;letter-spacing:0.04em;">Trading involves substantial risk. Past performance is not indicative of future results.</p></td></tr>
 </table></td></tr></table></body></html>`;
 }
 
@@ -145,7 +152,7 @@ async function handleContact(request, env) {
       from,
       subject: "Thank you for contacting ASYM Capital",
       html: autoreplyHtml(f.name),
-      text: `Dear ${f.name},\n\nThank you for contacting ASYM Capital. Your enquiry has been received and we will be in touch within 24 hours.\n\nASYM Capital`,
+      text: `Dear ${f.name},\n\nThank you for contacting ASYM Capital. Your enquiry has been received and we will be in touch within 24 hours.\n\nASYM Capital\n\n--\n${LEGAL_LINE}\nTrading involves substantial risk. Past performance is not indicative of future results.`,
     });
   } catch (err) {
     console.error("Auto-reply failed", err && err.code, err && err.message);

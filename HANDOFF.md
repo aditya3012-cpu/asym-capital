@@ -65,13 +65,11 @@ If you add a build step (e.g. a framework or bundler), set the **Build command**
   "vars": {
     "MAINTENANCE": "true",
     "CONTACT_FROM_EMAIL": "contact@asymcapital.uk",
-    "CONTACT_TO_EMAIL": "contact@asymcapital.in"
+    "CONTACT_TO_EMAIL": "contact@asymcapital.uk"
   },
   "observability": { "enabled": true }
 }
 ```
-
-Note: the comment above `assets` in the actual file still says "only /api/* runs the Worker first". That's stale: `run_worker_first` is now `true` so maintenance mode can cover every page. Fix the comment when you next touch the file.
 
 ### `worker/index.js`: what the Worker does
 
@@ -80,11 +78,11 @@ Note: the comment above `assets` in the actual file still says "only /api/* runs
 3. `POST /api/contact`: the contact form backend:
    - Validates `name` (2–200 chars), `email` (regex, ≤254), `message` (20–5000), optional `company` (≤200), `enquiry_type` (one of `systematic_trading`, `algorithmic_execution`, `quantitative_analytics`, `backtesting`, `market_signals`, `risk_management`, `general`). Returns 422 with `{detail}` on failure.
    - Rate limit: 3 per hour per IP, in memory per isolate (best effort only; invalid submissions count too). A Cloudflare WAF rate-limiting rule on `POST /api/contact` would be the proper fix.
-   - Sends a notification email to `CONTACT_TO_EMAIL` (reply-to = the enquirer), then a best-effort auto-reply to the enquirer, via the `EMAIL` (Email Service) binding. User input is HTML-escaped.
+   - Sends a notification email to `CONTACT_TO_EMAIL` (reply-to = the enquirer), then a best-effort auto-reply to the enquirer, via the `EMAIL` (Email Service) binding. User input is HTML-escaped. The auto-reply footer carries the DERIVQ LIMITED company details (`LEGAL_LINE`), matching the site footer.
    - Returns `{status:"ok", message}` or `{detail}` with 400/422/429/500.
 4. Any other `/api/*` returns 404; everything else is served by `env.ASSETS.fetch(request)` (the static site).
 
-The frontend (`frontend/main.js`, ~line 172) posts the form as JSON to same-origin `/api/contact` and expects the response shapes above. If you rebuild the frontend, keep that contract or update the Worker to match.
+The frontend (`frontend/main.js`, ~line 166) posts the form as JSON to same-origin `/api/contact` and expects the response shapes above. If you rebuild the frontend, keep that contract or update the Worker to match.
 
 ---
 
@@ -94,10 +92,10 @@ The frontend (`frontend/main.js`, ~line 172) posts the form as JSON to same-orig
 - **Custom domain:** `asymcapital.uk` is attached to the `asym-capital-uk` Worker (Production). Cloudflare manages its DNS record and SSL automatically.
 - GoDaddy's two parking A records (`15.197.148.33`, `3.33.130.190`) were deleted so the custom domain could attach.
 - Remaining DNS records (left on purpose):
-  - `www` CNAME → `asymcapital.uk` (proxied). It should follow the main domain to the Worker, but **this was never confirmed**. Check https://www.asymcapital.uk loads. If it doesn't, add `www.asymcapital.uk` as a second custom domain on the Worker (delete the CNAME first) or add a redirect rule www → apex.
+  - `www` CNAME → `asymcapital.uk` (proxied). **Confirmed broken on 7 Oct 2026: https://www.asymcapital.uk returns Cloudflare error 522**, because the CNAME points at a Worker custom domain rather than an origin. Fix: delete the CNAME and add `www.asymcapital.uk` as a second custom domain on the Worker, or keep a proxied record and add a redirect rule www → apex.
   - `_domainconnect` CNAME (GoDaddy leftover, harmless)
   - `_dmarc` TXT: `v=DMARC1; p=quarantine; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;` (a GoDaddy default; revisit when setting up email sending, since `p=quarantine` with no SPF/DKIM yet means any mail from the domain gets quarantined)
-- **No MX records**: nothing can receive mail at `@asymcapital.uk` yet.
+- **Mail (added after the setup session):** MX records point to Fastmail (`eu1-smtp.messagingengine.com`, `eu2-smtp.messagingengine.com`) and SPF is `v=spf1 include:spf.messagingengine.com ?all`, so `contact@asymcapital.uk` receives mail. If Cloudflare Email Sending or another provider is added for the contact form, its SPF/DKIM records must be added alongside Fastmail's (DMARC is `p=quarantine`).
 
 ---
 
@@ -117,20 +115,22 @@ The owner asked for the site to be taken offline while it's redone.
 1. **Contact form email doesn't send.** The Worker uses the Cloudflare Email Service `send_email` binding, but Email Sending says it's "only available with the Workers Paid plan" (~US$5/month). The owner hasn't chosen yet. Options:
    - Buy Workers Paid, then onboard `asymcapital.uk` to Email Sending (adds SPF/DKIM DNS records) and send a test enquiry. No code change needed.
    - Switch the Worker to a third-party API (Resend, Brevo, Postmark, …) using `fetch` + an API key stored as a Worker **secret** (`wrangler secret put`), with that provider's DNS records on asymcapital.uk.
+   - Send through the owner's Fastmail account via Fastmail's JMAP API, with an API token stored as a Worker secret (no extra DNS needed, since Fastmail already sends for the domain).
    - Replace the form with a `mailto:` link.
-   Until resolved, a submission returns 500 with "Failed to send message. Please try emailing us directly at contact@asymcapital.in."
-2. **Branding/copy still references asymcapital.in.** The page copy and contact address in `frontend/index.html` still say asymcapital.in, and `CONTACT_TO_EMAIL` is `contact@asymcapital.in`. Ask the owner which domain and email the UK site should present.
+   Until resolved, a submission returns 500 with "Failed to send message. Please try emailing us directly at contact@asymcapital.uk."
+2. ~~Branding/copy still references asymcapital.in.~~ Resolved: the site and `CONTACT_TO_EMAIL` now use contact@asymcapital.uk (see §8 for the confirmed company details).
 3. **Rate limiting** is per-isolate only; add a Cloudflare rate-limiting rule for `POST /api/contact` (Security → WAF → Rate limiting rules).
 4. **Spam protection:** none yet. Consider Cloudflare Turnstile on the form (verify the token in the Worker).
-5. **`www` subdomain** unverified (see §4).
+5. **`www` subdomain** returns error 522 (see §4). Fix before launch.
 
 ---
 
 ## 7. Repo layout (`cloudflare-uk` branch)
 
 ```
-frontend/index.html     # whole site: one 1,445-line HTML file with inline CSS
-frontend/main.js        # nav/animation/form JS; form posts to /api/contact
+frontend/index.html     # whole site: one HTML file with inline CSS (~1,250 lines)
+frontend/main.js        # nav, mobile menu, scroll reveal, footer year, form (posts to /api/contact)
+frontend/favicon.svg, robots.txt, sitemap.xml
 worker/index.js         # Cloudflare Worker (maintenance, health, contact API, assets)
 wrangler.jsonc          # Worker config (see §3)
 asymcapital-website-v3.html  # older standalone copy of the site; not deployed
@@ -145,8 +145,16 @@ Everything Cloudflare serves comes from `frontend/` (static) and `worker/index.j
 
 ## 8. About the firm (context for the redesign)
 
-- **ASYM Capital**: boutique quantitative investment and advisory firm, based in Bengaluru, with a UK presence via asymcapital.uk.
-- Services the current site and form list: systematic trading strategies, algorithmic execution, quantitative analytics (QaaS), backtesting infrastructure, market signal intelligence, portfolio risk management.
+- **ASYM Capital**: boutique quantitative investment and advisory firm, founded in Bengaluru, with a UK presence via asymcapital.uk.
+- **Confirmed by the owner (7 Oct 2026):**
+  - The firm does both proprietary trading and client services. All six services below are real and offered.
+  - Audience: institutions, family offices, high-net-worth individuals and funds (anyone the firm pitches to).
+  - Registered entity: **DERIVQ LIMITED**, company number **09852527**, registered in England and Wales (incorporated 2 Nov 2015). Registered office (per Companies House): 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR. The site states "ASYM Capital is a trading name of DERIVQ LIMITED" in the footer.
+  - Contact: contact@asymcapital.uk, +44 7743 262560, office 53 Kilby Court, Southern Way, London SE10 0PR.
+  - The published figures are real: Sharpe ratio 1.87, 240μs execution latency, 60+ signals in production, 3 asset classes.
+  - No GitHub or LinkedIn links on the site.
+  - A compliance officer reviews the site before publishing.
+- Services the site and form list: systematic trading strategies, algorithmic execution, quantitative analytics (QaaS), backtesting infrastructure, market signal intelligence, portfolio risk management.
 - Current visual style: dark background (`#0C0C0E`), off-white text (`#F5F0E8`), orange accent (`#E8521A`), monospace (Courier New) typography. The owner wants it to look more professional and less templated. Treat these as a starting point, not a requirement.
 - The site carries a risk disclaimer ("Trading involves substantial risk. Past performance is not indicative of future results."). Keep appropriate financial-services disclaimers in the redesign, and don't invent performance figures, client names, regulatory status or team members. Ask the owner for real content.
 
