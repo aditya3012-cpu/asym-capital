@@ -30,8 +30,8 @@
 @font-face {
   font-family: "Archivo";
   src: url("/fonts/archivo-latin.woff2") format("woff2");
-  font-weight: 100 900;
-  font-stretch: 62% 125%;
+  font-weight: 300 600;
+  font-stretch: 100% 125%;
   font-style: normal;
   font-display: swap;
 }
@@ -179,7 +179,31 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
   .site-footer .entity, .ft-legal a { color: var(--ink); }
   .ft-legal { display: none; }
 }
+
+/* Breadcrumb: replaces the eyebrow on legal pages */
+.crumbs { margin-bottom: 36px; }
+@media (max-width: 899px) { .crumbs { margin-bottom: 28px; } }
+.crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; margin: 0; padding: 0; list-style: none; }
+.crumbs li {
+  display: flex; align-items: center;
+  font-size: 12px; line-height: 16px; font-weight: 500; font-stretch: 125%;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.crumbs li + li::before { content: "/"; margin: 0 0.75em; color: var(--rule); }
+.crumbs a { display: inline-block; padding: 4px 0; color: var(--muted); text-decoration: none; }
+.crumbs a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.crumbs [aria-current="page"] { color: var(--ink); }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "ASYM Capital", "item": "https://asymcapital.uk/" },
+    { "@type": "ListItem", "position": 2, "name": "Privacy policy", "item": "https://asymcapital.uk/privacy" }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="gl" aria-hidden="true"><div class="gl__in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
@@ -197,7 +221,7 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
   <div class="wrap">
     <div class="grid">
       <div class="cell doc-head">
-        <p class="eyebrow">Legal</p>
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">ASYM Capital</a></li><li aria-current="page">Privacy policy</li></ol></nav>
         <h1>Privacy policy</h1>
         <p class="updated">Last updated: <time datetime="2026-10-07">7 October 2026</time></p>
         <p class="lead">This policy explains how DERIVQ LIMITED, trading as ASYM Capital, collects and uses personal data when you visit asymcapital.uk or contact us, and the rights you have under UK data protection law.</p>
@@ -372,8 +396,8 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
     <p class="entity">ASYM Capital is a trading name of DERIVQ LIMITED, a company registered in England and Wales (company number 09852527). Registered office: 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
     <p>Trading involves substantial risk. Past performance is not indicative of future results.</p>
     <nav class="ft-legal" aria-label="Legal">
-      <a href="/privacy" aria-current="page">Privacy</a>
-      <a href="/terms">Terms</a>
+      <a href="/privacy" aria-current="page">Privacy policy</a>
+      <a href="/terms">Terms of use</a>
     </nav>
   </div>
 </footer>
