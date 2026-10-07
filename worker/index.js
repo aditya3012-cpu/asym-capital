@@ -214,11 +214,18 @@ function maintenance(request) {
   });
 }
 
-async function route(request, env) {
-  // Set MAINTENANCE to "true" in wrangler.jsonc vars to take the site offline.
-  if (env.MAINTENANCE === "true") return maintenance(request);
+// Served even in maintenance mode: crawlers treat a 5xx robots.txt as "crawl
+// nothing", and these files say nothing about the site's content.
+const ALWAYS_AVAILABLE = new Set([
+  "/robots.txt", "/sitemap.xml", "/favicon.ico", "/favicon.svg",
+  "/apple-touch-icon.png", "/logo.png", "/og.png",
+]);
 
+async function route(request, env) {
   const { pathname } = new URL(request.url);
+
+  // Set MAINTENANCE to "true" in wrangler.jsonc vars to take the site offline.
+  if (env.MAINTENANCE === "true" && !ALWAYS_AVAILABLE.has(pathname)) return maintenance(request);
 
   if (pathname === "/api/health") {
     return json({ status: "ok", timestamp: new Date().toISOString() });
