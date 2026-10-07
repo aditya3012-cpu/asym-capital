@@ -120,6 +120,7 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
 .prose p + p, .prose p + ul, .prose ul + p, .prose dl + p, .prose p + dl, .prose .purposes + p { margin-top: 14px; }
 .prose a { text-underline-offset: 3px; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
 .prose a:hover { text-decoration-thickness: 2px; }
+.prose a[href^="tel:"] { white-space: nowrap; }
 .prose ul { list-style: none; }
 .prose ul li { position: relative; padding-left: 22px; }
 .prose ul li + li { margin-top: 6px; }
@@ -228,7 +229,7 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
           <h2 id="who-we-are-h">Who we are</h2>
           <p>DERIVQ LIMITED, trading as ASYM Capital (“we”, “us”, “our”), is the controller of the personal data described in this policy. This means we decide why and how it is used.</p>
           <p>DERIVQ LIMITED is a company registered in England and Wales (company number 09852527). Our registered office is 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
-          <p>We handle personal data in line with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. This policy covers personal data we collect through this website and when you contact us by email or phone.</p>
+          <p>Our use of personal data is governed by UK data protection law, in particular the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. This policy covers personal data we collect through this website and when you contact us by email or phone.</p>
           <p>If you have a question about this policy or about your personal data, contact us:</p>
           <dl class="rows">
             <div><dt>Email</dt><dd><a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a></dd></div>
@@ -249,8 +250,8 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
             <li>the type of enquiry you select</li>
             <li>your message and anything you include in it.</li>
           </ul>
-          <p>The form delivers these details to our mailbox and sends an automatic email to the address you give to acknowledge your enquiry.</p>
-          <p>If the website cannot send the email, your own email app opens with a pre-filled message addressed to <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a>. Nothing reaches us unless you choose to send that message. Once sent, it is treated in the same way as any other email you send us.</p>
+          <p>The form delivers these details to our mailbox and sends an automatic acknowledgement to the email address you give.</p>
+          <p>If the website cannot send the email, your own email app opens with a pre-filled message addressed to <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a>. We receive that message only if you choose to send it. Once sent, it is treated in the same way as any other email you send us.</p>
 
           <h3>Emails and phone calls</h3>
           <p>If you email or phone us directly, we receive the contact details you use, such as your name, email address or phone number, and the information you give us in your email or during the call.</p>
@@ -260,7 +261,7 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
           <p>When you submit the contact form, we also use your IP address to limit the number of submissions that can be made from the same address. This helps prevent abuse of the form.</p>
 
           <h3>Whether you have to give us personal data</h3>
-          <p>You do not have to give us any personal data. The contact form needs your name, email address and a message so that we can reply, and it cannot be sent without them. You can also contact us by email or phone instead.</p>
+          <p>You are not required by law or by contract to give us personal data. The contact form needs your name, email address and a message so that we can reply, and it cannot be sent without them. You can contact us by email or phone instead.</p>
           <p>Please do not include special category data (for example, information about your health, religious beliefs or political opinions) or information about criminal convictions in your message. We do not need it to respond to an enquiry.</p>
         </section>
 
@@ -272,8 +273,8 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
               <h3>Responding to your enquiry</h3>
               <dl class="rows">
                 <div><dt>What we do</dt><dd>Read and reply to your enquiry, send the automatic acknowledgement and communicate with you about it.</dd></div>
-                <div><dt>Data used</dt><dd>Contact form details, and the details and content of emails and calls you make to us.</dd></div>
-                <div><dt>Lawful basis</dt><dd>Where you ask about our services, taking steps at your request before entering into a contract (UK GDPR Article 6(1)(b)). For other enquiries, our legitimate interests in responding to people who contact us (Article 6(1)(f)).</dd></div>
+                <div><dt>Data used</dt><dd>Contact form details, and your contact details and what you tell us in emails and phone calls.</dd></div>
+                <div><dt>Lawful basis</dt><dd>Where you ask about our services for yourself, taking steps at your request before entering into a contract with you (UK GDPR Article 6(1)(b)). In all other cases, including where you contact us on behalf of an organisation, our legitimate interests in responding to enquiries and corresponding with the people who contact us (Article 6(1)(f)).</dd></div>
               </dl>
             </div>
             <div class="purpose">
@@ -310,7 +311,7 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
 
         <section id="transfers" aria-labelledby="transfers-h">
           <h2 id="transfers-h">International transfers</h2>
-          <p>Our service providers may process personal data outside the United Kingdom. Where personal data is transferred outside the UK, we make sure it is protected by the appropriate safeguards that UK data protection law requires. You can contact us for more information about these safeguards.</p>
+          <p>Our service providers may process personal data outside the United Kingdom. Where personal data is transferred outside the UK, we make sure it is protected by the safeguards that UK data protection law requires. You can contact us for details of these safeguards and, where applicable, a copy of them.</p>
         </section>
 
         <section id="retention" aria-labelledby="retention-h">
@@ -333,12 +334,11 @@ h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; let
             <div><dt>Restriction</dt><dd>To ask us to limit how we use your personal data, for example while we check whether it is accurate.</dd></div>
             <div><dt>Objection</dt><dd>To object to our use of your personal data where we rely on our legitimate interests.</dd></div>
             <div><dt>Portability</dt><dd>To receive the personal data you have given us in a structured, commonly used and machine-readable format, or to ask us to send it to another organisation, where we use it on the basis of a contract or your consent and by automated means.</dd></div>
-            <div><dt>Withdrawing consent</dt><dd>Where we rely on your consent, to withdraw it at any time. This does not affect anything we did with your data before you withdrew it.</dd></div>
           </dl>
 
           <h3>How to exercise your rights</h3>
           <p>To make a request, email <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a>, call <a href="tel:+447743262560">+44 7743 262560</a> or write to us at our registered office. You do not usually have to pay a fee.</p>
-          <p>We may need to ask for information to confirm your identity before we act on your request. We will respond without undue delay and in any event within one month of receiving it. If your request is complex, or you have made several requests, we may take up to two further months. If so, we will tell you within the first month and explain why.</p>
+          <p>We may need to ask for information to confirm your identity before we act on your request. We will respond without undue delay and in any event within one month of receiving your request or, if we need to confirm your identity, within one month of receiving the information we asked for. If your request is complex, or you have made several requests, we may take up to two further months. If so, we will tell you within the first month and explain why.</p>
         </section>
 
         <section id="complaints" aria-labelledby="complaints-h">

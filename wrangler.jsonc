@@ -22,7 +22,7 @@
 
   "vars": {
     // "true" = show the maintenance page; "false" = site live.
-    "MAINTENANCE": "true",
+    "MAINTENANCE": "false",
     // Sender must be an address on a domain verified in Email Service.
     "CONTACT_FROM_EMAIL": "contact@asymcapital.uk",
     // Where enquiries are delivered (Fastmail mailbox; also shown to visitors if sending fails).

@@ -9,7 +9,7 @@ This file tells you how asymcapital.uk is hosted and deployed, what state it is 
 | Item | State |
 |---|---|
 | Live domain | **https://asymcapital.uk** |
-| What visitors see right now | **A 503 "Under maintenance" page** (deliberate; see §5) |
+| What visitors see right now | **The live site** (maintenance mode switched off on 7 Oct 2026 at the owner's request; see §5) |
 | Hosting | Cloudflare Workers with static assets, Worker name **`asym-capital-uk`** |
 | workers.dev URL | https://asym-capital-uk.bars-cocoon-49.workers.dev (also in maintenance) |
 | Source repo | GitHub **`aditya3012-cpu/asym-capital`** |
@@ -112,7 +112,7 @@ As of 7 Oct 2026 derivq.com uses GoDaddy nameservers (`ns39/ns40.domaincontrol.c
 
 Do not add these domains via `routes` in `wrangler.jsonc` unless asymcapital.uk is listed there too: a Wrangler deploy can replace dashboard-managed routes.
 
-## 5. Maintenance mode (currently ON)
+## 5. Maintenance mode (OFF since 7 Oct 2026: site live at the owner's request)
 
 The owner asked for the site to be taken offline while it's redone.
 
