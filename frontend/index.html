@@ -393,18 +393,44 @@ main { position: relative; z-index: 1; }
 .lbl--sym { right: calc(65.2% + 8px); top: calc(95.8% - 9px); }
 .payoff figcaption { margin-top: 16px; }
 
-/* Technology */
-.spec { grid-template-rows: auto auto repeat(4, auto); }
-.spec-col { grid-row: span 6; display: grid; grid-template-rows: subgrid; padding-top: 28px; }
-.spec-col .h3 { margin-bottom: 8px; }
-.spec-col > p { font-size: 14px; line-height: 1.55; color: var(--muted); padding-bottom: 28px; max-width: 34ch; }
-.spec-col dl { display: contents; }
-.spec-row {
-  margin-left: calc(-1 * var(--inset)); margin-right: calc(-1 * var(--inset) - 1px);
-  padding: 13px var(--inset) 14px; border-top: 1px solid var(--rule);
+/* Technology: the strategy pipeline. Four stages share one subgrid so their
+   spec rows line up across columns; a wire with an arrowhead joins each stage
+   to the next, and the risk layer runs underneath all four. */
+.flow { grid-template-rows: auto auto repeat(6, auto); }
+.stage { grid-row: span 8; display: grid; grid-template-rows: subgrid; padding-top: 28px; }
+.stage__head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.stage__head .h3 { white-space: nowrap; }
+.node { flex: none; width: 8px; height: 8px; background: var(--ink); }
+.node--live { background: var(--signal); }
+.wire { position: relative; flex: 1; height: 1px; background: var(--ink); margin-right: calc(-1 * var(--inset) - 1px); }
+.wire--arrow::after {
+  content: ""; position: absolute; right: 1px; top: -3px; width: 7px; height: 7px;
+  border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); transform: rotate(45deg);
 }
-.spec-row dt { font-size: 16px; line-height: 1.35; font-weight: 500; }
-.spec-row dd { font-size: 14px; line-height: 1.45; color: var(--muted); }
+.wire--end { margin-right: 0; }
+.stage__desc { font-size: 14px; line-height: 1.55; color: var(--muted); padding-bottom: 24px; max-width: 34ch; }
+.sheet { display: contents; }
+.sheet > div {
+  margin-left: calc(-1 * var(--inset)); margin-right: calc(-1 * var(--inset) - 1px);
+  padding: 12px var(--inset) 13px; border-top: 1px solid var(--rule);
+}
+.sheet dt { font-size: 12px; line-height: 1.4; font-stretch: 112%; color: var(--muted); }
+.sheet dd { margin-top: 3px; font-size: 15px; line-height: 1.4; font-weight: 500; }
+.sheet .lead { padding-top: 16px; padding-bottom: 18px; }
+.sheet .lead dd { margin-top: 6px; font-size: clamp(28px, 1.2vw + 16px, 34px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; }
+.sheet .unit { font-size: 0.5em; }
+
+.risk { border-top: 0; }
+.risk > .cell, .risk li { background: var(--surface); }
+.risk__title { grid-column: 1 / 4; grid-row: span 2; padding-top: 28px; padding-bottom: 28px; }
+.risk__title .stage__desc { padding-bottom: 0; }
+.risk ul { display: contents; }
+.risk li {
+  grid-column: span 3; position: relative; min-width: 0;
+  padding: 18px var(--inset) 20px; border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+  font-size: 15px; line-height: 1.45; font-weight: 500;
+}
+.risk li:nth-child(n+4) { border-top-color: var(--rule); }
 
 /* Contact */
 .contact-band { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
@@ -483,6 +509,12 @@ html:not(.js) #contact-form { display: none; }
 @media (min-width: 1200px) and (max-width: 1279px) {
   .nav a { font-size: 13px; font-stretch: 100%; }
 }
+@media (min-width: 900px) and (max-width: 1279px) {
+  /* Four pipeline columns are too narrow here: two rows of two stages. */
+  .flow { grid-template-rows: repeat(2, auto auto repeat(6, auto)); }
+  .flow .stage { grid-column: span 6; }
+  .flow .stage:nth-child(-n+2) .sheet > div:last-child { padding-bottom: 28px; }
+}
 @media (max-width: 1199px) {
   .nav, .nav-contact-wrap { display: none; }
   .menu { display: block; grid-column: 12 / 13; align-self: center; }
@@ -527,9 +559,12 @@ html:not(.js) #contact-form { display: none; }
   .svc { min-height: 0; padding-top: 24px; padding-bottom: 28px; }
   .payoff { margin-top: 36px; }
   .phil-body { margin-top: 28px; }
-  .spec-col { grid-row: auto; display: block; padding-top: 24px; }
-  .spec-col dl { display: block; }
-  .spec-col > p { padding-bottom: 20px; }
+  .stage { grid-row: auto; display: block; padding-top: 24px; }
+  .sheet { display: block; }
+  .stage__desc { padding-bottom: 20px; }
+  .wire, .stage .node--live { display: none; }
+  .risk__title { grid-column: 1 / -1; grid-row: auto; padding-top: 24px; padding-bottom: 20px; }
+  .risk li { grid-column: 1 / -1; }
   .details { padding-bottom: 8px; }
   .details dl > div { padding-top: 18px; padding-bottom: 18px; }
   .form-cell { border-top: 1px solid var(--rule); padding-top: 28px; }
@@ -545,10 +580,15 @@ html:not(.js) #contact-form { display: none; }
   .eyebrow--list::before { position: absolute; left: 0; top: 6px; margin: 0; }
   .eyebrow--list span:first-child { display: block; }
   .eyebrow--list span:first-child::after { content: none; }
+  /* Spec rows: label and value side by side to keep the pipeline compact */
+  .sheet > div:not(.lead) { display: grid; grid-template-columns: 8.5em minmax(0, 1fr); column-gap: 12px; align-items: baseline; }
+  .sheet > div:not(.lead) dd { margin-top: 0; }
 }
 @media (min-width: 600px) and (max-width: 899px) {
   .svcs .svc { grid-column: span 2; }
   .pillars .cell { grid-column: span 2; }
+  .flow .stage { grid-column: span 2; }
+  .risk li { grid-column: span 2; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -812,54 +852,80 @@ html:not(.js) #contact-form { display: none; }
       <div class="grid head">
         <div class="cell c1-7">
           <p class="eyebrow">Technology</p>
-          <h2 class="h2" id="technology-title">Infrastructure and research stack</h2>
+          <h2 class="h2" id="technology-title">From market data to live execution</h2>
         </div>
         <div class="cell c9-12 side-cell">
-          <p class="summary">Built for low latency, minimal market impact and reproducible results.</p>
+          <p class="summary">Infrastructure and research stack</p>
+          <div class="body side">
+            <p>Every strategy moves through the same four stages, with risk controls built into each one. The infrastructure that trades our own capital is the infrastructure we deploy for clients.</p>
+          </div>
         </div>
       </div>
 
-      <div class="grid mx spec">
-        <section class="cell span3 spec-col" aria-labelledby="t1">
-          <h3 class="h3" id="t1">Execution and latency</h3>
-          <p>Order routing, broker connectivity and execution algorithms built for low latency and minimal market impact.</p>
-          <dl>
-            <div class="spec-row"><dt>C / C++</dt><dd>Order routing core</dd></div>
-            <div class="spec-row"><dt>FIX protocol</dt><dd>Broker connectivity</dd></div>
-            <div class="spec-row"><dt>asyncio</dt><dd>Event-driven I/O</dd></div>
-            <div class="spec-row"><dt>TWAP / VWAP</dt><dd>Execution algorithms</dd></div>
+      <ol class="grid mx flow" aria-label="Strategy pipeline, in order">
+        <li class="cell span3 stage">
+          <div class="stage__head"><span class="node" aria-hidden="true"></span><h3 class="h3">Data</h3><span class="wire wire--arrow" aria-hidden="true"></span></div>
+          <p class="stage__desc">Multi-year tick-level history across all three asset classes, stored so that every result can be reproduced.</p>
+          <dl class="sheet">
+            <div class="lead"><dt>Granularity</dt><dd>Tick-level</dd></div>
+            <div><dt>History</dt><dd>Multi-year</dd></div>
+            <div><dt>Asset classes</dt><dd>Equity, derivatives, fixed income</dd></div>
+            <div><dt>Equity universe</dt><dd>60+ names</dd></div>
+            <div><dt>Storage</dt><dd>Time-series database</dd></div>
+            <div><dt>Reproducibility</dt><dd>Every backtest <span class="nb">re-runnable</span></dd></div>
           </dl>
-        </section>
-        <section class="cell span3 spec-col" aria-labelledby="t2">
-          <h3 class="h3" id="t2">Quant research</h3>
-          <p>Statistical modelling, derivatives pricing and signal research, validated before any strategy reaches capital.</p>
-          <dl>
-            <div class="spec-row"><dt>Python</dt><dd>Primary research language</dd></div>
-            <div class="spec-row"><dt>QuantLib</dt><dd>Derivatives pricing</dd></div>
-            <div class="spec-row"><dt>NumPy / SciPy</dt><dd>Numerics and optimisation</dd></div>
-            <div class="spec-row"><dt>statsmodels</dt><dd>Econometrics</dd></div>
+        </li>
+        <li class="cell span3 stage">
+          <div class="stage__head"><span class="node" aria-hidden="true"></span><h3 class="h3">Research and signals</h3><span class="wire wire--arrow" aria-hidden="true"></span></div>
+          <p class="stage__desc">Multi-factor signal generation and portfolio construction, with models that adapt to the market regime.</p>
+          <dl class="sheet">
+            <div class="lead"><dt>Signals in production</dt><dd>60+</dd></div>
+            <div><dt>Signal families</dt><dd>Momentum, mean reversion, cross-sectional volatility</dd></div>
+            <div><dt>Regime detection</dt><dd>Hidden Markov models</dd></div>
+            <div><dt>Factor models</dt><dd>Multi-factor, with exposure reporting</dd></div>
+            <div><dt>Derivatives pricing</dt><dd>QuantLib</dd></div>
+            <div><dt>Research language</dt><dd>Python</dd></div>
           </dl>
-        </section>
-        <section class="cell span3 spec-col" aria-labelledby="t3">
-          <h3 class="h3" id="t3">ML and signal intelligence</h3>
-          <p>Regime detection, factor modelling and cross-sectional signal pipelines that feed both our own trading and our client analytics.</p>
-          <dl>
-            <div class="spec-row"><dt>scikit-learn</dt><dd>Factor and ML models</dd></div>
-            <div class="spec-row"><dt>Hidden Markov models</dt><dd>Regime detection</dd></div>
-            <div class="spec-row"><dt>Momentum / mean reversion</dt><dd>Signal families</dd></div>
-            <div class="spec-row"><dt>pandas</dt><dd>Signal pipelines</dd></div>
+        </li>
+        <li class="cell span3 stage">
+          <div class="stage__head"><span class="node" aria-hidden="true"></span><h3 class="h3">Backtesting and validation</h3><span class="wire wire--arrow" aria-hidden="true"></span></div>
+          <p class="stage__desc">Event-driven simulation on tick data with realistic costs. No strategy reaches capital before it passes statistical validation.</p>
+          <dl class="sheet">
+            <div class="lead"><dt>Engine</dt><dd>Event-driven</dd></div>
+            <div><dt>Data</dt><dd>Tick-level, multi-year</dd></div>
+            <div><dt>Cost modelling</dt><dd>Slippage and commission</dd></div>
+            <div><dt>Performance metrics</dt><dd>Sharpe, Sortino, Calmar, maximum drawdown</dd></div>
+            <div><dt>Scope</dt><dd>Multi-factor, multi-asset</dd></div>
+            <div><dt>Gate to capital</dt><dd>Statistical validation</dd></div>
           </dl>
-        </section>
-        <section class="cell span3 spec-col" aria-labelledby="t4">
-          <h3 class="h3" id="t4">Data and infrastructure</h3>
-          <p>Multi-year tick-level history and an event-driven backtesting pipeline with realistic cost modelling, so every result is reproducible.</p>
-          <dl>
-            <div class="spec-row"><dt>PostgreSQL</dt><dd>Time-series store</dd></div>
-            <div class="spec-row"><dt>Tick-level history</dt><dd>Multi-year</dd></div>
-            <div class="spec-row"><dt>Event-driven backtester</dt><dd>Slippage and cost models</dd></div>
-            <div class="spec-row"><dt>Performance analytics</dt><dd>Sharpe · Sortino · Calmar</dd></div>
+        </li>
+        <li class="cell span3 stage">
+          <div class="stage__head"><span class="node" aria-hidden="true"></span><h3 class="h3">Execution</h3><span class="wire wire--end" aria-hidden="true"></span><span class="node node--live" aria-hidden="true"></span></div>
+          <p class="stage__desc">A low-latency order-routing core connected to brokers over FIX, running TWAP, VWAP and adaptive algorithms.</p>
+          <dl class="sheet">
+            <div class="lead"><dt>Execution latency</dt><dd>240<span class="unit">µs</span></dd></div>
+            <div><dt>Order routing</dt><dd>C / C++ core, <span class="nb">sub-millisecond</span></dd></div>
+            <div><dt>Connectivity</dt><dd>FIX protocol, broker APIs</dd></div>
+            <div><dt>Algorithms</dt><dd>TWAP, VWAP, adaptive</dd></div>
+            <div><dt>Cost model</dt><dd>Market impact and transaction costs</dd></div>
+            <div><dt>Markets</dt><dd>NASDAQ, NYSE, CME, LSE</dd></div>
           </dl>
-        </section>
+        </li>
+      </ol>
+
+      <div class="grid mx risk">
+        <div class="cell risk__title">
+          <div class="stage__head"><span class="node node--live" aria-hidden="true"></span><h3 class="h3">Risk, at every stage</h3></div>
+          <p class="stage__desc">Built into the pipeline from the start, not added after the fact.</p>
+        </div>
+        <ul role="list" aria-label="Risk controls">
+          <li>Real-time exposure monitoring</li>
+          <li>Portfolio Greeks</li>
+          <li>Multi-factor risk decomposition</li>
+          <li>Live stress testing</li>
+          <li>Scenario analysis</li>
+          <li>Systematic hedging</li>
+        </ul>
       </div>
     </div>
   </section>
