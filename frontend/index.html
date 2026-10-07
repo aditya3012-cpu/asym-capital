@@ -2,17 +2,17 @@
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASYM Capital — Asymmetric Edge in Systematic Trading</title>
-<meta name="description" content="Proprietary trading and quantitative-as-a-service: systematic strategies, algorithmic execution and analytics for institutions, family offices, funds and HNWIs.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASYM Capital | Systematic trading and Quantitative-as-a-Service</title>
+<meta name="description" content="ASYM Capital is a London proprietary trading firm and Quantitative-as-a-Service provider for institutions, family offices, funds and high-net-worth investors.">
 <link rel="canonical" href="https://asymcapital.uk/">
-<meta name="theme-color" content="#0C0C0E">
+<meta name="theme-color" content="#FCFCFB">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ASYM Capital">
-<meta property="og:title" content="ASYM Capital — Asymmetric Edge in Systematic Trading">
-<meta property="og:description" content="Proprietary trading and quantitative-as-a-service: systematic strategies, algorithmic execution and analytics for institutions, family offices, funds and HNWIs.">
+<meta property="og:title" content="ASYM Capital | Systematic trading and Quantitative-as-a-Service">
+<meta property="og:description" content="ASYM Capital is a London proprietary trading firm and Quantitative-as-a-Service provider for institutions, family offices, funds and high-net-worth investors.">
 <meta property="og:url" content="https://asymcapital.uk/">
 <meta property="og:locale" content="en_GB">
 <meta property="og:image" content="https://asymcapital.uk/og.png">
@@ -30,6 +30,7 @@
   "url": "https://asymcapital.uk/",
   "email": "contact@asymcapital.uk",
   "telephone": "+44 7743 262560",
+  "foundingDate": "2022",
   "identifier": {
     "@type": "PropertyValue",
     "propertyID": "Companies House company number",
@@ -45,8 +46,8 @@
 }
 </script>
 
-<!-- Lets the CSS hide .reveal elements (and show the JS-only form) only when JS is running.
-     If main.js fails to load or run, the class is removed on load so the page stays readable. -->
+<!-- The .js class shows the JS-only contact form. If main.js fails to load or run,
+     the class is removed on load and visitors see the email and phone instead. -->
 <script>
 document.documentElement.classList.add('js');
 window.addEventListener('load', function () {
@@ -56,1228 +57,926 @@ window.addEventListener('load', function () {
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..600&display=swap" rel="stylesheet">
 
 <style>
+/* ───────────────────────── Tokens ───────────────────────── */
 :root {
-  --ink:     #0C0C0E;
-  --paper:   #F5F0E8;
-  --orange:  #E8521A;
-  --orange2: #FF7A3D;
-  --white:   #FEFCF8;
-  --dark:    #141416;
-  --dark2:   #1C1C20;
-  --dark3:   #242428;
-  --dark-muted: #5A5A62;  /* rules and decoration only: too low-contrast for text */
-  --dark-rule:  #2E2E34;
-  --text-body:  #A8A296;  /* body copy on dark backgrounds */
-  --text-meta:  #8F8A80;  /* labels and small print on dark backgrounds */
+  --bg: #FCFCFB;
+  --surface: #F1F2F2;
+  --ink: #0B0D10;
+  --muted: #555B65;
+  --grid: #E6E8EB;          /* page hairlines: decorative only */
+  --rule: #C9CDD2;          /* cell rules */
+  --field: #878D96;         /* form field borders */
+  --signal: #E8521A;        /* brand orange: graphics, rules and focus only */
+  --signal-text: #B23E12;   /* the only orange used for text (AA on --bg) */
+  --inv-bg: #0B0D10;
+  --inv-text: #FCFCFB;
+  --inv-muted: #9AA1AB;
+  --inv-grid: #1B1F25;
+  --inv-rule: #2E333B;
+
+  --cols: 12;
+  --margin: 40px;
+  --container: min(1280px, 100% - 2 * var(--margin));
+  --inset: 20px;            /* text inset from a grid line */
+  --gap: 120px;             /* open space between sections */
+  --header-h: 72px;
+  --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 5rem; /* clear the fixed nav when jumping to a section */
-}
-
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--ink);
-  color: var(--paper);
-  overflow-x: hidden;
-}
-
-button, select { cursor: pointer; }
-
-:focus-visible {
-  outline: 2px solid var(--orange);
-  outline-offset: 3px;
-}
-
-.skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 1rem;
-  z-index: 1000;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: var(--orange);
-  color: var(--ink);
-  padding: 0.6rem 1rem;
-  text-decoration: none;
-}
-.skip-link:focus { left: 1rem; }
-
-/* ── NAV ── */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 500;
-  padding: 2rem 4rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-nav::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(12,12,14,0.9) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: -1;
-}
-.nav-logo {
-  font-family: 'DM Mono', monospace;
-  font-size: 1.05rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--white);
-  text-decoration: none;
-}
-.nav-logo span { color: var(--orange); }
-.nav-links {
-  display: flex;
-  gap: 3rem;
-  list-style: none;
-}
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-meta);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-.nav-links a:hover { color: var(--orange); }
-.nav-links a.nav-active { color: var(--orange); }
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-.nav-cta {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--orange);
-  padding: 0.6rem 1.4rem;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-.nav-cta:hover { background: var(--orange2); }
-
-/* ── HAMBURGER ── */
-#nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  padding: 0.4rem;
-  flex-direction: column;
-  gap: 5px;
-  align-items: center;
-  justify-content: center;
-}
-#nav-toggle span {
-  display: block;
-  width: 22px;
-  height: 1.5px;
-  background: var(--paper);
-  transition: all 0.3s ease;
-}
-#nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-#nav-toggle.open span:nth-child(2) { opacity: 0; }
-#nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-/* ── MOBILE MENU ── */
-#mobile-menu {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: var(--dark);
-  z-index: 490;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 6rem 2rem 4rem;
-}
-#mobile-menu.open { display: flex; }
-#mobile-menu a {
-  font-family: 'DM Mono', monospace;
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-meta);
-  text-decoration: none;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--dark-rule);
-  width: 100%;
-  transition: color 0.2s;
-}
-#mobile-menu a:hover { color: var(--orange); }
-
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   position: relative;
-  overflow: hidden;
-}
-.hero-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 8rem 4rem 6rem;
-  position: relative;
-  z-index: 2;
-}
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.hero-eyebrow::before {
-  content: '';
-  width: 2rem;
-  height: 1px;
-  background: var(--orange);
-}
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3.5rem, 6vw, 6rem);
-  font-weight: 900;
-  line-height: 1.0;
-  color: var(--white);
-  margin-bottom: 2.5rem;
-}
-h1 em {
-  font-style: italic;
-  color: var(--orange);
-}
-.hero-desc {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: var(--text-body);
-  max-width: 420px;
-  margin-bottom: 3rem;
-}
-.hero-actions {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-.btn-primary {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: var(--orange);
+  margin: 0;
+  background: var(--bg);
   color: var(--ink);
-  padding: 1rem 2rem;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s;
-  display: inline-block;
-  border: none;
-}
-.btn-primary:hover { background: var(--orange2); transform: translateY(-2px); }
-.btn-primary:disabled { opacity: 0.6; cursor: default; transform: none; }
-.btn-ghost {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-meta);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: color 0.3s;
-}
-.btn-ghost:hover { color: var(--orange); }
-.btn-ghost::after { content: '→'; transition: transform 0.3s; }
-.btn-ghost:hover::after { transform: translateX(4px); }
-
-/* Hero right: key figures */
-.hero-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 8rem 4rem 6rem;
-  position: relative;
-  z-index: 2;
-}
-.hero-figures-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-meta);
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--dark-rule);
-}
-.figures-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.figure {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 0;
-  border-bottom: 1px solid var(--dark-rule);
-}
-.figure:nth-child(odd)  { padding-right: 2rem; border-right: 1px solid var(--dark-rule); }
-.figure:nth-child(even) { padding-left: 2rem; }
-.figure-val {
-  order: 1;
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1;
-  color: var(--white);
-}
-.figure-lbl {
-  order: 2;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-meta);
-  margin-top: 0.9rem;
-}
-.figure-note {
-  order: 3;
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--text-body);
-  margin-top: 0.35rem;
-}
-
-/* Hero vertical rule */
-.hero::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 15%;
-  bottom: 15%;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--dark-rule), transparent);
-}
-
-/* ── SECTION UTILITIES ── */
-section { position: relative; }
-.section-inner {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 4rem;
-}
-.section-header {
-  display: flex;
-  align-items: baseline;
-  gap: 2rem;
-  margin-bottom: 5rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--dark-rule);
-}
-.section-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  color: var(--orange);
-}
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 700;
-  color: var(--white);
-}
-.section-title em { font-style: italic; color: var(--orange); }
-
-/* ── ABOUT ── */
-.about { padding: 10rem 0; background: var(--dark); }
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  align-items: start;
-  max-width: 860px;
-}
-
-.about-lede {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
-  line-height: 1.5;
-  color: var(--white);
-  margin-bottom: 3rem;
-  font-weight: 400;
-}
-.about-lede strong { color: var(--orange); font-weight: 700; }
-
-.about-body {
-  font-size: 0.95rem;
-  line-height: 1.9;
-  color: var(--text-body);
-  margin-bottom: 2rem;
-}
-
-.about-pillars {
-  margin-top: 4rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-.pillar {
-  border-top: 2px solid var(--dark-rule);
-  padding-top: 1.5rem;
-  transition: border-color 0.3s;
-}
-.pillar:hover { border-color: var(--orange); }
-.pillar-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  color: var(--orange);
-  margin-bottom: 0.75rem;
-}
-.pillar-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 0.5rem;
-}
-.pillar-desc {
-  font-size: 0.82rem;
-  line-height: 1.7;
-  color: var(--text-body);
-}
-
-/* ── SERVICES ── */
-.services { padding: 10rem 0; background: var(--ink); }
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border: 1px solid var(--dark-rule);
-}
-.service-card {
-  padding: 3rem;
-  border-right: 1px solid var(--dark-rule);
-  border-bottom: 1px solid var(--dark-rule);
-  position: relative;
-  overflow: hidden;
-  transition: background 0.4s;
-}
-.service-card:nth-child(3n) { border-right: none; }
-.service-card:nth-last-child(-n+3) { border-bottom: none; }
-.service-card:hover { background: var(--dark2); }
-
-.service-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 0; height: 3px;
-  background: var(--orange);
-  transition: width 0.4s ease;
-}
-.service-card:hover::before { width: 100%; }
-
-.service-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  color: var(--text-meta);
-  margin-bottom: 2.5rem;
-}
-.service-icon {
-  width: 44px; height: 44px;
-  margin-bottom: 1.5rem;
-  color: var(--orange);
-  opacity: 0.8;
-}
-.service-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
-.service-desc {
-  font-size: 0.85rem;
-  line-height: 1.8;
-  color: var(--text-body);
-  margin-bottom: 2rem;
-}
-.service-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  list-style: none;
-}
-.service-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-meta);
-  border: 1px solid var(--dark-rule);
-  padding: 0.3rem 0.6rem;
-}
-
-/* ── PHILOSOPHY ── */
-.philosophy {
-  padding: 10rem 0;
-  background: var(--orange);
-  overflow: hidden;
-}
-.philosophy .section-header { border-bottom-color: rgba(0,0,0,0.15); }
-.philosophy .section-num { color: var(--ink); }
-.philosophy .section-title { color: var(--ink); }
-.philosophy .section-title em { color: var(--ink); font-style: italic; }
-
-.philosophy-grid {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 6rem;
-  align-items: center;
-}
-.philosophy-quote {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.8rem, 3.5vw, 3rem);
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.25;
-}
-.philosophy-quote em { font-style: italic; opacity: 0.7; }
-.philosophy-body {
-  font-size: 0.95rem;
-  line-height: 1.9;
-  color: var(--ink);
-}
-.philosophy-body p + p { margin-top: 1.5rem; }
-
-/* ── TECH STACK ── */
-.tech { padding: 10rem 0; background: var(--dark2); }
-
-.tech-categories {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-  border: 1px solid var(--dark-rule);
-}
-.tech-col {
-  padding: 2.5rem;
-  border-right: 1px solid var(--dark-rule);
-  transition: background 0.3s;
-}
-.tech-col:last-child { border-right: none; }
-.tech-col:hover { background: var(--dark3); }
-.tech-col-label {
-  font-family: 'DM Mono', monospace;
-  font-weight: 400;
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--dark-rule);
-}
-.tech-col-desc {
-  font-size: 0.78rem;
-  line-height: 1.7;
-  color: var(--text-body);
-  margin-bottom: 2rem;
-}
-.tech-col-items {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-.tech-col-items li {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(46,46,52,0.6);
-}
-.tech-col-items li:last-child { border-bottom: none; padding-bottom: 0; }
-.tci-name {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--paper);
-}
-.tci-note {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  color: var(--text-meta);
-  text-align: right;
-}
-
-/* ── CONTACT ── */
-.contact { padding: 10rem 0; background: var(--ink); }
-.contact-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8rem;
-  align-items: start;
-}
-.contact-left .big-text {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 900;
-  line-height: 1.0;
-  color: var(--white);
-  margin-bottom: 2rem;
-}
-.contact-left .big-text em { font-style: italic; color: var(--orange); }
-.contact-sub {
-  font-size: 0.9rem;
-  line-height: 1.8;
-  color: var(--text-body);
-  max-width: 380px;
-}
-.contact-details {
-  padding-top: 2rem;
-}
-.noscript-note { margin-top: 2rem; max-width: none; }
-.contact-item {
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--dark-rule);
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 2rem;
-}
-.contact-item:last-child { border-bottom: 1px solid var(--dark-rule); }
-.contact-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-meta);
-  flex-shrink: 0;
-}
-.contact-value {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.85rem;
+  font-family: var(--font);
+  font-size: 16px;
   line-height: 1.6;
-  color: var(--white);
-  text-align: right;
-  text-decoration: none;
-  overflow-wrap: anywhere;
-  transition: color 0.3s;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-a.contact-value:hover { color: var(--orange); }
-address.contact-value { font-style: normal; }
+h1, h2, h3, p, dl, dd, figure, ul, ol { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+a { color: inherit; }
+svg { display: block; }
+button, input, select, textarea { font: inherit; color: inherit; }
+::selection { background: var(--ink); color: var(--bg); }
 
-/* ── CONTACT FORM ── */
-/* The form needs main.js to submit; without JS, visitors use the email and phone above. */
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip {
+  position: absolute; left: 16px; top: -100px; z-index: 100;
+  background: var(--ink); color: var(--bg); padding: 12px 16px;
+  font-weight: 500; font-stretch: 112%; font-size: 14px; text-decoration: none;
+}
+.skip:focus { top: 16px; }
+
+/* ───────────────────────── The drawn grid ─────────────────────────
+   12 tracks with a 1px left line each, plus a closing line on the last
+   track. Content grids use the same tracks, so cell edges land on the lines. */
+.gl { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.gl__in {
+  width: var(--container); height: 100%; margin-inline: auto;
+  display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+}
+.gl i { border-left: 1px solid var(--grid); }
+.gl i:last-child { border-right: 1px solid var(--grid); }
+.gl--full, .gl--full .gl__in { width: 100%; }
+.gl--inv i, .gl--inv i:last-child { border-color: var(--inv-grid); }
+
+.wrap { width: var(--container); margin-inline: auto; position: relative; }
+.hero .wrap { container-type: inline-size; }
+.grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
+
+/* A cell masks the hairlines behind it but keeps its own edge lines. */
+.cell {
+  background: var(--bg);
+  background-clip: padding-box;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  padding-inline: var(--inset);
+  min-width: 0;
+}
+/* A matrix is a ruled table of cells: the grid is inked in. */
+.mx { position: relative; border-bottom: 1px solid var(--rule); }
+.mx::after { content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 1px; background: var(--rule); pointer-events: none; z-index: 2; }
+.mx > .cell { border-top: 1px solid var(--rule); border-left-color: var(--rule); position: relative; }
+
+/* Column placement (12 columns) */
+.c1-4  { grid-column: 1 / 5; }   .c1-5  { grid-column: 1 / 6; }
+.c1-6  { grid-column: 1 / 7; }   .c1-7  { grid-column: 1 / 8; }
+.c7-9  { grid-column: 7 / 10; }  .c7-12 { grid-column: 7 / 13; }
+.c8-12 { grid-column: 8 / 13; }  .c9-12 { grid-column: 9 / 13; }
+.c10-12{ grid-column: 10 / 13; } .c1-12 { grid-column: 1 / -1; }
+.span3 { grid-column: span 3; }  .span4 { grid-column: span 4; }
+
+/* ───────────────────────── Type ───────────────────────── */
+.eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; line-height: 16px; font-weight: 500; font-stretch: 125%;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.eyebrow::before { content: ""; flex: none; width: 8px; height: 8px; background: var(--ink); }
+.eyebrow--list { flex-wrap: wrap; column-gap: 0; row-gap: 4px; }
+.eyebrow--list::before { margin-right: 12px; }
+.eyebrow--list span { white-space: nowrap; }
+.eyebrow--list span:not(:last-child)::after { content: "·"; margin: 0 0.6em; }
+
+h1 {
+  font-weight: 300; line-height: 1.04; letter-spacing: -0.025em;
+  font-size: clamp(38px, calc(5.1cqw - 4px), 60px);
+  max-width: 14em; text-wrap: balance;
+}
+.h2 {
+  font-weight: 300; line-height: 1.08; letter-spacing: -0.02em;
+  font-size: clamp(30px, 1.9vw + 24.5px, 52px);
+  text-wrap: balance;
+}
+.h3 { font-size: 20px; line-height: 1.3; font-weight: 500; letter-spacing: -0.005em; }
+.h3--lg { font-size: clamp(26px, 0.9vw + 18px, 32px); line-height: 1.15; font-weight: 300; letter-spacing: -0.015em; }
+.statement { font-weight: 300; font-size: clamp(28px, 1.5vw + 20px, 42px); line-height: 1.16; letter-spacing: -0.018em; text-wrap: balance; }
+.standfirst {
+  font-weight: 300; font-size: clamp(19px, 0.47vw + 17.2px, 24px); line-height: 1.45;
+  max-width: 30em; letter-spacing: -0.005em; text-wrap: pretty;
+}
+.body { max-width: 62ch; text-wrap: pretty; }
+.body p + p { margin-top: 1em; }
+.nb { white-space: nowrap; }
+.cap { font-size: 12px; line-height: 1.4; font-weight: 400; font-stretch: 112%; color: var(--muted); }
+.cap b { font-weight: 500; font-stretch: 125%; letter-spacing: 0.12em; text-transform: uppercase; margin-right: 10px; }
+@media (min-width: 1200px) { body { font-size: 17px; } }
+
+/* ───────────────────────── Buttons ───────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 18px;
+  height: 48px; padding: 0 20px;
+  border: 1px solid var(--ink); border-radius: 0;
+  background: transparent; color: var(--ink);
+  font-size: 14px; font-weight: 500; font-stretch: 112%; line-height: 1;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: background-color .15s ease, color .15s ease;
+}
+.btn:hover { background: var(--surface); }
+.btn--primary { background: var(--ink); color: var(--bg); }
+.btn--primary:hover { background: #2A2E35; }
+.btn:disabled { opacity: 0.6; cursor: default; }
+.arr { width: 30px; height: 10px; fill: none; stroke: currentColor; stroke-width: 1.25; flex: none; }
+
+/* ───────────────────────── Header ───────────────────────── */
+.site-header { position: relative; z-index: 10; border-bottom: 1px solid var(--ink); background: var(--bg); }
+.site-header .grid { height: var(--header-h); align-items: stretch; }
+.brand {
+  grid-column: 1 / 3; display: flex; align-items: center;
+  text-decoration: none; color: var(--ink); white-space: nowrap;
+}
+.brand__asym { font-size: 17px; font-weight: 600; font-stretch: 125%; letter-spacing: 0.06em; }
+.brand__cap  { font-size: 17px; font-weight: 400; letter-spacing: 0.005em; margin-left: 0.42em; }
+.brand__dot  { flex: none; width: 5px; height: 5px; background: var(--signal); margin-left: 3px; align-self: center; transform: translateY(5px); }
+
+/* Nav sits on columns 7-10; column 11 stays open so Contact (column 12) stands apart. */
+.nav { grid-column: 7 / 11; display: grid; grid-template-columns: subgrid; }
+.nav ul { display: contents; }
+.nav a {
+  position: relative; display: flex; align-items: center; height: 100%;
+  border-left: 1px solid var(--grid); padding-left: var(--inset);
+  font-size: 14px; font-weight: 500; font-stretch: 104%; text-decoration: none; color: var(--ink);
+  white-space: nowrap;
+}
+.nav a::after {
+  content: ""; position: absolute; left: -1px; right: 0; bottom: -1px; height: 2px;
+  background: var(--signal); opacity: 0; transition: opacity .15s ease;
+}
+.nav a:hover::after, .nav a:focus-visible::after { opacity: 1; }
+.nav a:focus-visible { outline-offset: -2px; }
+.nav-contact-wrap { grid-column: 12 / 13; display: flex; align-items: center; }
+.nav-contact {
+  display: flex; align-items: center; width: 100%; height: 40px; padding-left: calc(var(--inset) - 1px);
+  border: 1px solid var(--ink); text-decoration: none; color: var(--ink);
+  font-size: 14px; font-weight: 500; font-stretch: 112%;
+  transition: background-color .15s ease, color .15s ease;
+}
+.nav-contact:hover { background: var(--ink); color: var(--bg); }
+
+/* Mobile menu: a <details> element, so it opens without JS too */
+.menu { display: none; }
+.menu summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; height: 40px; padding-left: calc(var(--inset) - 1px);
+  border: 1px solid var(--ink); font-size: 14px; font-weight: 500; font-stretch: 112%;
+}
+.menu summary::-webkit-details-marker { display: none; }
+.menu .when-open { display: none; }
+.menu[open] .when-open { display: inline; }
+.menu[open] .when-closed { display: none; }
+.menu-panel {
+  position: fixed; left: 0; right: 0; top: calc(var(--header-h) + 1px); bottom: 0;
+  background: var(--bg); z-index: 40; overflow-y: auto;
+}
+.menu-panel .wrap { min-height: 100%; }
+.menu-list { position: relative; border-bottom: 1px solid var(--rule); }
+.menu-list a {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-left: calc(-1 * var(--inset)); margin-right: calc(-1 * var(--inset) - 1px);
+  padding: 18px var(--inset); border-bottom: 1px solid var(--rule);
+  font-size: 28px; font-weight: 300; letter-spacing: -0.015em; text-decoration: none;
+}
+.menu-meta { padding: 24px 0 28px; }
+.menu-meta p + p { margin-top: 6px; }
+body.menu-open { overflow: hidden; }
+
+/* Audience notice: wording comes from the compliance officer. Keep `hidden` until it exists. */
+.notice { position: relative; z-index: 1; background: var(--surface); border-bottom: 1px solid var(--rule); font-size: 13px; line-height: 1.6; }
+.notice[hidden] { display: none; }
+
+main { position: relative; z-index: 1; }
+
+/* ───────────────────────── Hero ───────────────────────── */
+.hero .grid { align-items: stretch; }
+.hero-copy { padding-top: 56px; padding-bottom: 56px; }
+.hero-copy .eyebrow { margin-bottom: 44px; }
+.hero-copy h1 { margin-bottom: 32px; }
+.hero-copy .standfirst { margin-bottom: 40px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.hero-fig { display: flex; flex-direction: column; justify-content: flex-end; min-width: 0; }
+.plot { position: relative; }
+.plot svg { width: 100%; height: auto; overflow: visible; }
+.hero-fig .plot svg { aspect-ratio: 500 / 426; }
+.bars { fill: none; stroke-width: 1; shape-rendering: crispEdges; }
+.bars--ink { stroke: var(--ink); }
+.bars--tail { stroke: var(--signal); }
+.axis { stroke: var(--ink); stroke-width: 1; fill: none; shape-rendering: crispEdges; }
+.bracket { stroke: var(--signal); stroke-width: 1; fill: none; shape-rendering: crispEdges; }
+.flag {
+  position: absolute; left: 56.2%; top: 49.3%; transform: translate(-4px, calc(-100% - 6px));
+  background: var(--bg); padding: 0 4px;
+  font-size: 12px; line-height: 1.4; font-weight: 500; font-stretch: 112%; color: var(--signal-text);
+  white-space: nowrap;
+}
+.hero-fig figcaption {
+  background: var(--bg); background-clip: padding-box;
+  border-left: 1px solid transparent; border-right: 1px solid transparent;
+  padding: 18px var(--inset) 0; height: 50px;
+}
+
+/* ───────────────────────── Key figures ───────────────────────── */
+.facts .fact {
+  display: flex; flex-direction: column; min-height: 196px;
+  padding-top: 28px; padding-bottom: 30px;
+}
+.fact dt {
+  font-size: 12px; line-height: 16px; font-weight: 500; font-stretch: 125%;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.fact .note { margin-top: 6px; }
+.fact .num {
+  margin-top: auto; padding-top: 28px;
+  font-weight: 300; font-size: clamp(48px, 3.4vw + 31px, 80px); line-height: 0.95; letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+.unit { font-size: 0.4em; font-weight: 500; letter-spacing: 0; color: var(--muted); margin-left: 0.3em; }
+.unit--plus { font-size: 0.6em; font-weight: 300; margin-left: 0.02em; vertical-align: 0.16em; }
+.fn-mark {
+  display: inline-block; vertical-align: top; margin-left: 0.08em; padding: 0.16em 3px 2px;
+  font-size: 13px; line-height: 1; font-weight: 500; font-stretch: 112%; letter-spacing: 0; color: var(--muted);
+  text-decoration: none;
+}
+.fn-mark:hover { color: var(--ink); text-decoration: underline; }
+.facts .fn { padding-top: 12px; padding-bottom: 13px; }
+.facts-fn > .cell { border-top: 0; }
+
+/* ───────────────────────── Sections ───────────────────────── */
+.section { padding-top: var(--gap); }
+.head { border-top: 1px solid var(--ink); grid-template-rows: minmax(62px, auto) auto; row-gap: 32px; }
+/* Two rows shared across the band (subgrid): the eyebrow and the side summary share
+   row 1; the heading and the side text share row 2, so their tops line up. */
+.head > .cell {
+  grid-row: span 2; display: grid; grid-template-rows: subgrid; align-content: start;
+  padding-top: 22px; padding-bottom: 64px;
+}
+.head > .cell > * { align-self: start; }
+.head .side { grid-row: 2; }
+.summary { font-size: 15px; line-height: 20px; color: var(--muted); max-width: 40ch; margin-top: -2px; }
+
+/* About */
+.mx.lines { border-bottom: 0; }
+.lines .cell { padding-top: 32px; padding-bottom: 40px; }
+.lines .h3--lg { margin-bottom: 16px; }
+.pillars .cell { padding-top: 28px; padding-bottom: 36px; }
+.pillars .h3 { margin-bottom: 10px; }
+.pillars p { font-size: 15px; line-height: 1.6; color: var(--muted); }
+
+/* Services */
+.svc { display: flex; flex-direction: column; min-height: 300px; padding-top: 28px; padding-bottom: 30px; transition: background-color .15s ease; }
+.svc .h3 { margin-bottom: 12px; }
+.svc p { font-size: 16px; line-height: 1.6; color: var(--muted); }
+.svc__link {
+  display: inline-flex; align-self: flex-start; align-items: center; gap: 12px; margin-top: auto; padding-top: 24px;
+  font-size: 14px; font-weight: 500; font-stretch: 112%; text-decoration: none; color: var(--ink);
+}
+/* The whole card is the link's hit area. */
+.svc__link::before { content: ""; position: absolute; inset: 0; z-index: 1; }
+.svc__link:focus-visible { outline: none; }
+.svc:has(.svc__link:focus-visible) { outline: 2px solid var(--signal); outline-offset: -2px; }
+.svc::before {
+  content: ""; position: absolute; left: -1px; right: -1px; top: -1px; height: 2px;
+  background: var(--signal); opacity: 0; transition: opacity .15s ease; z-index: 2;
+}
+.svc:hover, .svc:has(.svc__link:focus-visible) { background-color: var(--surface); }
+.svc:hover::before { opacity: 1; }
+
+/* Philosophy */
+.phil-body { margin-top: 40px; max-width: 58ch; }
+.payoff .plot { margin-top: 4px; }
+.payoff svg .zero { stroke: var(--ink); stroke-width: 1; shape-rendering: crispEdges; }
+.payoff svg .down { stroke: var(--ink); stroke-width: 1.5; fill: none; }
+.payoff svg .up { stroke: var(--signal); stroke-width: 2; fill: none; }
+.payoff svg .ref { stroke: var(--field); stroke-width: 1; stroke-dasharray: 3 3; fill: none; }
+.lbl {
+  position: absolute; font-size: 12px; line-height: 1.4; font-weight: 400; font-stretch: 112%;
+  color: var(--muted); white-space: nowrap;
+}
+.lbl--payoff { left: 12px; top: 0; }
+.lbl--outcome { right: 0; top: calc(60.6% + 6px); }
+.lbl--down { left: 12px; top: calc(70.3% + 8px); }
+.lbl--up { right: calc(20% + 24px); top: calc(30.8% - 9px); color: var(--signal-text); font-weight: 500; }
+.lbl--sym { right: calc(65.2% + 8px); top: calc(95.8% - 9px); }
+.payoff figcaption { margin-top: 16px; }
+
+/* Technology */
+.spec { grid-template-rows: auto auto repeat(4, auto); }
+.spec-col { grid-row: span 6; display: grid; grid-template-rows: subgrid; padding-top: 28px; }
+.spec-col .h3 { margin-bottom: 8px; }
+.spec-col > p { font-size: 14px; line-height: 1.55; color: var(--muted); padding-bottom: 28px; max-width: 34ch; }
+.spec-col dl { display: contents; }
+.spec-row {
+  margin-left: calc(-1 * var(--inset)); margin-right: calc(-1 * var(--inset) - 1px);
+  padding: 13px var(--inset) 14px; border-top: 1px solid var(--rule);
+}
+.spec-row dt { font-size: 16px; line-height: 1.35; font-weight: 500; }
+.spec-row dd { font-size: 14px; line-height: 1.45; color: var(--muted); }
+
+/* Contact */
+.contact-band { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.gap-col { grid-column: 6 / 7; }
+.details { padding-top: 0; padding-bottom: 40px; }
+.details dl > div {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-left: calc(-1 * var(--inset)); margin-right: calc(-1 * var(--inset) - 1px);
+  padding: 22px var(--inset); border-bottom: 1px solid var(--rule);
+}
+.details dt {
+  font-size: 12px; line-height: 16px; font-weight: 500; font-stretch: 125%;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.details dd { font-size: 17px; line-height: 1.5; overflow-wrap: anywhere; }
+.details dl > div:last-child { border-bottom: 0; }
+.details a { text-decoration: none; background-image: linear-gradient(var(--rule), var(--rule)); background-size: 100% 1px; background-position: 0 100%; background-repeat: no-repeat; }
+.details a:hover { background-image: linear-gradient(var(--ink), var(--ink)); }
+.details address { font-style: normal; }
+
+.form-cell { padding-top: 32px; padding-bottom: 44px; }
+.form { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); column-gap: calc(2 * var(--inset)); row-gap: 22px; }
+/* The form submits with main.js; without JS, the email and phone above are the way in. */
 html:not(.js) #contact-form { display: none; }
-#contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  margin-top: 2.5rem;
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.field--full { grid-column: 1 / -1; }
+.field label { font-size: 13px; line-height: 1.3; font-weight: 500; font-stretch: 112%; }
+.field label .opt { font-weight: 400; color: var(--muted); }
+.field input, .field select, .field textarea {
+  width: 100%; height: 48px; padding: 0 14px;
+  border: 1px solid var(--field); border-radius: 0; background: #FFFFFF;
+  font-size: 16px; line-height: 1.4; appearance: none; -webkit-appearance: none;
+  transition: border-color .15s ease;
 }
-.field label {
-  display: block;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-meta);
-  margin-bottom: 0.5rem;
+.field textarea { height: auto; min-height: 152px; padding: 12px 14px; resize: vertical; line-height: 1.55; }
+.field select {
+  padding-right: 44px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%230B0D10' stroke-width='1.25' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
 }
-#contact-form input,
-#contact-form select,
-#contact-form textarea {
-  width: 100%;
-  background: var(--dark3);
-  border: 1px solid var(--dark-rule);
-  color: var(--paper);
-  font-family: 'DM Mono', monospace;
-  font-size: 0.85rem;
-  padding: 0.9rem 1.2rem;
-  outline: none;
-  transition: border-color 0.25s;
-  appearance: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-}
-#contact-form select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238F8A80' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1.2rem center;
-  padding-right: 2.8rem;
-}
-#contact-form select option {
-  background: var(--dark3);
-  color: var(--paper);
-}
-#contact-form textarea::placeholder {
-  color: var(--text-meta);
-}
-#contact-form input:focus,
-#contact-form select:focus,
-#contact-form textarea:focus {
-  border-color: var(--orange);
-}
-#contact-form [aria-invalid="true"] { border-color: #E05050; }
-#contact-form textarea { resize: vertical; }
-#cf-submit {
-  align-self: flex-start;
-}
-#cf-status {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  min-height: 1.2em;
-  transition: color 0.2s;
-}
-#cf-status.success { color: var(--orange); }
-#cf-status.error   { color: #E05050; }
+.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--ink); }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 2px solid var(--signal); outline-offset: 0; border-color: var(--ink); }
+.field [aria-invalid="true"] { border-color: var(--signal-text); }
+.form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 6px; }
+.status { font-size: 14px; line-height: 1.45; color: var(--muted); }
+.status.success { color: var(--ink); }
+.status.error { color: var(--signal-text); }
+.noscript-note { font-size: 15px; color: var(--muted); max-width: 40ch; }
 
-/* ── FOOTER ── */
-footer {
-  padding: 3rem 4rem;
-  border-top: 1px solid var(--dark-rule);
-  background: var(--ink);
+/* ───────────────────────── Footer ───────────────────────── */
+.site-footer { position: relative; z-index: 1; margin-top: var(--gap); background: var(--inv-bg); color: var(--inv-text); }
+.site-footer .cell { background-color: var(--inv-bg); }
+.ft-band { position: relative; }
+.ft-band + .ft-band { border-top: 1px solid var(--inv-rule); }
+.ft-band .cell { padding-top: 28px; padding-bottom: 32px; }
+.ft-top .cell { padding-top: 56px; padding-bottom: 56px; }
+.ft-label {
+  display: block; margin-bottom: 14px;
+  font-size: 12px; line-height: 16px; font-weight: 500; font-stretch: 125%;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--inv-muted);
 }
-.footer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--dark-rule);
-}
-.footer-logo {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--text-meta);
-}
-.footer-logo span { color: var(--orange); }
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-.footer-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  color: var(--text-meta);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-.footer-links a:hover { color: var(--orange); }
-.footer-legal {
-  font-size: 0.75rem;
-  line-height: 1.7;
-  color: var(--text-meta);
-  max-width: 860px;
-}
-.footer-legal p + p { margin-top: 0.6rem; }
+.ft-brand { display: flex; align-items: center; color: var(--inv-text); text-decoration: none; white-space: nowrap; }
+.ft-brand .brand__asym, .ft-brand .brand__cap { font-size: 22px; }
+.ft-brand .brand__dot { width: 6px; height: 6px; transform: translateY(7px); }
+.ft-sub { margin-top: 14px; font-size: 14px; color: var(--inv-muted); }
+.ft-links li + li { margin-top: 6px; }
+.ft-links a, .ft-contact a { text-decoration: none; font-size: 15px; }
+.ft-links a:hover, .ft-contact a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.ft-contact p { font-size: 15px; line-height: 1.6; }
+.ft-contact address { font-style: normal; font-size: 15px; line-height: 1.6; margin-top: 10px; }
+.legal { font-size: 13px; line-height: 1.6; color: var(--inv-muted); max-width: 72ch; }
+.legal--strong { color: var(--inv-text); }
+.ft-base .cell { padding-top: 18px; padding-bottom: 22px; }
 
-/* ── SCROLL REVEAL (only when JS is running; see the class set in <head>) ── */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+/* ───────────────────────── Responsive ───────────────────────── */
+@media (min-width: 1200px) and (max-width: 1279px) {
+  .nav a { font-size: 13px; font-stretch: 100%; }
 }
-.js .reveal.visible {
-  opacity: 1;
-  transform: none;
+@media (max-width: 1199px) {
+  .nav, .nav-contact-wrap { display: none; }
+  .menu { display: block; grid-column: 12 / 13; align-self: center; }
+  :root { --gap: 104px; }
 }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.35s; }
+@media (max-width: 899px) {
+  :root { --cols: 4; --margin: 16px; --inset: 16px; --gap: 72px; --header-h: 60px; }
+  .gl i:nth-child(n+5) { display: none; }
+  .gl i:nth-child(4) { border-right: 1px solid var(--grid); }
+  .gl--inv i:nth-child(4) { border-right-color: var(--inv-grid); }
+  .gl i:last-child { border-right: 0; }
+  .grid > [class*="c1-"], .grid > [class*="c7-"], .grid > [class*="c8-"], .grid > [class*="c9-"],
+  .grid > [class*="c10-"], .grid > .span3, .grid > .span4 { grid-column: 1 / -1; }
+  .brand { grid-column: 1 / 4; }
+  .menu { grid-column: 4 / 5; }
+  .brand__asym, .brand__cap { font-size: 16px; }
+  .gap-col { display: none; }
+
+  .hero-copy { padding-top: 36px; padding-bottom: 32px; }
+  .hero-copy .eyebrow { margin-bottom: 28px; }
+  h1 { font-size: clamp(34px, 9.4vw, 52px); }
+  .hero-copy h1 { margin-bottom: 24px; }
+  .hero-copy .standfirst { margin-bottom: 32px; }
+  .hero-fig { padding-top: 8px; }
+  .hero-fig .plot svg { aspect-ratio: auto; height: clamp(220px, 44vw, 340px); }
+  .hero-fig figcaption { height: auto; padding-bottom: 20px; }
+  .cap b { display: block; margin: 0 0 4px; }
+
+  .facts .fact { grid-column: span 2; min-height: 156px; padding-top: 20px; padding-bottom: 22px; }
+  .facts .fact .num { padding-top: 24px; }
+  .facts .fn { grid-column: 1 / -1; }
+
+  .head { row-gap: 0; }
+  .head > .cell { display: block; grid-row: auto; padding-top: 18px; padding-bottom: 0; }
+  .head > .cell:last-child { padding-bottom: 40px; }
+  .head .eyebrow { margin-bottom: 28px; }
+  .head .summary { margin-bottom: 18px; }
+  .head .summary:last-child { margin-bottom: 0; }
+  .head > .cell:first-child { padding-bottom: 24px; }
+  .head > .side-cell { padding-top: 0; }
+
+  .svc { min-height: 0; padding-top: 24px; padding-bottom: 28px; }
+  .payoff { margin-top: 36px; }
+  .phil-body { margin-top: 28px; }
+  .spec-col { grid-row: auto; display: block; padding-top: 24px; }
+  .spec-col dl { display: block; }
+  .spec-col > p { padding-bottom: 20px; }
+  .details { padding-bottom: 8px; }
+  .details dl > div { padding-top: 18px; padding-bottom: 18px; }
+  .form-cell { border-top: 1px solid var(--rule); padding-top: 28px; }
+  .form { grid-template-columns: minmax(0, 1fr); }
+  .ft-top .cell { padding-top: 32px; padding-bottom: 0; }
+  .ft-top .cell + .cell { padding-top: 28px; }
+  .ft-top .cell:last-child { padding-bottom: 36px; }
+  .ft-band .cell + .cell { padding-top: 12px; }
+}
+@media (max-width: 599px) {
+  /* Hero eyebrow: a two-line stack with a hanging square, no orphaned separators */
+  .eyebrow--list { display: block; position: relative; padding-left: 20px; line-height: 20px; }
+  .eyebrow--list::before { position: absolute; left: 0; top: 6px; margin: 0; }
+  .eyebrow--list span:first-child { display: block; }
+  .eyebrow--list span:first-child::after { content: none; }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+  .svcs .svc { grid-column: span 2; }
+  .pillars .cell { grid-column: span 2; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .js .reveal { opacity: 1; transform: none; transition: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; }
-}
-
-/* ── RESPONSIVE ── */
-@media (min-width: 901px) and (max-width: 1199px) {
-  .tech-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tech-col:nth-child(2n) { border-right: none; }
-  .tech-col:nth-child(-n+2) { border-bottom: 1px solid var(--dark-rule); }
-}
-
-@media (max-width: 900px) {
-  nav { padding: 1.5rem 2rem; }
-  .js .nav-links { display: none; }
-  .js #nav-toggle { display: flex; }
-  /* Without JS the menu can't open, so keep the links visible and let them wrap. */
-  html:not(.js) nav { position: absolute; flex-wrap: wrap; row-gap: 1rem; }
-  html:not(.js) .hero-left { padding-top: 11rem; }
-  html:not(.js) .nav-links { order: 3; width: 100%; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
-  .hero { grid-template-columns: minmax(0, 1fr); min-height: auto; }
-  h1 { font-size: clamp(2.25rem, 15vw, 3.5rem); }
-  .figures-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hero-left { padding: 8rem 2rem 3rem; }
-  .hero-right { padding: 0 2rem 5rem; }
-  .hero::after { display: none; }
-  .section-inner { padding: 0 2rem; }
-  .about, .services, .philosophy, .tech, .contact { padding: 6rem 0; }
-  .section-header { margin-bottom: 3rem; }
-  .about-grid, .services-grid, .philosophy-grid, .tech-categories, .contact-inner {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 3rem;
-  }
-  .contact-left .big-text { font-size: clamp(2rem, 13vw, 2.5rem); }
-  .services-grid { gap: 0; }
-  .services-grid .service-card { border-right: none; border-bottom: 1px solid var(--dark-rule); }
-  .services-grid .service-card:last-child { border-bottom: none; }
-  .tech-categories { gap: 0; }
-  .tech-col { border-right: none; border-bottom: 1px solid var(--dark-rule); }
-  .tech-col:last-child { border-bottom: none; }
-  footer { padding: 3rem 2rem; }
-  .footer-top { flex-direction: column; align-items: flex-start; gap: 1rem; }
-}
-
-@media (max-width: 600px) {
-  .nav-cta { padding: 0.55rem 1rem; }
-  .hero-actions { flex-wrap: wrap; }
-  .about-pillars { grid-template-columns: 1fr; }
-  .service-card { padding: 2.25rem 1.75rem; }
-  .tech-col { padding: 2rem 1.75rem; }
-  .figure:nth-child(odd)  { padding-right: 1.25rem; }
-  .figure:nth-child(even) { padding-left: 1.25rem; }
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<a class="skip-link" href="#main">Skip to content</a>
+<!-- The page grid, drawn behind everything: 12 columns at 1280px, 4 columns on phones. -->
+<div class="gl" aria-hidden="true"><div class="gl__in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
 
-<!-- ── NAV ── -->
-<nav aria-label="Primary">
-  <a href="#top" class="nav-logo" aria-label="ASYM Capital, back to top">ASYM<span>.</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#philosophy">Philosophy</a></li>
-    <li><a href="#tech">Technology</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="nav-actions">
-    <a href="#contact" class="nav-cta">Get in Touch</a>
-    <button id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span></span><span></span><span></span>
-    </button>
+<header class="site-header">
+  <div class="wrap grid">
+    <a class="brand cell" href="#top" aria-label="ASYM Capital, back to top">
+      <span class="brand__asym">ASYM</span><span class="brand__cap">Capital</span><span class="brand__dot" aria-hidden="true"></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#philosophy">Philosophy</a></li>
+        <li><a href="#technology">Technology</a></li>
+      </ul>
+    </nav>
+    <div class="nav-contact-wrap"><a class="nav-contact" href="#contact">Contact</a></div>
+
+    <details class="menu">
+      <summary><span class="when-closed">Menu</span><span class="when-open">Close</span></summary>
+      <div class="menu-panel">
+        <div class="gl" aria-hidden="true"><div class="gl__in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="wrap">
+          <nav class="menu-list cell" aria-label="Mobile">
+            <a href="#about">About <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+            <a href="#services">Services <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+            <a href="#philosophy">Philosophy <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+            <a href="#technology">Technology <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+            <a href="#contact">Contact <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+            <div class="menu-meta cap">
+              <p>contact@asymcapital.uk</p>
+              <p>+44 7743 262560</p>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </details>
   </div>
-</nav>
+</header>
 
-<!-- Mobile menu overlay -->
-<div id="mobile-menu" role="navigation" aria-label="Mobile">
-  <a href="#about">About</a>
-  <a href="#services">Services</a>
-  <a href="#philosophy">Philosophy</a>
-  <a href="#tech">Technology</a>
-  <a href="#contact">Contact</a>
-</div>
+<!-- Audience notice slot for compliance-approved wording. Keep `hidden` until the text exists. -->
+<aside class="notice" id="audience-notice" aria-label="Important information" hidden>
+  <div class="wrap grid"><div class="cell c1-12"></div></div>
+</aside>
 
 <main id="main">
 
-<!-- ── HERO ── -->
-<section class="hero" id="top">
-  <div class="hero-left">
-    <div class="hero-eyebrow reveal">London · Est. 2022</div>
-    <h1 class="reveal reveal-delay-1">
-      Where<br><em>asymmetry</em><br>becomes<br>alpha.
-    </h1>
-    <p class="hero-desc reveal reveal-delay-2">
-      ASYM Capital operates at the intersection of proprietary trading and quantitative-as-a-service, deploying systematic strategies across equity, derivatives and fixed income markets.
-    </p>
-    <div class="hero-actions reveal reveal-delay-3">
-      <a href="#services" class="btn-primary">Explore Services</a>
-      <a href="#about" class="btn-ghost">Our Story</a>
-    </div>
-  </div>
+  <!-- Hero -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap grid">
+      <div class="cell c1-7 hero-copy">
+        <p class="eyebrow eyebrow--list"><span>Systematic trading</span><span>London</span><span>Est. 2022</span></p>
+        <h1 id="hero-title">We trade our own capital systematically and provide the same systems to clients.</h1>
+        <p class="standfirst">ASYM Capital is a proprietary trading firm and <span class="nb">Quantitative-as-a-Service</span> (QaaS) provider, working across equity, derivatives and fixed income markets.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#services">Services <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+          <a class="btn" href="#contact">Contact</a>
+        </div>
+      </div>
 
-  <div class="hero-right">
-    <div class="hero-figures reveal reveal-delay-2">
-      <p class="hero-figures-label">Key figures</p>
-      <dl class="figures-grid">
-        <div class="figure">
-          <dt class="figure-lbl">Sharpe ratio</dt>
-          <dd class="figure-val">1.87</dd>
+      <figure class="hero-fig c8-12" aria-labelledby="fig1-cap">
+        <div class="plot">
+          <!-- Static and precomputed: 48 bars sampled from a skew-normal density (alpha = 4, x from -1.5 to 3.5).
+               Bars beyond the 80th percentile (x > 1.2816) are drawn in the signal colour. -->
+          <svg viewBox="0 0 500 426" preserveAspectRatio="none" role="img" aria-label="Illustrative right-skewed distribution. The bars in the long right tail, beyond the 80th percentile, are highlighted as the upside tail.">
+            <path class="bars bars--ink" vector-effect="non-scaling-stroke" d="M15 418V420M25 418V420M35 418V420M45 418V420M55 418V420M65 418V420M75 418V420M85 418V420M95 418V420M105 413.9V420M115 402.7V420M125 378.4V420M135 334.9V420M145 270.8V420M155 193.2V420M165 116.5V420M175 56.2V420M185 20.8V420M195 10V420M205 17.6V420M215 36.7V420M225 61.9V420M235 90.2V420M245 120V420M255 150.3V420M265 180.2V420M275 209.3V420"/>
+            <path class="bars bars--tail" vector-effect="non-scaling-stroke" d="M285 236.9V420M295 262.6V420M305 286.3V420M315 307.7V420M325 326.7V420M335 343.4V420M345 357.8V420M355 370V420M365 380.3V420M375 388.9V420M385 395.8V420M395 401.5V420M405 405.9V420M415 409.5V420M425 412.2V420M435 414.3V420M445 415.8V420M455 417V420M465 417.9V420M475 418V420M485 418V420"/>
+            <path class="bracket" vector-effect="non-scaling-stroke" d="M281 216V210H489V216"/>
+            <path class="axis" vector-effect="non-scaling-stroke" d="M0 420H500M0 420V425M100 420V425M200 420V425M300 420V425M400 420V425M499.5 420V425"/>
+          </svg>
+          <span class="flag" aria-hidden="true">Upside tail</span>
         </div>
-        <div class="figure">
-          <dt class="figure-lbl">Execution latency</dt>
-          <dd class="figure-val">240μs</dd>
+        <figcaption id="fig1-cap" class="cap"><b>Fig. 1</b>Illustrative distribution. Not performance data.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Key figures -->
+  <section class="facts" aria-labelledby="facts-title">
+    <h2 id="facts-title" class="visually-hidden">Key figures</h2>
+    <div class="wrap">
+      <dl class="grid mx">
+        <div class="cell span3 fact">
+          <dt>Asset classes</dt>
+          <dd class="note cap">Equity, derivatives, fixed income</dd>
+          <dd class="num">3</dd>
         </div>
-        <div class="figure">
-          <dt class="figure-lbl">Signals in production</dt>
-          <dd class="figure-val">60+</dd>
+        <div class="cell span3 fact">
+          <dt>Signals in production</dt>
+          <dd class="num">60<span class="unit unit--plus">+</span></dd>
         </div>
-        <div class="figure">
-          <dt class="figure-lbl">Asset classes</dt>
-          <dd class="figure-val">3</dd>
-          <dd class="figure-note">Equity, derivatives, fixed income</dd>
+        <div class="cell span3 fact">
+          <dt>Execution latency</dt>
+          <dd class="num">240<span class="unit">µs</span></dd>
+        </div>
+        <div class="cell span3 fact">
+          <dt>Sharpe ratio</dt>
+          <dd class="num">1.87<a class="fn-mark" href="#fn-1" id="fn-1-ref" aria-label="Note 1">1</a></dd>
         </div>
       </dl>
+      <div class="grid mx facts-fn">
+        <div class="cell c1-12 fn" id="fn-1">
+          <p class="cap">1&ensp;Past performance is not indicative of future results.</p>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── ABOUT ── -->
-<section class="about" id="about">
-  <div class="section-inner">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <h2 class="section-title">About <em>ASYM Capital</em></h2>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-left reveal">
-        <p class="about-lede">
-          ASYM Capital is both a <strong>proprietary trading firm</strong> and a <strong>Quantitative-as-a-Service (QaaS)</strong> provider. We trade our own capital systematically, and we provide the same research, execution and risk infrastructure to clients.
-        </p>
-        <p class="about-body">
-          Founded in 2022, ASYM Capital was built on a single thesis: the highest-quality opportunities in any market are <em>asymmetric</em>. They are positions where the potential upside materially outweighs the downside, where the distribution of outcomes is skewed in your favour, and where disciplined modelling and execution turn that skew into a repeatable edge.
-        </p>
-        <p class="about-body">
-          We build and run end-to-end systematic trading infrastructure, from signal research and portfolio construction through to live order execution and risk control. The systems that trade our own book are the same ones we deploy for clients, at any portfolio size.
-        </p>
-        <p class="about-body">
-          We work with a select group of institutions, family offices, funds and high-net-worth investors, and we bring to every engagement the same rigour we apply to our own capital.
-        </p>
-
-        <div class="about-pillars reveal reveal-delay-1">
-          <div class="pillar">
-            <div class="pillar-num">01</div>
-            <h3 class="pillar-title">Systematic Research</h3>
-            <p class="pillar-desc">Multi-factor signal generation, regime detection with hidden Markov models, and rigorous statistical validation before any strategy touches capital.</p>
-          </div>
-          <div class="pillar">
-            <div class="pillar-num">02</div>
-            <h3 class="pillar-title">Low-Latency Execution</h3>
-            <p class="pillar-desc">TWAP, VWAP and adaptive execution algorithms integrated with broker APIs. Sub-millisecond order routing with realistic market-impact modelling.</p>
-          </div>
-          <div class="pillar">
-            <div class="pillar-num">03</div>
-            <h3 class="pillar-title">Bespoke Analytics</h3>
-            <p class="pillar-desc">Custom alpha signals, factor exposure reports and portfolio analytics for external clients. Institutional grade, delivered at any portfolio scale.</p>
-          </div>
-          <div class="pillar">
-            <div class="pillar-num">04</div>
-            <h3 class="pillar-title">Risk Infrastructure</h3>
-            <p class="pillar-desc">Real-time exposure monitoring, portfolio Greeks, stress testing and systematic hedging. Risk is not managed after the fact; it is engineered in from day one.</p>
+  <!-- About -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="grid head">
+        <div class="cell c1-7">
+          <p class="eyebrow">About</p>
+          <h2 class="h2" id="about-title">Founded in 2022 on a single thesis: the <span class="nb">highest-quality</span> opportunities in any market are asymmetric.</h2>
+        </div>
+        <div class="cell c9-12 side-cell">
+          <div class="body side">
+            <p>They are positions where the potential upside materially outweighs the downside, where the distribution of outcomes is skewed in your favour, and where disciplined modelling and execution turn that skew into a repeatable edge.</p>
           </div>
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-<!-- ── SERVICES ── -->
-<section class="services" id="services">
-  <div class="section-inner">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <h2 class="section-title">What We <em>Do</em></h2>
-    </div>
-
-    <div class="services-grid">
-
-      <div class="service-card reveal">
-        <div class="service-num">01</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false">
-          <polyline points="4,34 14,20 22,26 32,12 40,18"/>
-          <line x1="4" y1="38" x2="40" y2="38"/>
-        </svg>
-        <h3 class="service-name">Systematic Trading Strategies</h3>
-        <p class="service-desc">End-to-end algorithmic trading systems covering signal generation, portfolio construction, risk management and live order execution across equity, derivatives and fixed income.</p>
-        <ul class="service-tags">
-          <li class="service-tag">Multi-asset</li>
-          <li class="service-tag">Proprietary capital</li>
-          <li class="service-tag">Live execution</li>
-        </ul>
-      </div>
-
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-num">02</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false">
-          <rect x="6" y="6" width="32" height="32" rx="2"/>
-          <line x1="22" y1="6" x2="22" y2="38"/>
-          <polyline points="6,18 22,14 38,18"/>
-          <polyline points="6,30 22,26 38,30"/>
-        </svg>
-        <h3 class="service-name">Algorithmic Execution</h3>
-        <p class="service-desc">Low-latency TWAP, VWAP and adaptive execution algorithms integrated directly with broker APIs for optimal order routing, minimal market impact and realistic transaction-cost modelling.</p>
-        <ul class="service-tags">
-          <li class="service-tag">TWAP / VWAP</li>
-          <li class="service-tag">Broker API</li>
-          <li class="service-tag">Sub-ms latency</li>
-        </ul>
-      </div>
-
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-num">03</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false">
-          <circle cx="22" cy="22" r="16"/>
-          <line x1="22" y1="6" x2="22" y2="22"/>
-          <line x1="22" y1="22" x2="32" y2="28"/>
-          <circle cx="22" cy="22" r="2" fill="currentColor"/>
-        </svg>
-        <h3 class="service-name">Quantitative Analytics (QaaS)</h3>
-        <p class="service-desc">Bespoke quantitative models, alpha signals and factor exposure reports for external clients across portfolios of every size. The rigour of a quant hedge fund, at any scale.</p>
-        <ul class="service-tags">
-          <li class="service-tag">Alpha signals</li>
-          <li class="service-tag">Factor reports</li>
-          <li class="service-tag">Bespoke models</li>
-        </ul>
-      </div>
-
-      <div class="service-card reveal">
-        <div class="service-num">04</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false">
-          <rect x="8" y="20" width="6" height="18"/>
-          <rect x="19" y="12" width="6" height="26"/>
-          <rect x="30" y="4" width="6" height="34"/>
-          <line x1="6" y1="40" x2="38" y2="40"/>
-        </svg>
-        <h3 class="service-name">Backtesting Infrastructure</h3>
-        <p class="service-desc">High-fidelity, event-driven backtesting over multi-year tick-level data. A full performance analytics suite (Sharpe, Sortino, Calmar, maximum drawdown) with realistic slippage and commission modelling.</p>
-        <ul class="service-tags">
-          <li class="service-tag">Tick-level data</li>
-          <li class="service-tag">Multi-factor</li>
-          <li class="service-tag">Risk analytics</li>
-        </ul>
-      </div>
-
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-num">05</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false">
-          <path d="M 8,32 Q 14,18 22,22 Q 30,26 36,10"/>
-          <circle cx="22" cy="22" r="3"/>
-          <line x1="6" y1="38" x2="38" y2="38"/>
-          <line x1="6" y1="6" x2="6" y2="38"/>
-        </svg>
-        <h3 class="service-name">Market Signal Intelligence</h3>
-        <p class="service-desc">Machine-learning regime detection using hidden Markov models, momentum and mean-reversion signals, and cross-sectional volatility analytics across 60+ equities for systematic pre-market intelligence.</p>
-        <ul class="service-tags">
-          <li class="service-tag">HMM regimes</li>
-          <li class="service-tag">60+ signals</li>
-          <li class="service-tag">Pre-market</li>
-        </ul>
-      </div>
-
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-num">06</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false">
-          <polygon points="22,4 40,34 4,34"/>
-          <line x1="22" y1="14" x2="22" y2="26"/>
-          <circle cx="22" cy="30" r="1.5" fill="currentColor"/>
-        </svg>
-        <h3 class="service-name">Portfolio Risk Management</h3>
-        <p class="service-desc">Real-time portfolio risk monitoring, Greeks exposure management and systematic hedging strategies. Multi-factor risk decomposition with live stress testing and scenario analysis across positions.</p>
-        <ul class="service-tags">
-          <li class="service-tag">Greeks</li>
-          <li class="service-tag">Real-time</li>
-          <li class="service-tag">Stress testing</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── PHILOSOPHY ── -->
-<section class="philosophy" id="philosophy">
-  <div class="section-inner">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <h2 class="section-title">Our <em>Philosophy</em></h2>
-    </div>
-    <div class="philosophy-grid">
-      <blockquote class="philosophy-quote reveal">
-        “In markets, symmetry is overrated. The best opportunities are not balanced; <em>they are skewed.</em> We find them, measure them and execute against them systematically.”
-      </blockquote>
-      <div class="philosophy-body reveal reveal-delay-2">
-        <p>The word <em>asymmetric</em> is not decoration. It is the foundation of every model we build, every position we take and every system we architect. We are in the business of identifying probability distributions skewed in our favour, and acting on them with precision.</p>
-        <p>This means rejecting “balanced” portfolio construction when the data shows directional skew. It means stress-testing the tail, not just the mean. It means building execution algorithms that preserve edge rather than erode it. And it means bringing that same philosophy to every client engagement we take on.</p>
-        <p>Rigour, not intuition. Evidence, not narrative. Asymmetry, not symmetry.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── TECH ── -->
-<section class="tech" id="tech">
-  <div class="section-inner">
-    <div class="section-header">
-      <span class="section-num">04</span>
-      <h2 class="section-title">Infrastructure &amp; <em>Research Stack</em></h2>
-    </div>
-    <div class="tech-categories reveal">
-
-      <div class="tech-col">
-        <h3 class="tech-col-label">Execution &amp; Latency</h3>
-        <p class="tech-col-desc">Order routing, broker connectivity and execution algorithms built for low latency and minimal market impact.</p>
-        <ul class="tech-col-items">
-          <li><span class="tci-name">C / C++</span><span class="tci-note">Order routing core</span></li>
-          <li><span class="tci-name">FIX protocol</span><span class="tci-note">Broker connectivity</span></li>
-          <li><span class="tci-name">asyncio</span><span class="tci-note">Event-driven I/O</span></li>
-          <li><span class="tci-name">TWAP / VWAP</span><span class="tci-note">Execution algorithms</span></li>
-        </ul>
-      </div>
-
-      <div class="tech-col">
-        <h3 class="tech-col-label">Quant Research</h3>
-        <p class="tech-col-desc">Statistical modelling, derivatives pricing and signal research, validated rigorously before any strategy reaches capital.</p>
-        <ul class="tech-col-items">
-          <li><span class="tci-name">Python</span><span class="tci-note">Primary research language</span></li>
-          <li><span class="tci-name">QuantLib</span><span class="tci-note">Derivatives pricing</span></li>
-          <li><span class="tci-name">NumPy / SciPy</span><span class="tci-note">Numerics &amp; optimisation</span></li>
-          <li><span class="tci-name">statsmodels</span><span class="tci-note">Econometrics</span></li>
-        </ul>
-      </div>
-
-      <div class="tech-col">
-        <h3 class="tech-col-label">ML &amp; Signal Intelligence</h3>
-        <p class="tech-col-desc">Regime detection, factor modelling and cross-sectional signal pipelines that feed both our own trading and our client analytics.</p>
-        <ul class="tech-col-items">
-          <li><span class="tci-name">scikit-learn</span><span class="tci-note">Factor &amp; ML models</span></li>
-          <li><span class="tci-name">Hidden Markov models</span><span class="tci-note">Regime detection</span></li>
-          <li><span class="tci-name">Momentum / mean reversion</span><span class="tci-note">Signal families</span></li>
-          <li><span class="tci-name">pandas</span><span class="tci-note">Signal pipelines</span></li>
-        </ul>
-      </div>
-
-      <div class="tech-col">
-        <h3 class="tech-col-label">Data &amp; Infrastructure</h3>
-        <p class="tech-col-desc">Multi-year tick-level history and an event-driven backtesting pipeline with realistic cost modelling, so every result is reproducible.</p>
-        <ul class="tech-col-items">
-          <li><span class="tci-name">PostgreSQL</span><span class="tci-note">Time-series store</span></li>
-          <li><span class="tci-name">Tick-level history</span><span class="tci-note">Multi-year</span></li>
-          <li><span class="tci-name">Event-driven backtester</span><span class="tci-note">Slippage &amp; cost models</span></li>
-          <li><span class="tci-name">Performance analytics</span><span class="tci-note">Sharpe · Sortino · Calmar</span></li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── CONTACT ── -->
-<section class="contact" id="contact">
-  <div class="section-inner">
-    <div class="section-header">
-      <span class="section-num">05</span>
-      <h2 class="section-title">Get in <em>Touch</em></h2>
-    </div>
-    <div class="contact-inner">
-      <div class="contact-left reveal">
-        <p class="big-text">Let’s build<br><em>asymmetric</em><br>edge<br>together.</p>
-        <p class="contact-sub">Whether you need bespoke quantitative analytics, algorithmic execution infrastructure or systematic trading strategies, we work closely with a select number of clients to deliver institutional-grade solutions.</p>
-      </div>
-      <div class="contact-details reveal reveal-delay-2">
-        <div class="contact-list">
-          <div class="contact-item">
-            <span class="contact-label">Email</span>
-            <a href="mailto:contact@asymcapital.uk" class="contact-value">contact@asymcapital.uk</a>
+      <div class="grid mx lines">
+        <article class="cell c1-6">
+          <h3 class="h3--lg">Proprietary trading</h3>
+          <div class="body">
+            <p>We trade our own capital on end-to-end systematic infrastructure, from signal research and portfolio construction through to live order execution and risk control.</p>
           </div>
-          <div class="contact-item">
-            <span class="contact-label">Phone</span>
-            <a href="tel:+447743262560" class="contact-value">+44 7743 262560</a>
+        </article>
+        <article class="cell c7-12">
+          <h3 class="h3--lg">Quantitative-as-a-Service</h3>
+          <div class="body">
+            <p>The systems that trade our own book are the ones we deploy for clients, at any portfolio size. We work with a select group of institutions, family offices, funds and <span class="nb">high-net-worth</span> investors, and bring the same rigour to each engagement that we apply to our own capital.</p>
           </div>
-          <div class="contact-item">
-            <span class="contact-label">Office</span>
-            <address class="contact-value">53 Kilby Court, Southern Way<br>London SE10 0PR<br>United Kingdom</address>
-          </div>
-          <div class="contact-item">
-            <span class="contact-label">Markets</span>
-            <span class="contact-value">NASDAQ · NYSE · CME · LSE</span>
-          </div>
-          <div class="contact-item">
-            <span class="contact-label">Founded</span>
-            <span class="contact-value">2022</span>
+        </article>
+      </div>
+
+      <div class="grid mx pillars">
+        <div class="cell span3">
+          <h3 class="h3">Systematic research</h3>
+          <p>Multi-factor signal generation, regime detection with hidden Markov models, and rigorous statistical validation before any strategy touches capital.</p>
+        </div>
+        <div class="cell span3">
+          <h3 class="h3">Low-latency execution</h3>
+          <p>TWAP, VWAP and adaptive execution algorithms integrated with broker APIs. Sub-millisecond order routing with realistic market-impact modelling.</p>
+        </div>
+        <div class="cell span3">
+          <h3 class="h3">Bespoke analytics</h3>
+          <p>Custom alpha signals, factor exposure reports and portfolio analytics for external clients, at any portfolio size.</p>
+        </div>
+        <div class="cell span3">
+          <h3 class="h3">Risk infrastructure</h3>
+          <p>Real-time exposure monitoring, portfolio Greeks, stress testing and systematic hedging, built into every system from the start.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section" id="services" aria-labelledby="services-title">
+    <div class="wrap">
+      <div class="grid head">
+        <div class="cell c1-7">
+          <p class="eyebrow">Services</p>
+          <h2 class="h2" id="services-title">What we do</h2>
+        </div>
+        <div class="cell c9-12 side-cell">
+          <p class="summary">Six services, built on the systems we run on our own capital.</p>
+          <div class="body side">
+            <p>We work closely with a select number of clients.</p>
           </div>
         </div>
+      </div>
 
-        <noscript><p class="contact-sub noscript-note">To get in touch, email contact@asymcapital.uk or call +44 7743 262560.</p></noscript>
-
-        <form id="contact-form" novalidate>
-          <div class="field">
-            <label for="cf-name">Name</label>
-            <input type="text" id="cf-name" name="name" autocomplete="name" maxlength="200" required>
-          </div>
-          <div class="field">
-            <label for="cf-email">Email</label>
-            <input type="email" id="cf-email" name="email" autocomplete="email" maxlength="254" required>
-          </div>
-          <div class="field">
-            <label for="cf-company">Company (optional)</label>
-            <input type="text" id="cf-company" name="company" autocomplete="organization" maxlength="200">
-          </div>
-          <div class="field">
-            <label for="cf-enquiry">Enquiry type</label>
-            <select id="cf-enquiry" name="enquiry_type">
-              <option value="general">General enquiry</option>
-              <option value="systematic_trading">Systematic Trading Strategies</option>
-              <option value="algorithmic_execution">Algorithmic Execution</option>
-              <option value="quantitative_analytics">Quantitative Analytics (QaaS)</option>
-              <option value="backtesting">Backtesting Infrastructure</option>
-              <option value="market_signals">Market Signal Intelligence</option>
-              <option value="risk_management">Portfolio Risk Management</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="cf-message">Message</label>
-            <textarea id="cf-message" name="message" rows="5" maxlength="5000" placeholder="Tell us about your requirements" required></textarea>
-          </div>
-          <button type="submit" class="btn-primary" id="cf-submit">Send Message →</button>
-          <div id="cf-status" role="status" aria-live="polite"></div>
-        </form>
-
+      <div class="grid mx svcs">
+        <article class="cell span4 svc">
+          <h3 class="h3">Systematic trading strategies</h3>
+          <p>End-to-end algorithmic trading systems covering signal generation, portfolio construction, risk management and live order execution across equity, derivatives and fixed income.</p>
+          <a class="svc__link" href="#contact" data-enquiry="systematic_trading">Enquire <span class="visually-hidden">about systematic trading strategies</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+        </article>
+        <article class="cell span4 svc">
+          <h3 class="h3">Algorithmic execution</h3>
+          <p>Low-latency TWAP, VWAP and adaptive execution algorithms integrated directly with broker APIs for optimal order routing, minimal market impact and realistic transaction-cost modelling.</p>
+          <a class="svc__link" href="#contact" data-enquiry="algorithmic_execution">Enquire <span class="visually-hidden">about algorithmic execution</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+        </article>
+        <article class="cell span4 svc">
+          <h3 class="h3">Quantitative analytics (QaaS)</h3>
+          <p>Bespoke quantitative models, alpha signals and factor exposure reports for external clients, for portfolios of any size.</p>
+          <a class="svc__link" href="#contact" data-enquiry="quantitative_analytics">Enquire <span class="visually-hidden">about quantitative analytics</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+        </article>
+        <article class="cell span4 svc">
+          <h3 class="h3">Backtesting infrastructure</h3>
+          <p>High-fidelity, event-driven backtesting over multi-year tick-level data, with a full performance analytics suite (Sharpe, Sortino, Calmar, maximum drawdown) and realistic slippage and commission modelling.</p>
+          <a class="svc__link" href="#contact" data-enquiry="backtesting">Enquire <span class="visually-hidden">about backtesting infrastructure</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+        </article>
+        <article class="cell span4 svc">
+          <h3 class="h3">Market signal intelligence</h3>
+          <p>Machine-learning regime detection using hidden Markov models, momentum and mean-reversion signals, and cross-sectional volatility analytics across 60+ equities for systematic pre-market intelligence.</p>
+          <a class="svc__link" href="#contact" data-enquiry="market_signals">Enquire <span class="visually-hidden">about market signal intelligence</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+        </article>
+        <article class="cell span4 svc">
+          <h3 class="h3">Portfolio risk management</h3>
+          <p>Real-time portfolio risk monitoring, Greeks exposure management and systematic hedging. Multi-factor risk decomposition with live stress testing and scenario analysis across positions.</p>
+          <a class="svc__link" href="#contact" data-enquiry="risk_management">Enquire <span class="visually-hidden">about portfolio risk management</span><svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+        </article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="section" id="philosophy" aria-labelledby="philosophy-title">
+    <div class="wrap">
+      <div class="grid head">
+        <div class="cell c1-7">
+          <p class="eyebrow">Philosophy</p>
+          <div>
+            <h2 class="statement" id="philosophy-title">In markets, symmetry is overrated. The best opportunities are not balanced; they are skewed.</h2>
+            <div class="body phil-body">
+              <p>We find those opportunities, measure them and execute against them systematically. Every model we build and every position we take starts from the same question: is the distribution of outcomes skewed in our favour?</p>
+              <p>In practice, that means rejecting “balanced” portfolio construction when the data shows directional skew, stress-testing the tail rather than just the mean, and building execution algorithms that preserve edge rather than erode it. Clients get the same discipline.</p>
+            </div>
+          </div>
+        </div>
+        <div class="cell c9-12 side-cell">
+          <figure class="payoff side" aria-labelledby="fig2-cap">
+            <div class="plot">
+              <svg viewBox="0 0 400 330" role="img" aria-label="Conceptual payoff profile: a small, flat downside on the left and a rising upside on the right, compared with a symmetric profile.">
+                <path class="zero" vector-effect="non-scaling-stroke" d="M0 200H400M0.5 14V316"/>
+                <path class="ref" vector-effect="non-scaling-stroke" d="M210 232L139.2 316"/>
+                <path class="down" vector-effect="non-scaling-stroke" d="M0 232H210"/>
+                <path class="up" vector-effect="non-scaling-stroke" d="M210 232L392 16"/>
+              </svg>
+              <span class="lbl lbl--payoff" aria-hidden="true">Payoff</span>
+              <span class="lbl lbl--outcome" aria-hidden="true">Outcome</span>
+              <span class="lbl lbl--down" aria-hidden="true">Downside</span>
+              <span class="lbl lbl--up" aria-hidden="true">Upside</span>
+              <span class="lbl lbl--sym" aria-hidden="true">Symmetric</span>
+            </div>
+            <figcaption id="fig2-cap" class="cap"><b>Fig. 2</b>Conceptual payoff. Not performance data.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology -->
+  <section class="section" id="technology" aria-labelledby="technology-title">
+    <div class="wrap">
+      <div class="grid head">
+        <div class="cell c1-7">
+          <p class="eyebrow">Technology</p>
+          <h2 class="h2" id="technology-title">Infrastructure and research stack</h2>
+        </div>
+        <div class="cell c9-12 side-cell">
+          <p class="summary">Built for low latency, minimal market impact and reproducible results.</p>
+        </div>
+      </div>
+
+      <div class="grid mx spec">
+        <section class="cell span3 spec-col" aria-labelledby="t1">
+          <h3 class="h3" id="t1">Execution and latency</h3>
+          <p>Order routing, broker connectivity and execution algorithms built for low latency and minimal market impact.</p>
+          <dl>
+            <div class="spec-row"><dt>C / C++</dt><dd>Order routing core</dd></div>
+            <div class="spec-row"><dt>FIX protocol</dt><dd>Broker connectivity</dd></div>
+            <div class="spec-row"><dt>asyncio</dt><dd>Event-driven I/O</dd></div>
+            <div class="spec-row"><dt>TWAP / VWAP</dt><dd>Execution algorithms</dd></div>
+          </dl>
+        </section>
+        <section class="cell span3 spec-col" aria-labelledby="t2">
+          <h3 class="h3" id="t2">Quant research</h3>
+          <p>Statistical modelling, derivatives pricing and signal research, validated before any strategy reaches capital.</p>
+          <dl>
+            <div class="spec-row"><dt>Python</dt><dd>Primary research language</dd></div>
+            <div class="spec-row"><dt>QuantLib</dt><dd>Derivatives pricing</dd></div>
+            <div class="spec-row"><dt>NumPy / SciPy</dt><dd>Numerics and optimisation</dd></div>
+            <div class="spec-row"><dt>statsmodels</dt><dd>Econometrics</dd></div>
+          </dl>
+        </section>
+        <section class="cell span3 spec-col" aria-labelledby="t3">
+          <h3 class="h3" id="t3">ML and signal intelligence</h3>
+          <p>Regime detection, factor modelling and cross-sectional signal pipelines that feed both our own trading and our client analytics.</p>
+          <dl>
+            <div class="spec-row"><dt>scikit-learn</dt><dd>Factor and ML models</dd></div>
+            <div class="spec-row"><dt>Hidden Markov models</dt><dd>Regime detection</dd></div>
+            <div class="spec-row"><dt>Momentum / mean reversion</dt><dd>Signal families</dd></div>
+            <div class="spec-row"><dt>pandas</dt><dd>Signal pipelines</dd></div>
+          </dl>
+        </section>
+        <section class="cell span3 spec-col" aria-labelledby="t4">
+          <h3 class="h3" id="t4">Data and infrastructure</h3>
+          <p>Multi-year tick-level history and an event-driven backtesting pipeline with realistic cost modelling, so every result is reproducible.</p>
+          <dl>
+            <div class="spec-row"><dt>PostgreSQL</dt><dd>Time-series store</dd></div>
+            <div class="spec-row"><dt>Tick-level history</dt><dd>Multi-year</dd></div>
+            <div class="spec-row"><dt>Event-driven backtester</dt><dd>Slippage and cost models</dd></div>
+            <div class="spec-row"><dt>Performance analytics</dt><dd>Sharpe · Sortino · Calmar</dd></div>
+          </dl>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="grid head">
+        <div class="cell c1-7">
+          <p class="eyebrow">Contact</p>
+          <h2 class="h2" id="contact-title">Get in touch</h2>
+        </div>
+        <div class="cell c9-12 side-cell">
+          <p class="summary">For institutions, family offices, funds and <span class="nb">high-net-worth</span> investors.</p>
+        </div>
+      </div>
+
+      <div class="grid contact-band">
+        <div class="cell c1-5 details">
+          <dl>
+            <div><dt>Email</dt><dd><a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a></dd></div>
+            <div><dt>Phone</dt><dd><a href="tel:+447743262560">+44 7743 262560</a></dd></div>
+            <div><dt>Office</dt><dd><address>53 Kilby Court, Southern Way<br>London SE10 0PR, United Kingdom</address></dd></div>
+            <div><dt>Markets</dt><dd>NASDAQ · NYSE · CME · LSE</dd></div>
+            <div><dt>Founded</dt><dd>2022</dd></div>
+          </dl>
+        </div>
+        <div class="gap-col" aria-hidden="true"></div>
+        <div class="cell c7-12 form-cell">
+          <noscript><p class="noscript-note">To get in touch, email contact@asymcapital.uk or call +44 7743 262560.</p></noscript>
+          <form class="form" id="contact-form" novalidate>
+            <div class="field">
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" name="name" autocomplete="name" maxlength="200" required>
+            </div>
+            <div class="field">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" autocomplete="email" maxlength="254" required>
+            </div>
+            <div class="field">
+              <label for="cf-company">Company <span class="opt">(optional)</span></label>
+              <input type="text" id="cf-company" name="company" autocomplete="organization" maxlength="200">
+            </div>
+            <div class="field">
+              <label for="cf-enquiry">Enquiry type</label>
+              <select id="cf-enquiry" name="enquiry_type">
+                <option value="general">General enquiry</option>
+                <option value="systematic_trading">Systematic trading strategies</option>
+                <option value="algorithmic_execution">Algorithmic execution</option>
+                <option value="quantitative_analytics">Quantitative analytics (QaaS)</option>
+                <option value="backtesting">Backtesting infrastructure</option>
+                <option value="market_signals">Market signal intelligence</option>
+                <option value="risk_management">Portfolio risk management</option>
+              </select>
+            </div>
+            <div class="field field--full">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" name="message" rows="6" maxlength="5000" required aria-describedby="cf-hint"></textarea>
+              <span class="cap" id="cf-hint">Tell us about your requirements. Minimum 20 characters.</span>
+            </div>
+            <div class="form-foot">
+              <button type="submit" class="btn btn--primary" id="cf-submit"><span id="cf-label">Send message</span> <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></button>
+              <p class="status" id="cf-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </main>
 
-<!-- ── FOOTER ── -->
-<footer>
-  <div class="footer-top">
-    <div class="footer-logo">ASYM<span>.</span>CAPITAL</div>
-    <div class="footer-links">
-      <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a>
-      <a href="tel:+447743262560">+44 7743 262560</a>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="gl gl--full gl--inv" aria-hidden="true"><div class="gl__in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+    <div class="grid ft-band ft-top">
+      <div class="cell c1-4">
+        <a class="ft-brand" href="#top" aria-label="ASYM Capital, back to top"><span class="brand__asym">ASYM</span><span class="brand__cap">Capital</span><span class="brand__dot" aria-hidden="true"></span></a>
+        <p class="ft-sub">Systematic trading · London · Est. 2022</p>
+      </div>
+      <nav class="cell c7-9" aria-label="Footer">
+        <span class="ft-label">Sections</span>
+        <ul class="ft-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#philosophy">Philosophy</a></li>
+          <li><a href="#technology">Technology</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="cell c10-12 ft-contact">
+        <span class="ft-label">Contact</span>
+        <p><a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a></p>
+        <p><a href="tel:+447743262560">+44 7743 262560</a></p>
+        <address>53 Kilby Court, Southern Way<br>London SE10 0PR<br>United Kingdom</address>
+      </div>
     </div>
-  </div>
-  <div class="footer-legal">
-    <p>© <span id="year">2026</span> ASYM Capital. All rights reserved.</p>
-    <p>ASYM Capital is a trading name of DERIVQ LIMITED, a company registered in England and Wales (company number 09852527). Registered office: 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
-    <p>Trading involves substantial risk. Past performance is not indicative of future results.</p>
+
+    <div class="grid ft-band">
+      <div class="cell c1-6">
+        <span class="ft-label">Company</span>
+        <p class="legal">ASYM Capital is a trading name of DERIVQ LIMITED, a company registered in England and Wales (company number 09852527). Registered office: 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
+      </div>
+      <div class="cell c7-9">
+        <span class="ft-label">Markets</span>
+        <p class="legal legal--strong">NASDAQ · NYSE · CME · LSE</p>
+      </div>
+      <div class="cell c10-12">
+        <span class="ft-label">Risk</span>
+        <p class="legal legal--strong">Trading involves substantial risk. Past performance is not indicative of future results.</p>
+      </div>
+    </div>
+
+    <div class="grid ft-band ft-base">
+      <div class="cell c1-6"><p class="legal">© <span id="year">2026</span> ASYM Capital. All rights reserved.</p></div>
+    </div>
   </div>
 </footer>
 

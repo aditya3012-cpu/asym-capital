@@ -82,7 +82,7 @@ If you add a build step (e.g. a framework or bundler), set the **Build command**
    - Returns `{status:"ok", message}` or `{detail}` with 400/422/429/500.
 4. Any other `/api/*` returns 404; everything else is served by `env.ASSETS.fetch(request)` (the static site).
 
-The frontend (`frontend/main.js`, ~line 166) posts the form as JSON to same-origin `/api/contact` and expects the response shapes above. If you rebuild the frontend, keep that contract or update the Worker to match.
+The frontend (`frontend/main.js`, ~line 104) posts the form as JSON to same-origin `/api/contact` and expects the response shapes above. If you rebuild the frontend, keep that contract or update the Worker to match.
 
 ---
 
@@ -128,8 +128,8 @@ The owner asked for the site to be taken offline while it's redone.
 ## 7. Repo layout (`cloudflare-uk` branch)
 
 ```
-frontend/index.html     # whole site: one HTML file with inline CSS (~1,250 lines)
-frontend/main.js        # nav, mobile menu, scroll reveal, footer year, form (posts to /api/contact)
+frontend/index.html     # whole site: one HTML file with inline CSS (see §8 design system)
+frontend/main.js        # mobile menu, Enquire preselect, footer year, contact form (posts to /api/contact)
 frontend/favicon.svg, og.png (1200x630 link preview), robots.txt, sitemap.xml
 worker/index.js         # Cloudflare Worker (maintenance, health, contact API, assets)
 wrangler.jsonc          # Worker config (see §3)
@@ -158,7 +158,14 @@ Everything Cloudflare serves comes from `frontend/` (static) and `worker/index.j
   - No GitHub or LinkedIn links on the site.
   - A compliance officer reviews the site before publishing.
 - Services the site and form list: systematic trading strategies, algorithmic execution, quantitative analytics (QaaS), backtesting infrastructure, market signal intelligence, portfolio risk management.
-- Current visual style: dark background (`#0C0C0E`), off-white text (`#F5F0E8`), orange accent (`#E8521A`), monospace (Courier New) typography. The owner wants it to look more professional and less templated. Treat these as a starting point, not a requirement.
+- **Design system (chosen by the owner, 7 Oct 2026: "Hairline Lab").** The owner's brief: it must not look like a "vibe-coded" or template site.
+  - Near-white `#FCFCFB` page, ink `#0B0D10` text, muted `#555B65`, rules `#C9CDD2`, faint grid `#E6E8EB`. Brand orange `#E8521A` is a graphic accent only (wordmark dot, the histogram's upside tail, hover/focus lines); orange text uses `#B23E12`. Dark footer `#0B0D10`.
+  - One typeface: Archivo (Google Fonts), using its width axis: light 300 for headings and figures, 400 body, expanded 125% caps for small labels.
+  - A 12-column grid (1280px max) is drawn faintly behind the page; content cells sit on the same tracks. 4 columns on phones.
+  - Fig. 1 (hero) is a precomputed skew-normal histogram and Fig. 2 a conceptual payoff diagram. Both are captioned "not performance data". Never add charts that look like real performance.
+  - Copy rules: plain declarative sentences, sentence case, en-GB spelling. Avoid AI-copy tells: "X, not Y" slogans, triads, "Where X becomes Y" taglines, buzzwords such as "institutional-grade solutions", em-dash rhythm. Don't add animations, counters, tickers, custom cursors or decorative chips.
+  - The contact form is shown only when JS runs (`html.js`); without JS a `<noscript>` line gives the email and phone. The mobile menu is a `<details>` element, so it works without JS.
+  - The Worker's maintenance page and both emails use the same light style (Arial/Helvetica in email).
 - The site carries a risk disclaimer ("Trading involves substantial risk. Past performance is not indicative of future results."). Keep appropriate financial-services disclaimers in the redesign, and don't invent performance figures, client names, regulatory status or team members. Ask the owner for real content.
 
 ---

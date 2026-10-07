@@ -73,40 +73,50 @@ function validate(data) {
   return { name, email, message, company: company || null, enquiry };
 }
 
-function notificationHtml(f) {
-  const label = esc(ENQUIRY_LABELS[f.enquiry]);
-  const row = (k, v) =>
-    `<tr><td style="padding:10px 16px;color:#5A5A62;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid #2E2E34;white-space:nowrap;">${k}</td><td style="padding:10px 16px;color:#F5F0E8;font-size:13px;border-bottom:1px solid #2E2E34;">${v}</td></tr>`;
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>New Enquiry — ASYM Capital</title></head>
-<body style="margin:0;padding:0;background:#0C0C0E;font-family:'Courier New',Courier,monospace;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0C0C0E;padding:40px 0;"><tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
-<tr><td style="background:#141416;border:1px solid #2E2E34;padding:24px 32px;border-bottom:none;"><p style="margin:0;color:#E8521A;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">ASYM Capital</p><h1 style="margin:8px 0 0;color:#FEFCF8;font-size:20px;font-weight:700;letter-spacing:0.04em;">New Enquiry Received</h1></td></tr>
-<tr><td style="background:#1C1C20;border:1px solid #2E2E34;border-top:none;border-bottom:none;padding:16px 32px;"><span style="display:inline-block;background:#E8521A;color:#0C0C0E;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;">${label}</span></td></tr>
-<tr><td style="background:#1C1C20;border:1px solid #2E2E34;border-top:none;border-bottom:none;padding:0 0 8px;"><table width="100%" cellpadding="0" cellspacing="0" border="0">
-${row("Name", esc(f.name))}
-${row("Email", `<a href="mailto:${esc(f.email)}" style="color:#E8521A;text-decoration:none;">${esc(f.email)}</a>`)}
-${f.company ? row("Company", esc(f.company)) : ""}
-${row("Enquiry&nbsp;Type", label)}
-</table></td></tr>
-<tr><td style="background:#1C1C20;border:1px solid #2E2E34;padding:24px 32px;"><p style="margin:0 0 12px;color:#5A5A62;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;">Message</p><p style="margin:0;color:#F5F0E8;font-size:14px;line-height:1.8;white-space:pre-wrap;">${esc(f.message)}</p></td></tr>
-<tr><td style="background:#141416;border:1px solid #2E2E34;border-top:none;padding:16px 32px;"><p style="margin:0;color:#5A5A62;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">ASYM Capital · asymcapital.uk</p></td></tr>
+// Email styles: plain, light and table-based so they render in Outlook and Gmail.
+const FONT = "Arial,Helvetica,sans-serif";
+const WORDMARK = `<span style="font-family:${FONT};font-size:16px;font-weight:bold;letter-spacing:0.06em;color:#0B0D10;">ASYM</span><span style="font-family:${FONT};font-size:16px;color:#0B0D10;"> Capital</span><span style="display:inline-block;width:5px;height:5px;background:#E8521A;margin-left:3px;"></span>`;
+
+function emailShell(title, inner, footer) {
+  return `<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${title}</title></head>
+<body style="margin:0;padding:0;background:#F1F2F2;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F1F2F2;padding:32px 0;"><tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#FFFFFF;border:1px solid #C9CDD2;">
+<tr><td style="padding:22px 32px;border-bottom:1px solid #0B0D10;">${WORDMARK}</td></tr>
+${inner}
+<tr><td style="padding:20px 32px;border-top:1px solid #C9CDD2;font-family:${FONT};font-size:11px;line-height:1.6;color:#555B65;">${footer}</td></tr>
 </table></td></tr></table></body></html>`;
 }
 
+function notificationHtml(f) {
+  const label = esc(ENQUIRY_LABELS[f.enquiry]);
+  const row = (k, v) =>
+    `<tr><td style="padding:10px 0;border-bottom:1px solid #E6E8EB;font-family:${FONT};font-size:12px;color:#555B65;width:120px;vertical-align:top;">${k}</td><td style="padding:10px 0;border-bottom:1px solid #E6E8EB;font-family:${FONT};font-size:14px;color:#0B0D10;">${v}</td></tr>`;
+  const inner = `<tr><td style="padding:28px 32px 8px;font-family:${FONT};">
+<p style="margin:0 0 6px;font-size:12px;color:#555B65;">New website enquiry</p>
+<h1 style="margin:0 0 20px;font-size:22px;font-weight:normal;color:#0B0D10;">${label}</h1>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+${row("Name", esc(f.name))}
+${row("Email", `<a href="mailto:${esc(f.email)}" style="color:#0B0D10;">${esc(f.email)}</a>`)}
+${f.company ? row("Company", esc(f.company)) : ""}
+${row("Enquiry type", label)}
+</table></td></tr>
+<tr><td style="padding:20px 32px 28px;font-family:${FONT};">
+<p style="margin:0 0 8px;font-size:12px;color:#555B65;">Message</p>
+<p style="margin:0;font-size:15px;line-height:1.6;color:#0B0D10;white-space:pre-wrap;">${esc(f.message)}</p></td></tr>`;
+  return emailShell("New enquiry: ASYM Capital", inner, "Sent from the contact form on asymcapital.uk. Reply to this email to answer the enquirer directly.");
+}
+
 function autoreplyHtml(name) {
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Thank you — ASYM Capital</title></head>
-<body style="margin:0;padding:0;background:#0C0C0E;font-family:'Courier New',Courier,monospace;">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0C0C0E;padding:40px 0;"><tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
-<tr><td style="background:#141416;border:1px solid #2E2E34;padding:24px 32px;border-bottom:3px solid #E8521A;"><p style="margin:0;color:#E8521A;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">ASYM Capital</p><h1 style="margin:8px 0 0;color:#FEFCF8;font-size:20px;font-weight:700;letter-spacing:0.04em;">We've received your message.</h1></td></tr>
-<tr><td style="background:#1C1C20;border:1px solid #2E2E34;border-top:none;padding:32px;">
-<p style="margin:0 0 20px;color:#F5F0E8;font-size:14px;line-height:1.8;">Dear ${esc(name)},</p>
-<p style="margin:0 0 20px;color:#B5AFA3;font-size:14px;line-height:1.8;">Thank you for reaching out to <strong style="color:#F5F0E8;">ASYM Capital</strong>. Your enquiry has been received and a member of our team will be in touch within <strong style="color:#E8521A;">24 hours</strong>.</p>
-<p style="margin:0 0 20px;color:#B5AFA3;font-size:14px;line-height:1.8;">We work with a select number of clients and take great care in every engagement. If your requirements are time-sensitive, please reply to this email directly and we will prioritise your enquiry.</p>
-<p style="margin:0;color:#B5AFA3;font-size:14px;line-height:1.8;">Regards,<br><strong style="color:#F5F0E8;">ASYM Capital</strong></p></td></tr>
-<tr><td style="background:#141416;border:1px solid #2E2E34;border-top:none;padding:16px 32px;"><p style="margin:0 0 8px;color:#8F8A80;font-size:10px;line-height:1.6;letter-spacing:0.04em;">${LEGAL_LINE}</p><p style="margin:0;color:#8F8A80;font-size:10px;line-height:1.6;letter-spacing:0.04em;">Trading involves substantial risk. Past performance is not indicative of future results.</p></td></tr>
-</table></td></tr></table></body></html>`;
+  const p = (text) => `<p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#0B0D10;">${text}</p>`;
+  const inner = `<tr><td style="padding:28px 32px 12px;font-family:${FONT};">
+${p(`Dear ${esc(name)},`)}
+${p("Thank you for contacting ASYM Capital. We have received your enquiry and a member of our team will be in touch within 24 hours.")}
+${p("If your requirements are time-sensitive, please reply to this email and we will prioritise your enquiry.")}
+${p("Kind regards,<br>ASYM Capital")}
+</td></tr>`;
+  const footer = `contact@asymcapital.uk &middot; +44 7743 262560 &middot; asymcapital.uk<br><br>${LEGAL_LINE}<br>Trading involves substantial risk. Past performance is not indicative of future results.`;
+  return emailShell("Thank you for contacting ASYM Capital", inner, footer);
 }
 
 async function handleContact(request, env) {
@@ -161,12 +171,12 @@ async function handleContact(request, env) {
   return json({ status: "ok", message: "We'll be in touch within 24 hours." });
 }
 
-const MAINTENANCE_HTML = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="robots" content="noindex"><title>Under Maintenance — ASYM Capital</title></head>
-<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0C0C0E;font-family:'Courier New',Courier,monospace;color:#F5F0E8;text-align:center;">
-<div style="padding:32px;max-width:520px;">
-<p style="margin:0 0 16px;color:#E8521A;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;">ASYM Capital</p>
-<h1 style="margin:0 0 16px;font-size:24px;letter-spacing:0.04em;color:#FEFCF8;">Under maintenance</h1>
-<p style="margin:0;font-size:14px;line-height:1.8;color:#B5AFA3;">We're making some improvements and will be back shortly. Thank you for your patience.</p>
+const MAINTENANCE_HTML = `<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="robots" content="noindex"><title>ASYM Capital</title></head>
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;background:#FCFCFB;color:#0B0D10;font-family:'Helvetica Neue',Arial,sans-serif;">
+<div style="width:100%;max-width:640px;margin:0 auto;padding:32px 24px;">
+<p style="margin:0 0 28px;padding-bottom:20px;border-bottom:1px solid #0B0D10;font-size:17px;"><span style="font-weight:bold;letter-spacing:0.06em;">ASYM</span> Capital<span style="display:inline-block;width:5px;height:5px;background:#E8521A;margin-left:3px;"></span></p>
+<h1 style="margin:0 0 12px;font-size:28px;font-weight:300;letter-spacing:-0.01em;">This site is being updated.</h1>
+<p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#555B65;">Please check back shortly. In the meantime you can reach us at <a href="mailto:contact@asymcapital.uk" style="color:#0B0D10;">contact@asymcapital.uk</a> or +44 7743 262560.</p>
 </div></body></html>`;
 
 function maintenance(request) {
