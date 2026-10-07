@@ -335,6 +335,27 @@ main { position: relative; z-index: 1; }
 .facts .fn { padding-top: 12px; padding-bottom: 13px; }
 .facts-fn > .cell { border-top: 0; }
 
+/* ───────────────────────── Legal entity ───────────────────────── */
+.entity { padding-top: 48px; }
+.entity .cell { padding-top: 28px; padding-bottom: 32px; }
+.entity__lead .eyebrow { margin-bottom: 20px; }
+.entity__statement { font-weight: 300; font-size: clamp(22px, 0.6vw + 16px, 28px); line-height: 1.3; letter-spacing: -0.01em; max-width: 26em; text-wrap: balance; }
+.entity__statement strong { font-weight: 500; letter-spacing: 0.01em; }
+.entity__item dt {
+  font-size: 12px; line-height: 16px; font-weight: 500; font-stretch: 125%;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.entity__item dd { margin-top: 12px; font-size: 16px; line-height: 1.5; }
+.entity__item address { font-style: normal; }
+.entity__num { font-weight: 300; font-size: clamp(30px, 1.2vw + 18px, 40px) !important; line-height: 1 !important; letter-spacing: -0.01em; }
+.entity__link { margin-top: 16px !important; }
+.entity__link a {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 14px; font-weight: 500; font-stretch: 112%; text-decoration: none;
+  background-image: linear-gradient(var(--rule), var(--rule)); background-size: 100% 1px; background-position: 0 100%; background-repeat: no-repeat; padding-bottom: 2px;
+}
+.entity__link a:hover { background-image: linear-gradient(var(--ink), var(--ink)); }
+
 /* ───────────────────────── Sections ───────────────────────── */
 .section { padding-top: var(--gap); }
 .head { border-top: 1px solid var(--ink); grid-template-rows: minmax(62px, auto) auto; row-gap: 32px; }
@@ -503,6 +524,7 @@ html:not(.js) #contact-form { display: none; }
 .ft-contact address { font-style: normal; font-size: 15px; line-height: 1.6; margin-top: 10px; }
 .legal { font-size: 13px; line-height: 1.6; color: var(--inv-muted); max-width: 72ch; }
 .legal--strong { color: var(--inv-text); }
+.legal--entity { color: var(--inv-text); font-size: 15px; }
 .ft-base .cell { padding-top: 18px; padding-bottom: 22px; }
 
 /* ───────────────────────── Responsive ───────────────────────── */
@@ -546,6 +568,8 @@ html:not(.js) #contact-form { display: none; }
   .facts .fact { grid-column: span 2; min-height: 156px; padding-top: 20px; padding-bottom: 22px; }
   .facts .fact .num { padding-top: 24px; }
   .facts .fn { grid-column: 1 / -1; }
+  .entity { padding-top: 32px; }
+  .entity .cell { padding-top: 22px; padding-bottom: 24px; }
 
   .head { row-gap: 0; }
   .head > .cell { display: block; grid-row: auto; padding-top: 18px; padding-bottom: 0; }
@@ -704,6 +728,27 @@ html:not(.js) #contact-form { display: none; }
         <div class="cell c1-12 fn" id="fn-1">
           <p class="cap">1&ensp;Past performance is not indicative of future results.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legal entity -->
+  <section class="entity" aria-labelledby="entity-title">
+    <div class="wrap">
+      <div class="grid mx">
+        <div class="cell c1-6 entity__lead">
+          <p class="eyebrow" id="entity-title">Legal entity</p>
+          <p class="entity__statement">ASYM Capital is a trading name of <strong>DERIVQ&nbsp;LIMITED</strong>, a company registered in England and Wales.</p>
+        </div>
+        <dl class="cell c7-9 entity__item">
+          <dt>Company number</dt>
+          <dd class="entity__num">09852527</dd>
+        </dl>
+        <dl class="cell c10-12 entity__item">
+          <dt>Registered office</dt>
+          <dd><address>53 Kilby Court, Southern Way<br>North Greenwich, London SE10 0PR<br>United Kingdom</address></dd>
+          <dd class="entity__link"><a href="https://find-and-update.company-information.service.gov.uk/company/09852527" target="_blank" rel="noopener">Companies House record<span class="visually-hidden"> (opens in a new tab)</span> <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a></dd>
+        </dl>
       </div>
     </div>
   </section>
@@ -949,6 +994,7 @@ html:not(.js) #contact-form { display: none; }
             <div><dt>Email</dt><dd><a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a></dd></div>
             <div><dt>Phone</dt><dd><a href="tel:+447743262560">+44 7743 262560</a></dd></div>
             <div><dt>Office</dt><dd><address>53 Kilby Court, Southern Way<br>London SE10 0PR, United Kingdom</address></dd></div>
+            <div><dt>Legal entity</dt><dd>DERIVQ LIMITED<br>Company number 09852527, England and Wales</dd></div>
             <div><dt>Markets</dt><dd>NASDAQ · NYSE · CME · LSE</dd></div>
             <div><dt>Founded</dt><dd>2022</dd></div>
           </dl>
@@ -1027,8 +1073,8 @@ html:not(.js) #contact-form { display: none; }
 
     <div class="grid ft-band">
       <div class="cell c1-6">
-        <span class="ft-label">Company</span>
-        <p class="legal">ASYM Capital is a trading name of DERIVQ LIMITED, a company registered in England and Wales (company number 09852527). Registered office: 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
+        <span class="ft-label">Legal entity</span>
+        <p class="legal legal--entity">ASYM Capital is a trading name of DERIVQ LIMITED, a company registered in England and Wales (company number 09852527). Registered office: 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
       </div>
       <div class="cell c7-9">
         <span class="ft-label">Markets</span>
