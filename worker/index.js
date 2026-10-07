@@ -176,7 +176,7 @@ const MAINTENANCE_HTML = `<!DOCTYPE html><html lang="en-GB"><head><meta charset=
 <div style="width:100%;max-width:640px;margin:0 auto;padding:32px 24px;">
 <p style="margin:0 0 28px;padding-bottom:20px;border-bottom:1px solid #0B0D10;font-size:17px;"><span style="font-weight:bold;letter-spacing:0.06em;">ASYM</span> Capital<span style="display:inline-block;width:5px;height:5px;background:#E8521A;margin-left:3px;"></span></p>
 <h1 style="margin:0 0 12px;font-size:28px;font-weight:300;letter-spacing:-0.01em;">This site is being updated.</h1>
-<p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#555B65;">Please check back shortly. In the meantime you can reach us at <a href="mailto:contact@asymcapital.uk" style="color:#0B0D10;">contact@asymcapital.uk</a> or +44 7743 262560.</p>
+<p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#555B65;">Please check back shortly. In the meantime you can reach us at <a href="mailto:contact@asymcapital.uk" style="color:#0B0D10;">contact@asymcapital.uk</a> or <a href="tel:+447743262560" style="color:#0B0D10;">+44 7743 262560</a>.</p>
 </div></body></html>`;
 
 function maintenance(request) {

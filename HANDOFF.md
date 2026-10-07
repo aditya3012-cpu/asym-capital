@@ -80,7 +80,7 @@ If you add a build step (e.g. a framework or bundler), set the **Build command**
    - Rate limit: 3 per hour per IP, in memory per isolate (best effort only; invalid submissions count too). A Cloudflare WAF rate-limiting rule on `POST /api/contact` would be the proper fix.
    - Sends a notification email to `CONTACT_TO_EMAIL` (reply-to = the enquirer), then a best-effort auto-reply to the enquirer, via the `EMAIL` (Email Service) binding. User input is HTML-escaped. The auto-reply footer carries the DERIVQ LIMITED company details (`LEGAL_LINE`), matching the site footer.
    - Returns `{status:"ok", message}` or `{detail}` with 400/422/429/500.
-4. Any other `/api/*` returns 404; everything else is served by `env.ASSETS.fetch(request)` (the static site).
+4. Any other `/api/*` returns 404; everything else is served by `env.ASSETS.fetch(request)` (the static site). `assets.not_found_handling` is `"404-page"`, so unknown paths get `frontend/404.html` with a 404 status (verified locally with `wrangler dev`).
 
 The frontend (`frontend/main.js`, ~line 104) posts the form as JSON to same-origin `/api/contact` and expects the response shapes above. If you rebuild the frontend, keep that contract or update the Worker to match.
 
@@ -130,6 +130,7 @@ The owner asked for the site to be taken offline while it's redone.
 ```
 frontend/index.html     # whole site: one HTML file with inline CSS (see §8 design system)
 frontend/main.js        # mobile menu, Enquire preselect, footer year, contact form (posts to /api/contact)
+frontend/404.html       # "Page not found" page (served with a 404 status for any unknown path)
 frontend/favicon.svg, og.png (1200x630 link preview), robots.txt, sitemap.xml
 worker/index.js         # Cloudflare Worker (maintenance, health, contact API, assets)
 wrangler.jsonc          # Worker config (see §3)

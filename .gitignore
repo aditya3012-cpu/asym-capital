@@ -35,3 +35,6 @@ logs/
 .coverage
 htmlcov/
 .pytest_cache/
+
+# Cloudflare Wrangler local state
+.wrangler/

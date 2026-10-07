@@ -251,7 +251,7 @@ h1 {
 .menu { display: none; }
 .menu summary {
   list-style: none; cursor: pointer;
-  display: flex; align-items: center; height: 40px; padding-left: calc(var(--inset) - 1px);
+  display: flex; align-items: center; height: 44px; padding-left: calc(var(--inset) - 1px);
   border: 1px solid var(--ink); font-size: 14px; font-weight: 500; font-stretch: 112%;
 }
 .menu summary::-webkit-details-marker { display: none; }
@@ -271,12 +271,9 @@ h1 {
   font-size: 28px; font-weight: 300; letter-spacing: -0.015em; text-decoration: none;
 }
 .menu-meta { padding: 24px 0 28px; }
-.menu-meta p + p { margin-top: 6px; }
+.menu-meta p + p { margin-top: 2px; }
+.menu-meta a { display: inline-block; padding: 6px 0; text-decoration: none; color: var(--ink); }
 body.menu-open { overflow: hidden; }
-
-/* Audience notice: wording comes from the compliance officer. Keep `hidden` until it exists. */
-.notice { position: relative; z-index: 1; background: var(--surface); border-bottom: 1px solid var(--rule); font-size: 13px; line-height: 1.6; }
-.notice[hidden] { display: none; }
 
 main { position: relative; z-index: 1; }
 
@@ -328,6 +325,7 @@ main { position: relative; z-index: 1; }
 .unit--plus { font-size: 0.6em; font-weight: 300; margin-left: 0.02em; vertical-align: 0.16em; }
 .fn-mark {
   display: inline-block; vertical-align: top; margin-left: 0.08em; padding: 0.16em 3px 2px;
+  min-width: 24px; min-height: 24px; text-align: center;
   font-size: 13px; line-height: 1; font-weight: 500; font-stretch: 112%; letter-spacing: 0; color: var(--muted);
   text-decoration: none;
 }
@@ -447,7 +445,7 @@ main { position: relative; z-index: 1; }
 }
 .details dd { font-size: 17px; line-height: 1.5; overflow-wrap: anywhere; }
 .details dl > div:last-child { border-bottom: 0; }
-.details a { text-decoration: none; background-image: linear-gradient(var(--rule), var(--rule)); background-size: 100% 1px; background-position: 0 100%; background-repeat: no-repeat; }
+.details a { display: inline-block; padding: 3px 0; text-decoration: none; background-image: linear-gradient(var(--rule), var(--rule)); background-size: 100% 1px; background-position: 0 100%; background-repeat: no-repeat; }
 .details a:hover { background-image: linear-gradient(var(--ink), var(--ink)); }
 .details address { font-style: normal; }
 
@@ -480,6 +478,7 @@ html:not(.js) #contact-form { display: none; }
 .status.error { color: var(--signal-text); }
 .status a { color: var(--ink); text-underline-offset: 3px; white-space: nowrap; }
 .noscript-note { font-size: 15px; color: var(--muted); max-width: 40ch; }
+.noscript-note a { color: var(--ink); }
 
 /* ───────────────────────── Footer ───────────────────────── */
 .site-footer { position: relative; z-index: 1; margin-top: var(--gap); background: var(--inv-bg); color: var(--inv-text); }
@@ -497,8 +496,8 @@ html:not(.js) #contact-form { display: none; }
 .ft-brand .brand__asym, .ft-brand .brand__cap { font-size: 22px; }
 .ft-brand .brand__dot { width: 6px; height: 6px; transform: translateY(7px); }
 .ft-sub { margin-top: 14px; font-size: 14px; color: var(--inv-muted); }
-.ft-links li + li { margin-top: 6px; }
-.ft-links a, .ft-contact a { text-decoration: none; font-size: 15px; }
+.ft-links li + li { margin-top: 2px; }
+.ft-links a, .ft-contact a { display: inline-block; padding: 4px 0; text-decoration: none; font-size: 15px; }
 .ft-links a:hover, .ft-contact a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .ft-contact p { font-size: 15px; line-height: 1.6; }
 .ft-contact address { font-style: normal; font-size: 15px; line-height: 1.6; margin-top: 10px; }
@@ -632,8 +631,8 @@ html:not(.js) #contact-form { display: none; }
             <a href="#technology">Technology <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
             <a href="#contact">Contact <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
             <div class="menu-meta cap">
-              <p>contact@asymcapital.uk</p>
-              <p>+44 7743 262560</p>
+              <p><a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a></p>
+              <p><a href="tel:+447743262560">+44 7743 262560</a></p>
             </div>
           </nav>
         </div>
@@ -641,11 +640,6 @@ html:not(.js) #contact-form { display: none; }
     </details>
   </div>
 </header>
-
-<!-- Audience notice slot for compliance-approved wording. Keep `hidden` until the text exists. -->
-<aside class="notice" id="audience-notice" aria-label="Important information" hidden>
-  <div class="wrap grid"><div class="cell c1-12"></div></div>
-</aside>
 
 <main id="main">
 
@@ -657,8 +651,8 @@ html:not(.js) #contact-form { display: none; }
         <h1 id="hero-title">We trade our own capital systematically and provide the same systems to clients.</h1>
         <p class="standfirst">ASYM Capital is a proprietary trading firm and <span class="nb">Quantitative-as-a-Service</span> (QaaS) provider, working across equity, derivatives and fixed income markets.</p>
         <div class="actions">
-          <a class="btn btn--primary" href="#services">Services <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
-          <a class="btn" href="#contact">Contact</a>
+          <a class="btn btn--primary" href="#contact">Get in touch <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+          <a class="btn" href="#services">Our services</a>
         </div>
       </div>
 
@@ -958,7 +952,7 @@ html:not(.js) #contact-form { display: none; }
         </div>
         <div class="gap-col" aria-hidden="true"></div>
         <div class="cell c7-12 form-cell">
-          <noscript><p class="noscript-note">To get in touch, email contact@asymcapital.uk or call +44 7743 262560.</p></noscript>
+          <noscript><p class="noscript-note">To get in touch, email <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a> or call <a href="tel:+447743262560">+44 7743 262560</a>.</p></noscript>
           <form class="form" id="contact-form" data-mailto="contact@asymcapital.uk" novalidate>
             <div class="field">
               <label for="cf-name">Name</label>

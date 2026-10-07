@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found | ASYM Capital</title>
+<meta name="description" content="The page you were looking for could not be found. Return to the ASYM Capital homepage or contact us.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FCFCFB">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..600&display=swap" rel="stylesheet">
+<style>
+/* A standalone page: the same tokens and grid as the homepage, nothing else.
+   Every link is absolute because this page is served for any unknown path. */
+:root {
+  --bg: #FCFCFB; --surface: #F1F2F2; --ink: #0B0D10; --muted: #555B65;
+  --grid: #E6E8EB; --rule: #C9CDD2; --signal: #E8521A;
+  --inv-bg: #0B0D10; --inv-text: #FCFCFB; --inv-muted: #9AA1AB;
+  --cols: 12; --margin: 40px; --inset: 20px; --header-h: 72px;
+  --container: min(1280px, 100% - 2 * var(--margin));
+  --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  position: relative; margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+  background: var(--bg); color: var(--ink); font-family: var(--font);
+  font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+h1, p { margin: 0; }
+a { color: inherit; }
+svg { display: block; }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+.gl { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.gl__in { width: var(--container); height: 100%; margin-inline: auto; display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
+.gl i { border-left: 1px solid var(--grid); }
+.gl i:last-child { border-right: 1px solid var(--grid); }
+.wrap { width: var(--container); margin-inline: auto; position: relative; }
+.cell { background: var(--bg); background-clip: padding-box; border-left: 1px solid transparent; border-right: 1px solid transparent; padding-inline: var(--inset); }
+
+.site-header { position: relative; z-index: 1; border-bottom: 1px solid var(--ink); background: var(--bg); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); }
+.brand { display: flex; align-items: center; text-decoration: none; white-space: nowrap; padding-left: var(--inset); }
+.brand__asym { font-size: 17px; font-weight: 600; font-stretch: 125%; letter-spacing: 0.06em; }
+.brand__cap { font-size: 17px; margin-left: 0.42em; }
+.brand__dot { flex: none; width: 5px; height: 5px; background: var(--signal); margin-left: 3px; transform: translateY(5px); }
+.nav-contact {
+  display: flex; align-items: center; height: 44px; padding: 0 18px; margin-right: 1px;
+  border: 1px solid var(--ink); text-decoration: none; font-size: 14px; font-weight: 500; font-stretch: 112%;
+}
+.nav-contact:hover { background: var(--ink); color: var(--bg); }
+
+main { position: relative; z-index: 1; flex: 1; }
+.notfound { padding-top: 96px; padding-bottom: 96px; max-width: 760px; }
+.eyebrow {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 36px;
+  font-size: 12px; line-height: 16px; font-weight: 500; font-stretch: 125%;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.eyebrow::before { content: ""; width: 8px; height: 8px; background: var(--ink); }
+h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; letter-spacing: -0.025em; margin-bottom: 24px; }
+.lead { font-weight: 300; font-size: clamp(19px, 0.5vw + 17px, 23px); line-height: 1.45; max-width: 30em; margin-bottom: 40px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 18px; height: 48px; padding: 0 20px;
+  border: 1px solid var(--ink); background: transparent; color: var(--ink);
+  font-size: 14px; font-weight: 500; font-stretch: 112%; text-decoration: none; white-space: nowrap;
+}
+.btn:hover { background: var(--surface); }
+.btn--primary { background: var(--ink); color: var(--bg); }
+.btn--primary:hover { background: #2A2E35; }
+.arr { width: 30px; height: 10px; fill: none; stroke: currentColor; stroke-width: 1.25; }
+.reach { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 15px; color: var(--muted); }
+.reach a { display: inline-block; padding: 3px 0; color: var(--ink); text-underline-offset: 3px; }
+
+.site-footer { position: relative; z-index: 1; background: var(--inv-bg); color: var(--inv-muted); }
+.site-footer .wrap { padding: 28px var(--inset) 32px; font-size: 13px; line-height: 1.6; }
+.site-footer p + p { margin-top: 6px; }
+.site-footer .entity { color: var(--inv-text); }
+
+@media (max-width: 899px) {
+  :root { --cols: 4; --margin: 16px; --inset: 16px; --header-h: 60px; }
+  .gl i:nth-child(n+5) { display: none; }
+  .gl i:nth-child(4) { border-right: 1px solid var(--grid); }
+  .brand__asym, .brand__cap { font-size: 16px; }
+  .notfound { padding-top: 56px; padding-bottom: 64px; }
+}
+</style>
+</head>
+<body>
+<div class="gl" aria-hidden="true"><div class="gl__in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="ASYM Capital, homepage">
+      <span class="brand__asym">ASYM</span><span class="brand__cap">Capital</span><span class="brand__dot" aria-hidden="true"></span>
+    </a>
+    <a class="nav-contact" href="/#contact">Contact</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="cell notfound">
+      <p class="eyebrow">Error 404</p>
+      <h1>Page not found</h1>
+      <p class="lead">The page you were looking for doesn’t exist or has moved.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href="/">Go to the homepage <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a>
+        <a class="btn" href="/#contact">Contact us</a>
+      </div>
+      <p class="reach">You can also email <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a> or call <a href="tel:+447743262560">+44 7743 262560</a>.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="entity">ASYM Capital is a trading name of DERIVQ LIMITED, a company registered in England and Wales (company number 09852527). Registered office: 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
+    <p>Trading involves substantial risk. Past performance is not indicative of future results.</p>
+  </div>
+</footer>
+</body>
+</html>
