@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy policy | ASYM Capital</title>
+<meta name="description" content="How DERIVQ LIMITED, trading as ASYM Capital, collects and uses personal data through asymcapital.uk and enquiries, and your rights under UK data protection law.">
+<link rel="canonical" href="https://asymcapital.uk/privacy">
+<meta name="theme-color" content="#FCFCFB">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ASYM Capital">
+<meta property="og:title" content="Privacy policy | ASYM Capital">
+<meta property="og:description" content="How DERIVQ LIMITED, trading as ASYM Capital, collects and uses personal data through asymcapital.uk and enquiries, and your rights under UK data protection law.">
+<meta property="og:url" content="https://asymcapital.uk/privacy">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://asymcapital.uk/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ASYM Capital">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* A standalone legal page: the same tokens, grid, header and footer as the 404 page,
+   plus a long-form reading layout. Every link is absolute. */
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --bg: #FCFCFB; --surface: #F1F2F2; --ink: #0B0D10; --muted: #555B65;
+  --grid: #E6E8EB; --rule: #C9CDD2; --signal: #E8521A;
+  --inv-bg: #0B0D10; --inv-text: #FCFCFB; --inv-muted: #9AA1AB; --inv-rule: #2E333B;
+  --cols: 12; --margin: 40px; --inset: 20px; --header-h: 72px;
+  --container: min(1280px, 100% - 2 * var(--margin));
+  --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --measure: 68ch;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  position: relative; margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+  background: var(--bg); color: var(--ink); font-family: var(--font);
+  font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p, ul, dl, dd { margin: 0; }
+ul { padding: 0; }
+a { color: inherit; }
+svg { display: block; }
+::selection { background: var(--ink); color: var(--bg); }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+.gl { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.gl__in { width: var(--container); height: 100%; margin-inline: auto; display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
+.gl i { border-left: 1px solid var(--grid); }
+.gl i:last-child { border-right: 1px solid var(--grid); }
+.wrap { width: var(--container); margin-inline: auto; position: relative; }
+.cell { background: var(--bg); background-clip: padding-box; border-left: 1px solid transparent; border-right: 1px solid transparent; padding-inline: var(--inset); }
+
+.site-header { position: relative; z-index: 1; border-bottom: 1px solid var(--ink); background: var(--bg); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); }
+.brand { display: flex; align-items: center; text-decoration: none; white-space: nowrap; padding-left: var(--inset); }
+.brand__asym { font-size: 17px; font-weight: 600; font-stretch: 125%; letter-spacing: 0.06em; }
+.brand__cap { font-size: 17px; margin-left: 0.42em; }
+.brand__dot { flex: none; width: 5px; height: 5px; background: var(--signal); margin-left: 3px; transform: translateY(5px); }
+.nav-contact {
+  display: flex; align-items: center; height: 44px; padding: 0 18px; margin-right: 1px;
+  border: 1px solid var(--ink); text-decoration: none; font-size: 14px; font-weight: 500; font-stretch: 112%;
+}
+.nav-contact:hover { background: var(--ink); color: var(--bg); }
+
+main { position: relative; z-index: 1; flex: 1; }
+.eyebrow {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 36px;
+  font-size: 12px; line-height: 16px; font-weight: 500; font-stretch: 125%;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.eyebrow::before { content: ""; width: 8px; height: 8px; background: var(--ink); }
+h1 { font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; letter-spacing: -0.025em; margin-bottom: 24px; }
+
+/* ───────── Long-form layout ───────── */
+.grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
+.doc-head { grid-column: 1 / 9; padding-top: 96px; padding-bottom: 64px; }
+.updated { font-size: 14px; font-stretch: 112%; color: var(--muted); margin-bottom: 32px; }
+.lead { font-weight: 300; font-size: clamp(19px, 0.5vw + 17px, 23px); line-height: 1.45; max-width: 34em; text-wrap: pretty; }
+
+.doc-body { border-top: 1px solid var(--ink); }
+.toc { grid-column: 10 / 13; grid-row: 1; }
+.toc__in { position: sticky; top: 0; padding-top: 32px; padding-bottom: 40px; }
+.toc__label {
+  display: block; margin-bottom: 12px;
+  font-size: 12px; line-height: 16px; font-weight: 500; font-stretch: 125%;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc a {
+  display: block; padding: 5px 0; font-size: 14px; line-height: 1.45;
+  text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px;
+}
+.toc a:hover { text-decoration-color: var(--ink); }
+
+.prose { grid-column: 1 / 9; grid-row: 1; padding-top: 8px; padding-bottom: 120px; }
+.prose section { padding-top: 40px; scroll-margin-top: 16px; }
+.prose section + section { margin-top: 24px; border-top: 1px solid var(--rule); margin-inline: calc(-1 * var(--inset)); padding-inline: var(--inset); }
+.prose h2 {
+  font-weight: 300; font-size: clamp(25px, 0.6vw + 20px, 30px); line-height: 1.2; letter-spacing: -0.015em;
+  max-width: 24em; margin-bottom: 20px; text-wrap: balance;
+}
+.prose h3 { font-size: 1em; line-height: 1.4; font-weight: 600; max-width: var(--measure); margin-top: 32px; margin-bottom: 8px; }
+.prose h2 + h3 { margin-top: 4px; }
+.prose p, .prose li { max-width: var(--measure); text-wrap: pretty; }
+.prose p + p, .prose p + ul, .prose ul + p, .prose dl + p, .prose p + dl, .prose .purposes + p { margin-top: 14px; }
+.prose a { text-underline-offset: 3px; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
+.prose a:hover { text-decoration-thickness: 2px; }
+.prose ul { list-style: none; }
+.prose ul li { position: relative; padding-left: 22px; }
+.prose ul li + li { margin-top: 6px; }
+.prose ul li::before { content: ""; position: absolute; left: 2px; top: 0.68em; width: 6px; height: 6px; background: var(--ink); }
+.prose strong { font-weight: 600; }
+
+/* Label and value rows: contact details, rights, lawful bases */
+.rows { max-width: var(--measure); border-top: 1px solid var(--rule); }
+.rows > div { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); column-gap: 20px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.rows dt { font-size: 14px; font-weight: 500; font-stretch: 112%; color: var(--muted); }
+.rows dd { overflow-wrap: anywhere; }
+.rows address { font-style: normal; }
+
+.purposes { max-width: var(--measure); }
+.purpose { padding-top: 24px; }
+.purpose h3 { margin: 0 0 12px; }
+.purpose .rows dt { font-size: 13px; }
+
+.site-footer { position: relative; z-index: 1; background: var(--inv-bg); color: var(--inv-muted); }
+.site-footer .wrap { padding: 28px var(--inset) 32px; font-size: 13px; line-height: 1.6; }
+.site-footer p + p { margin-top: 6px; }
+.site-footer .entity { color: var(--inv-text); }
+.ft-legal { display: flex; flex-wrap: wrap; gap: 0 28px; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--inv-rule); }
+.ft-legal a { display: inline-flex; align-items: center; gap: 8px; padding: 4px 0; color: var(--inv-text); text-underline-offset: 3px; }
+.ft-legal a:hover { text-decoration-thickness: 2px; }
+.ft-legal a[aria-current="page"] { text-decoration: none; }
+.ft-legal a[aria-current="page"]::before { content: ""; width: 5px; height: 5px; background: var(--signal); }
+
+@media (min-width: 1200px) { body { font-size: 17px; } }
+@media (max-width: 899px) {
+  :root { --cols: 4; --margin: 16px; --inset: 16px; --header-h: 60px; }
+  .gl i:nth-child(n+5) { display: none; }
+  .gl i:nth-child(4) { border-right: 1px solid var(--grid); }
+  .brand__asym, .brand__cap { font-size: 16px; }
+  .doc-head { grid-column: 1 / -1; padding-top: 56px; padding-bottom: 40px; }
+  .eyebrow { margin-bottom: 28px; }
+  .updated { margin-bottom: 24px; }
+  .toc { grid-column: 1 / -1; grid-row: auto; border-bottom: 1px solid var(--rule); }
+  .toc__in { position: static; padding-top: 24px; padding-bottom: 20px; }
+  .prose { grid-column: 1 / -1; grid-row: auto; padding-bottom: 80px; }
+  .prose section { padding-top: 32px; }
+  .prose section + section { margin-top: 16px; }
+}
+@media (max-width: 599px) {
+  .rows > div { display: block; }
+  .rows dd { margin-top: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+@media print {
+  .gl, .toc, .nav-contact { display: none; }
+  .doc-head, .prose { grid-column: 1 / -1; }
+  .prose { padding-bottom: 24px; }
+  .site-footer { background: none; color: var(--ink); border-top: 1px solid var(--ink); }
+  .site-footer .entity, .ft-legal a { color: var(--ink); }
+  .ft-legal { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="gl" aria-hidden="true"><div class="gl__in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="ASYM Capital, homepage">
+      <span class="brand__asym">ASYM</span><span class="brand__cap">Capital</span><span class="brand__dot" aria-hidden="true"></span>
+    </a>
+    <a class="nav-contact" href="/#contact">Contact</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="grid">
+      <div class="cell doc-head">
+        <p class="eyebrow">Legal</p>
+        <h1>Privacy policy</h1>
+        <p class="updated">Last updated: <time datetime="2026-10-07">7 October 2026</time></p>
+        <p class="lead">This policy explains how DERIVQ LIMITED, trading as ASYM Capital, collects and uses personal data when you visit asymcapital.uk or contact us, and the rights you have under UK data protection law.</p>
+      </div>
+    </div>
+
+    <div class="grid doc-body">
+      <nav class="cell toc" aria-labelledby="toc-label">
+        <div class="toc__in">
+          <span class="toc__label" id="toc-label">On this page</span>
+          <ol>
+            <li><a href="#who-we-are">Who we are</a></li>
+            <li><a href="#data-we-collect">The personal data we collect</a></li>
+            <li><a href="#how-we-use-it">How we use your personal data</a></li>
+            <li><a href="#sharing">Who we share it with</a></li>
+            <li><a href="#transfers">International transfers</a></li>
+            <li><a href="#retention">How long we keep it</a></li>
+            <li><a href="#security">How we protect it</a></li>
+            <li><a href="#your-rights">Your rights</a></li>
+            <li><a href="#complaints">Complaints</a></li>
+            <li><a href="#cookies">Cookies and tracking</a></li>
+            <li><a href="#changes">Changes to this policy</a></li>
+          </ol>
+        </div>
+      </nav>
+
+      <article class="cell prose">
+        <section id="who-we-are" aria-labelledby="who-we-are-h">
+          <h2 id="who-we-are-h">Who we are</h2>
+          <p>DERIVQ LIMITED, trading as ASYM Capital (“we”, “us”, “our”), is the controller of the personal data described in this policy. This means we decide why and how it is used.</p>
+          <p>DERIVQ LIMITED is a company registered in England and Wales (company number 09852527). Our registered office is 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
+          <p>We handle personal data in line with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. This policy covers personal data we collect through this website and when you contact us by email or phone.</p>
+          <p>If you have a question about this policy or about your personal data, contact us:</p>
+          <dl class="rows">
+            <div><dt>Email</dt><dd><a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a></dd></div>
+            <div><dt>Phone</dt><dd><a href="tel:+447743262560">+44 7743 262560</a></dd></div>
+            <div><dt>Post</dt><dd><address>DERIVQ LIMITED, 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom</address></dd></div>
+          </dl>
+        </section>
+
+        <section id="data-we-collect" aria-labelledby="data-we-collect-h">
+          <h2 id="data-we-collect-h">The personal data we collect</h2>
+
+          <h3>The contact form</h3>
+          <p>When you send an enquiry through the contact form on our website, we collect:</p>
+          <ul>
+            <li>your name</li>
+            <li>your email address</li>
+            <li>your company, if you choose to give it</li>
+            <li>the type of enquiry you select</li>
+            <li>your message and anything you include in it.</li>
+          </ul>
+          <p>The form sends these details to our mailbox and sends an automatic email to the address you give, acknowledging your enquiry.</p>
+          <p>If the website cannot send the email, your own email app opens with a pre-filled message addressed to <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a>. Nothing reaches us unless you choose to send that message. Once sent, it is treated in the same way as any other email you send us.</p>
+
+          <h3>Emails and phone calls</h3>
+          <p>If you email or phone us directly, we receive the contact details you use, such as your name, email address or phone number, and the information you give us in your email or during the call.</p>
+
+          <h3>Technical data</h3>
+          <p>When you visit the website, our hosting provider processes the technical data needed to deliver pages to your device and to protect the site. This includes your IP address and details of each request, such as the page requested and the time of the request, which are recorded in the hosting provider’s server logs.</p>
+          <p>When you submit the contact form, we also use your IP address to limit the number of submissions that can be made from the same address. This prevents abuse of the form.</p>
+
+          <h3>Whether you have to give us personal data</h3>
+          <p>You do not have to give us any personal data. The contact form needs your name, email address and a message so that we can reply, and it cannot be sent without them. You can also contact us by email or phone instead.</p>
+          <p>Please do not include special category data (for example, information about your health, religious beliefs or political opinions) or information about criminal convictions in your message. We do not need it to respond to an enquiry.</p>
+        </section>
+
+        <section id="how-we-use-it" aria-labelledby="how-we-use-it-h">
+          <h2 id="how-we-use-it-h">How we use your personal data</h2>
+          <p>We use personal data only for the purposes below. UK data protection law requires us to have a lawful basis for each of them.</p>
+          <div class="purposes">
+            <div class="purpose">
+              <h3>Responding to your enquiry</h3>
+              <dl class="rows">
+                <div><dt>What we do</dt><dd>Read and reply to your enquiry, send the automatic acknowledgement and communicate with you about it.</dd></div>
+                <div><dt>Data used</dt><dd>Contact form details, and the details and content of emails and calls you make to us.</dd></div>
+                <div><dt>Lawful basis</dt><dd>Where you ask about our services, taking steps at your request before entering into a contract (UK GDPR Article 6(1)(b)). For other enquiries, our legitimate interests in responding to people who contact us (Article 6(1)(f)).</dd></div>
+              </dl>
+            </div>
+            <div class="purpose">
+              <h3>Running and securing the website</h3>
+              <dl class="rows">
+                <div><dt>What we do</dt><dd>Deliver the website, keep it secure and working properly, and prevent abuse of the contact form.</dd></div>
+                <div><dt>Data used</dt><dd>Technical data, including your IP address.</dd></div>
+                <div><dt>Lawful basis</dt><dd>Our legitimate interests in operating a secure and reliable website (Article 6(1)(f)).</dd></div>
+              </dl>
+            </div>
+            <div class="purpose">
+              <h3>Meeting our legal obligations</h3>
+              <dl class="rows">
+                <div><dt>What we do</dt><dd>Comply with the laws and regulations that apply to us, including requests from authorities that we are legally required to meet.</dd></div>
+                <div><dt>Data used</dt><dd>Any of the personal data described in this policy, where the law requires it.</dd></div>
+                <div><dt>Lawful basis</dt><dd>Compliance with a legal obligation (Article 6(1)(c)).</dd></div>
+              </dl>
+            </div>
+          </div>
+          <p>We do not use enquiries sent through the contact form to send marketing, and we do not sell personal data.</p>
+          <p>We do not rely on your consent for the uses described in this policy. We do not make decisions about you based solely on automated processing that have legal or similarly significant effects on you.</p>
+        </section>
+
+        <section id="sharing" aria-labelledby="sharing-h">
+          <h2 id="sharing-h">Who we share it with</h2>
+          <p>We share personal data only as described below. We never sell it.</p>
+          <p>We use two service providers, which process personal data on our behalf to provide their services to us:</p>
+          <ul>
+            <li><strong>Cloudflare</strong> hosts the website, delivers its content, provides security services, keeps the server logs and sends the emails created when you use the contact form (your enquiry to us and the acknowledgement to you).</li>
+            <li><strong>Fastmail</strong> hosts our @asymcapital.uk mailbox, where your enquiry and any emails you send us are received and stored.</li>
+          </ul>
+          <p>We may also disclose personal data to regulators, law enforcement agencies, courts or other public authorities where the law requires us to do so.</p>
+        </section>
+
+        <section id="transfers" aria-labelledby="transfers-h">
+          <h2 id="transfers-h">International transfers</h2>
+          <p>Our service providers may process personal data outside the United Kingdom. Where personal data is transferred outside the UK, we make sure it is protected by the appropriate safeguards that UK data protection law requires. You can contact us for more information about these safeguards.</p>
+        </section>
+
+        <section id="retention" aria-labelledby="retention-h">
+          <h2 id="retention-h">How long we keep it</h2>
+          <p>We keep personal data only for as long as necessary for the purposes described in this policy, including to meet legal and regulatory obligations. When we no longer need it, we delete it.</p>
+        </section>
+
+        <section id="security" aria-labelledby="security-h">
+          <h2 id="security-h">How we protect it</h2>
+          <p>We use appropriate technical and organisational measures to protect personal data against unauthorised access, loss, alteration and disclosure. The website, including the contact form, is served over an encrypted (HTTPS) connection.</p>
+        </section>
+
+        <section id="your-rights" aria-labelledby="your-rights-h">
+          <h2 id="your-rights-h">Your rights</h2>
+          <p>Under UK data protection law you have the following rights over your personal data. Some apply only in certain circumstances, and some are subject to exemptions.</p>
+          <dl class="rows">
+            <div><dt>Access</dt><dd>To ask for a copy of the personal data we hold about you and for information about how we use it.</dd></div>
+            <div><dt>Rectification</dt><dd>To ask us to correct personal data that is inaccurate, or to complete data that is incomplete.</dd></div>
+            <div><dt>Erasure</dt><dd>To ask us to delete your personal data.</dd></div>
+            <div><dt>Restriction</dt><dd>To ask us to limit how we use your personal data, for example while we check whether it is accurate.</dd></div>
+            <div><dt>Objection</dt><dd>To object to our use of your personal data where we rely on our legitimate interests.</dd></div>
+            <div><dt>Portability</dt><dd>To receive the personal data you have given us in a structured, commonly used and machine-readable format, or to ask us to send it to another organisation, where we use it on the basis of a contract or your consent and by automated means.</dd></div>
+            <div><dt>Withdrawing consent</dt><dd>Where we rely on your consent, to withdraw it at any time. This does not affect anything we did with your data before you withdrew it.</dd></div>
+          </dl>
+
+          <h3>How to exercise your rights</h3>
+          <p>To make a request, email <a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a>, call <a href="tel:+447743262560">+44 7743 262560</a> or write to us at our registered office. You do not usually have to pay a fee.</p>
+          <p>We may need to ask for information to confirm your identity before we act on your request. We will respond without undue delay and in any event within one month of receiving it. If your request is complex, or you have made several requests, we may take up to two further months. If so, we will tell you within the first month and explain why.</p>
+        </section>
+
+        <section id="complaints" aria-labelledby="complaints-h">
+          <h2 id="complaints-h">Complaints</h2>
+          <p>If you are unhappy with how we have handled your personal data, please contact us first and we will try to resolve your concern.</p>
+          <p>You also have the right to complain to the Information Commissioner’s Office (ICO), the UK’s data protection regulator:</p>
+          <dl class="rows">
+            <div><dt>Website</dt><dd><a href="https://ico.org.uk/" rel="noopener">ico.org.uk</a></dd></div>
+            <div><dt>Helpline</dt><dd><a href="tel:+443031231113">0303 123 1113</a></dd></div>
+          </dl>
+        </section>
+
+        <section id="cookies" aria-labelledby="cookies-h">
+          <h2 id="cookies-h">Cookies and tracking</h2>
+          <p>The website does not set any cookies. It does not use analytics, advertising or other tracking technologies, and it has no social media plugins.</p>
+          <p>The fonts on the website are hosted on our own site, so loading a page does not send your data to a third-party font service.</p>
+          <p>If this changes, we will update this policy and, where the law requires, ask for your consent before setting any cookies that are not strictly necessary.</p>
+        </section>
+
+        <section id="changes" aria-labelledby="changes-h">
+          <h2 id="changes-h">Changes to this policy</h2>
+          <p>We may update this policy from time to time, for example if we change how we use personal data. The current version is always published on this page, and the date at the top shows when it was last updated.</p>
+        </section>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="entity">ASYM Capital is a trading name of DERIVQ LIMITED, a company registered in England and Wales (company number 09852527). Registered office: 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR, United Kingdom.</p>
+    <p>Trading involves substantial risk. Past performance is not indicative of future results.</p>
+    <nav class="ft-legal" aria-label="Legal">
+      <a href="/privacy" aria-current="page">Privacy</a>
+      <a href="/terms">Terms</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
