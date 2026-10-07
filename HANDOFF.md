@@ -148,6 +148,8 @@ Everything Cloudflare serves comes from `frontend/` (static) and `worker/index.j
 - **ASYM Capital**: boutique quantitative investment and advisory firm, presented on asymcapital.uk as London-based.
 - **Confirmed by the owner (7 Oct 2026):**
   - Established **2022**. Do not mention Bengaluru on the UK site.
+  - Markets traded (as shown on the site): NASDAQ, NYSE, CME, LSE.
+  - The owner will not disclose the basis of the Sharpe ratio (period, book); don't ask again. The "60+" signals figure and the "60+ equities" in the Market Signal Intelligence copy are the same number.
   - The firm does both proprietary trading and client services. All six services below are real and offered.
   - Audience: institutions, family offices, high-net-worth individuals and funds (anyone the firm pitches to).
   - Registered entity: **DERIVQ LIMITED**, company number **09852527**, registered in England and Wales (incorporated 2 Nov 2015). Registered office (per Companies House): 53 Kilby Court, Southern Way, North Greenwich, London SE10 0PR. The site states "ASYM Capital is a trading name of DERIVQ LIMITED" in the footer.
