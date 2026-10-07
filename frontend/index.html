@@ -154,7 +154,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* Column placement (12 columns) */
 .c1-4  { grid-column: 1 / 5; }   .c1-5  { grid-column: 1 / 6; }
-.c1-6  { grid-column: 1 / 7; }   .c1-7  { grid-column: 1 / 8; }
+.c1-6  { grid-column: 1 / 7; }   .c1-7  { grid-column: 1 / 8; }   .c1-8  { grid-column: 1 / 9; }
 .c7-9  { grid-column: 7 / 10; }  .c7-12 { grid-column: 7 / 13; }
 .c8-12 { grid-column: 8 / 13; }  .c9-12 { grid-column: 9 / 13; }
 .c10-12{ grid-column: 10 / 13; } .c1-12 { grid-column: 1 / -1; }
@@ -347,7 +347,6 @@ main { position: relative; z-index: 1; }
 }
 .entity__item dd { margin-top: 12px; font-size: 16px; line-height: 1.5; }
 .entity__item address { font-style: normal; }
-.entity__num { font-weight: 300; font-size: clamp(30px, 1.2vw + 18px, 40px) !important; line-height: 1 !important; letter-spacing: -0.01em; }
 .entity__link { margin-top: 16px !important; }
 .entity__link a {
   display: inline-flex; align-items: center; gap: 12px;
@@ -737,15 +736,11 @@ html:not(.js) #contact-form { display: none; }
   <section class="entity" aria-labelledby="entity-title">
     <div class="wrap">
       <div class="grid mx">
-        <div class="cell c1-6 entity__lead">
+        <div class="cell c1-8 entity__lead">
           <p class="eyebrow" id="entity-title">Legal entity</p>
-          <p class="entity__statement">ASYM Capital is a trading name of <strong>DERIVQ&nbsp;LIMITED</strong>, a company registered in England and Wales.</p>
+          <p class="entity__statement">ASYM Capital is registered under <strong>DERIVQ&nbsp;LIMITED</strong> <span class="nb">(CRN 09852527)</span>.</p>
         </div>
-        <dl class="cell c7-9 entity__item">
-          <dt>Company number</dt>
-          <dd class="entity__num">09852527</dd>
-        </dl>
-        <dl class="cell c10-12 entity__item">
+        <dl class="cell c9-12 entity__item">
           <dt>Registered office</dt>
           <dd><address>53 Kilby Court, Southern Way<br>North Greenwich, London SE10 0PR<br>United Kingdom</address></dd>
           <dd class="entity__link"><a href="https://find-and-update.company-information.service.gov.uk/company/09852527" target="_blank" rel="noopener">Companies House record<span class="visually-hidden"> (opens in a new tab)</span> <svg class="arr" viewBox="0 0 30 10" aria-hidden="true"><path d="M0 5h28.5M24 1l4.5 4L24 9"/></svg></a></dd>
@@ -995,7 +990,7 @@ html:not(.js) #contact-form { display: none; }
             <div><dt>Email</dt><dd><a href="mailto:contact@asymcapital.uk">contact@asymcapital.uk</a></dd></div>
             <div><dt>Phone</dt><dd><a href="tel:+447743262560">+44 7743 262560</a></dd></div>
             <div><dt>Office</dt><dd><address>53 Kilby Court, Southern Way<br>London SE10 0PR, United Kingdom</address></dd></div>
-            <div><dt>Legal entity</dt><dd>DERIVQ LIMITED<br>Company number 09852527, England and Wales</dd></div>
+            <div><dt>Legal entity</dt><dd>DERIVQ LIMITED (CRN 09852527)</dd></div>
             <div><dt>Markets</dt><dd>NASDAQ · NYSE · CME · LSE</dd></div>
             <div><dt>Founded</dt><dd>2022</dd></div>
           </dl>
